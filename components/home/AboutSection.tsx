@@ -1,4 +1,5 @@
 import { Eye, Target } from "lucide-react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 const cards = [
   {
@@ -31,6 +32,13 @@ export default function AboutSection() {
 
         {/* Main heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="mb-8 flex justify-center">
+            <SiteBrandLogo
+              variant="onLight"
+              asLink={false}
+              className="h-12 w-auto max-w-[240px] sm:h-14"
+            />
+          </div>
           <h2
             className="font-bold leading-snug"
             style={{ color: "#292929", fontSize: "clamp(20px, 2.5vw, 30px)" }}

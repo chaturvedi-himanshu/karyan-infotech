@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/layout/SiteShell";
-import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -31,15 +30,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" id="top" className={`${cormorant.variable} ${outfit.variable}`}>
+    <html
+      lang="en"
+      id="top"
+      className={`${cormorant.variable} ${outfit.variable}`}
+    >
       <body
         className={`${outfit.className} min-h-screen flex flex-col bg-lux-cream text-stone-800 antialiased`}
       >
-        <EnquiryProvider>
-          <SiteShell>
-            <main className="flex-1">{children}</main>
-          </SiteShell>
-        </EnquiryProvider>
+        <SiteShell>
+          <main className="flex-1">{children}</main>
+        </SiteShell>
       </body>
     </html>
   );

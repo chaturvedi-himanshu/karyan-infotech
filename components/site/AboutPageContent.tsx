@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CTASection from "@/components/shared/CTASection";
 import InquirySection from "@/components/home/InquirySection";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import { CheckCircle2 } from "lucide-react";
 
 export type AboutPayload = {
@@ -36,6 +37,13 @@ export default function AboutPageContent({ payload }: { payload: AboutPayload })
               />
             </div>
             <div>
+              <div className="mb-6 flex justify-start">
+                <SiteBrandLogo
+                  variant="onLight"
+                  asLink={false}
+                  className="h-11 w-auto max-w-[220px] sm:h-12"
+                />
+              </div>
               <h4
                 className="mb-2 text-xs font-bold uppercase tracking-widest"
                 style={{ color: "#655E56" }}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 interface CTASectionProps {
   title?: string;
@@ -32,6 +33,13 @@ export default function CTASection({
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
           <div>
+            <div className="mb-4 flex justify-center lg:justify-start">
+              <SiteBrandLogo
+                variant="onDark"
+                asLink={false}
+                className="h-9 w-auto max-w-[200px] opacity-95 sm:h-10"
+              />
+            </div>
             <h2 className="mb-2 text-2xl font-bold text-white md:text-3xl">
               {title}
             </h2>

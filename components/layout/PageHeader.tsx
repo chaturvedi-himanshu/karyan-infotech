@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 export interface PageHeaderBreadcrumb {
   label: string;
@@ -66,12 +67,13 @@ export default function PageHeader({
       <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <div className="max-w-3xl">
-            <div
-              className="mb-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.32em] text-lux-gold-bright/90"
-              aria-hidden
-            >
-              <span className="h-px w-8 bg-lux-gold-bright/80" />
-              Karyan Infratech
+            <div className="mb-5 inline-flex items-center gap-3">
+              <span className="h-px w-8 shrink-0 bg-lux-gold-bright/80" aria-hidden />
+              <SiteBrandLogo
+                variant="onDark"
+                asLink={false}
+                className="h-7 w-auto max-w-[160px] opacity-95 sm:h-8 sm:max-w-[200px]"
+              />
             </div>
             <h1 className="font-display text-3xl font-medium leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
               {title}

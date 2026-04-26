@@ -2,6 +2,9 @@ export type NavLink = { label: string; href: string };
 export type NavProject = { name: string; href: string; tag: string };
 
 export type SiteNavPayload = {
+  /** Header brand image (HTTPS URL). Falls back to the main site logo if unset. */
+  headerLogoSrc?: string;
+  headerLogoAlt?: string;
   topBar: {
     phone: string;
     phoneHref: string;

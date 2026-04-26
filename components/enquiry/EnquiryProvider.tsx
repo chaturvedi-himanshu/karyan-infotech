@@ -32,7 +32,15 @@ export function useEnquiry() {
   return ctx;
 }
 
-export function EnquiryProvider({ children }: { children: ReactNode }) {
+export function EnquiryProvider({
+  children,
+  brandLogoSrc,
+  brandLogoAlt,
+}: {
+  children: ReactNode;
+  brandLogoSrc?: string;
+  brandLogoAlt?: string;
+}) {
   const [isOpen, setOpen] = useState(false);
   const [defaultProject, setDefaultProject] = useState("");
 
@@ -64,6 +72,8 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
         isOpen={isOpen}
         onClose={closeEnquiry}
         defaultProject={defaultProject}
+        logoSrc={brandLogoSrc}
+        logoAlt={brandLogoAlt}
       />
     </EnquiryContext.Provider>
   );

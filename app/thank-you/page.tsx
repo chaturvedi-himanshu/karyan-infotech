@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Home, Phone, Mail } from "lucide-react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 export const metadata: Metadata = {
   title: "Thank You",
@@ -11,6 +12,12 @@ export default function ThankYouPage() {
   return (
     <div className="min-h-screen bg-[#f8f5f0] flex items-center justify-center px-4 pt-20">
       <div className="max-w-2xl w-full text-center">
+        <div className="mb-8 flex justify-center">
+          <SiteBrandLogo
+            variant="onLight"
+            className="h-11 w-auto max-w-[220px] sm:h-12"
+          />
+        </div>
         {/* Success Icon */}
         <div className="w-24 h-24 bg-[#c9a84c]/10 rounded-full flex items-center justify-center mx-auto mb-8">
           <CheckCircle2 className="w-14 h-14 text-[#c9a84c]" />

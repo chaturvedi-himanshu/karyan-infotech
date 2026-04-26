@@ -2,9 +2,18 @@
 
 import Link from "next/link";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import type { SiteFooterPayload } from "@/lib/cms/types";
 
-export default function FooterClient({ footer }: { footer: SiteFooterPayload }) {
+export default function FooterClient({
+  footer,
+  logoSrc,
+  logoAlt,
+}: {
+  footer: SiteFooterPayload;
+  logoSrc?: string;
+  logoAlt?: string;
+}) {
   const { openEnquiry } = useEnquiry();
   const year = new Date().getFullYear();
 
@@ -13,12 +22,12 @@ export default function FooterClient({ footer }: { footer: SiteFooterPayload }) 
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block leading-none">
-              <span className="font-display text-2xl font-semibold text-white">Karyan</span>
-              <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.35em] text-lux-gold-bright">
-                Infratech
-              </span>
-            </Link>
+            <SiteBrandLogo
+              src={logoSrc}
+              alt={logoAlt}
+              variant="onDark"
+              className="h-10 w-auto max-w-[200px] sm:h-11"
+            />
             <p className="mt-6 text-sm leading-relaxed">{footer.tagline}</p>
           </div>
 

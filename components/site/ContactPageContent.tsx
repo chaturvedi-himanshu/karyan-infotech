@@ -1,5 +1,6 @@
 import ContactForm from "@/components/shared/ContactForm";
 import { EnquiryTrigger } from "@/components/enquiry/EnquiryProvider";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import { getLucideIcon } from "@/lib/cms/icons";
 
 export type ContactPayload = {
@@ -16,6 +17,13 @@ export default function ContactPageContent({ payload }: { payload: ContactPayloa
     <section style={{ background: "#fff" }} className="py-16">
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="mb-10 text-center">
+          <div className="mb-6 flex justify-center">
+            <SiteBrandLogo
+              variant="onLight"
+              asLink={false}
+              className="h-11 w-auto max-w-[220px] sm:h-12"
+            />
+          </div>
           <h2 className="mb-2 text-2xl font-bold" style={{ color: "#292929" }}>
             {payload.heroTitle}
           </h2>

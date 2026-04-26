@@ -12,13 +12,22 @@ import { getLucideIcon } from "@/lib/cms/icons";
 export default function LuxuryHomeView({
   data,
   projectsList,
+  brandLogoSrc,
+  brandLogoAlt,
 }: {
   data: HomePayload;
   projectsList: ProjectsListPayload;
+  brandLogoSrc?: string;
+  brandLogoAlt?: string;
 }) {
   return (
     <>
-      <HeroSlider slides={data.heroSlides} sideStats={data.heroSideStats} />
+      <HeroSlider
+        slides={data.heroSlides}
+        sideStats={data.heroSideStats}
+        brandLogoSrc={brandLogoSrc}
+        brandLogoAlt={brandLogoAlt}
+      />
 
       {/* Wave into light band */}
       <div className="relative z-20 -mt-14 overflow-hidden bg-white md:-mt-20">

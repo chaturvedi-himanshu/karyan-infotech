@@ -13,6 +13,8 @@ import {
   Home,
 } from "lucide-react";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
+import { DEFAULT_HEADER_LOGO_SRC } from "@/lib/cms/defaults/siteSettings";
 import type { SiteNavPayload } from "@/lib/cms/types";
 
 export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
@@ -26,6 +28,8 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
   const deskProjectsWrapRef = useRef<HTMLDivElement>(null);
 
   const { residentialProjects, commercialProjects, mainLinks, topBar } = nav;
+  const headerLogoSrc = nav.headerLogoSrc?.trim() || DEFAULT_HEADER_LOGO_SRC;
+  const headerLogoAlt = nav.headerLogoAlt?.trim() || "Karyan Infratech";
 
   const closeAllNav = useCallback(() => {
     setMobileOpen(false);
@@ -88,17 +92,15 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
 
       <header className="sticky top-0 z-100 border-b border-stone-200/80 bg-white/90 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 lg:py-4">
-          <Link
-            href="/"
-            className="relative z-10 flex shrink-0 flex-col leading-none"
-          >
-            <span className="font-display text-[1.35rem] font-semibold tracking-tight text-lux-navy sm:text-2xl">
-              Karyan
-            </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-lux-gold-dim">
-              Infratech
-            </span>
-          </Link>
+          <div className="relative z-10 flex shrink-0 items-center">
+            <SiteBrandLogo
+              src={headerLogoSrc}
+              alt={headerLogoAlt}
+              variant="onLight"
+              className="h-9 max-h-11 w-auto max-w-[min(100vw-8rem,200px)] sm:h-11"
+              priority
+            />
+          </div>
 
           <nav className="hidden items-center gap-1 lg:flex">
             {mainLinks.map((l) => (

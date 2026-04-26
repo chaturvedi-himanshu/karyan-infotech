@@ -1,7 +1,13 @@
 import type { SiteSettingsBundle } from "../types";
 
+/** Matches WordPress custom logo on karyaninfratech.co.in */
+export const DEFAULT_HEADER_LOGO_SRC =
+  "https://karyaninfratech.co.in/wp-content/uploads/2023/03/logo.png";
+
 export const DEFAULT_SITE_SETTINGS: SiteSettingsBundle = {
   nav: {
+    headerLogoSrc: DEFAULT_HEADER_LOGO_SRC,
+    headerLogoAlt: "Karyan Infratech",
     topBar: {
       phone: "+91 920 600 1002",
       phoneHref: "tel:+919206001002",

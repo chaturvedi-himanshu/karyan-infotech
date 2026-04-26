@@ -1,7 +1,7 @@
 import LuxuryHomeView from "@/components/home/LuxuryHomeView";
 import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
 import { DEFAULT_SITE_PAGES } from "@/lib/cms/defaults/sitePages";
-import { getHomeContent, getSitePage } from "@/lib/cms/getters";
+import { getHomeContent, getSitePage, getSiteSettings } from "@/lib/cms/getters";
 
 function mergeProjectsListPayload(
   fromCms: Record<string, unknown> | undefined
@@ -18,9 +18,20 @@ function mergeProjectsListPayload(
 }
 
 export default async function LuxuryHomePage() {
-  const [data, projectsDoc] = await Promise.all([getHomeContent(), getSitePage("projects")]);
+  const [data, projectsDoc, site] = await Promise.all([
+    getHomeContent(),
+    getSitePage("projects"),
+    getSiteSettings(),
+  ]);
   const projectsList = mergeProjectsListPayload(
     (projectsDoc?.payload ?? undefined) as Record<string, unknown> | undefined
   );
-  return <LuxuryHomeView data={data} projectsList={projectsList} />;
+  return (
+    <LuxuryHomeView
+      data={data}
+      projectsList={projectsList}
+      brandLogoSrc={site.nav.headerLogoSrc}
+      brandLogoAlt={site.nav.headerLogoAlt}
+    />
+  );
 }

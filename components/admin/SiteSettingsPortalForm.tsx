@@ -117,6 +117,38 @@ export default function SiteSettingsPortalForm() {
       </CmsSection>
 
       <CmsSection
+        title="Header logo"
+        description="Image shown in the main header (replaces the old text wordmark)."
+        where="Header — left of the menu on desktop and mobile."
+        defaultOpen
+      >
+        <div className="grid gap-4 sm:grid-cols-2">
+          <CmsField label="Logo image URL" hint="HTTPS link to PNG or SVG (e.g. from your media library).">
+            <CmsInput
+              value={data.nav.headerLogoSrc ?? ""}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  nav: { ...d.nav, headerLogoSrc: e.target.value },
+                }))
+              }
+            />
+          </CmsField>
+          <CmsField label="Logo alt text" hint="Short description for accessibility and SEO.">
+            <CmsInput
+              value={data.nav.headerLogoAlt ?? ""}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  nav: { ...d.nav, headerLogoAlt: e.target.value },
+                }))
+              }
+            />
+          </CmsField>
+        </div>
+      </CmsSection>
+
+      <CmsSection
         title="Main menu links"
         description="The primary pages in the horizontal navigation."
         where="Header — main menu beside the logo on desktop; mobile menu on phones."

@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { X, Send, CheckCircle2 } from "lucide-react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 const PROJECT_OPTIONS = [
   { value: "", label: "Select a project" },
@@ -33,10 +34,14 @@ export default function EnquiryModal({
   isOpen,
   onClose,
   defaultProject = "",
+  logoSrc,
+  logoAlt,
 }: {
   isOpen: boolean;
   onClose: () => void;
   defaultProject?: string;
+  logoSrc?: string;
+  logoAlt?: string;
 }) {
   const panelId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -129,10 +134,14 @@ export default function EnquiryModal({
       >
         <div className="flex shrink-0 items-start justify-between gap-4 border-b border-stone-100 bg-gradient-to-br from-lux-cream/80 to-white px-5 py-4 sm:px-6 sm:py-5">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-lux-gold-dim">
-              Karyan Infratech
-            </p>
-            <h2 id={panelId} className="font-display mt-1 text-2xl font-medium text-lux-navy">
+            <SiteBrandLogo
+              src={logoSrc}
+              alt={logoAlt}
+              variant="onLight"
+              asLink={false}
+              className="h-8 w-auto max-w-[180px]"
+            />
+            <h2 id={panelId} className="font-display mt-2 text-2xl font-medium text-lux-navy">
               Enquire with us
             </h2>
             <p className="mt-1 text-sm text-stone-600">

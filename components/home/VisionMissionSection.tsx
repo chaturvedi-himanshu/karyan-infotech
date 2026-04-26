@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Eye, Target, Compass } from "lucide-react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 const cards = [
   {
@@ -30,6 +31,13 @@ export default function VisionMissionSection() {
           {/* Cards */}
           <div className="order-2 lg:order-1 space-y-6">
             <div className="mb-8">
+              <div className="mb-5 flex justify-start">
+                <SiteBrandLogo
+                  variant="onLight"
+                  asLink={false}
+                  className="h-10 w-auto max-w-[200px] sm:h-11"
+                />
+              </div>
               <p className="text-[#c9a84c] text-sm font-semibold uppercase tracking-widest mb-3">
                 What Drives Us
               </p>

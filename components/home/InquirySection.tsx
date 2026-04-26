@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 export default function InquirySection() {
   const [form, setForm] = useState({ name: "", email: "", mobile: "" });
@@ -35,6 +36,13 @@ export default function InquirySection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Left: heading */}
           <div>
+            <div className="mb-6 flex justify-start">
+              <SiteBrandLogo
+                variant="onLight"
+                asLink={false}
+                className="h-10 w-auto max-w-[200px] sm:h-11"
+              />
+            </div>
             <h4
               className="text-xs font-bold uppercase tracking-widest mb-2"
               style={{ color: "#655E56" }}

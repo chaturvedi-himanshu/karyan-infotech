@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import PropertySvgBackdrop from "@/components/decor/PropertySvgBackdrop";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
+import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import type { HomeHeroSlide, HomePayload } from "@/lib/cms/types";
 
 type HeroSlide = HomeHeroSlide;
@@ -66,9 +67,16 @@ const defaultSideStats: HomePayload["heroSideStats"] = [
 type Props = {
   slides?: HeroSlide[];
   sideStats?: HomePayload["heroSideStats"];
+  brandLogoSrc?: string;
+  brandLogoAlt?: string;
 };
 
-export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsProp }: Props) {
+export default function HeroSlider({
+  slides: slidesProp,
+  sideStats: sideStatsProp,
+  brandLogoSrc,
+  brandLogoAlt,
+}: Props) {
   const slides = slidesProp?.length ? slidesProp : defaultSlides;
   const sideStats = sideStatsProp?.length ? sideStatsProp : defaultSideStats;
   const rootRef = useRef<HTMLDivElement>(null);
@@ -83,7 +91,7 @@ export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsPro
       speed: 1100,
       parallax: true,
       autoplay: {
-        delay: 6200,
+        delay: 3000,
         disableOnInteraction: false,
       },
       pagination: {
@@ -127,9 +135,9 @@ export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsPro
                   </div>
                   <div className="pointer-events-none absolute left-0 top-0 z-[6] hidden h-full w-px bg-gradient-to-b from-lux-gold-bright/80 via-lux-gold/30 to-transparent lg:left-8 xl:left-12 lg:block" />
 
-                  <div className="relative z-10 mx-auto flex h-full min-h-[min(100svh,940px)] max-w-7xl flex-col justify-center px-5 pb-36 pt-28 sm:px-8 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-28">
+                  <div className="relative z-20 mx-auto flex h-full min-h-[min(100svh,940px)] max-w-7xl flex-col justify-center px-5 pb-36 pt-28 sm:px-8 sm:pb-32 sm:pt-32 lg:px-12 lg:pb-28">
                     <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-10">
-                      <div className="lg:col-span-7">
+                      <div className="relative z-20 lg:col-span-7">
                         <div
                           className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-lux-gold-bright backdrop-blur-md"
                           data-swiper-parallax="-80"
@@ -141,12 +149,15 @@ export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsPro
                           className="mb-6 h-px w-16 bg-gradient-to-r from-lux-gold-bright to-lux-gold/20"
                           data-swiper-parallax="-100"
                         />
-                        <p
-                          className="mb-3 text-[11px] font-semibold uppercase tracking-[0.38em] text-white/55"
-                          data-swiper-parallax="-120"
-                        >
-                          Karyan Infratech
-                        </p>
+                        <div className="mb-3" data-swiper-parallax="-120">
+                          <SiteBrandLogo
+                            src={brandLogoSrc}
+                            alt={brandLogoAlt}
+                            variant="onDark"
+                            asLink={false}
+                            className="h-7 w-auto max-w-[200px] opacity-90 sm:h-9 sm:max-w-[240px]"
+                          />
+                        </div>
                         <h1
                           className="font-display max-w-[22ch] text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-7xl"
                           data-swiper-parallax="-180"
@@ -216,7 +227,7 @@ export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsPro
           </div>
         </div>
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-lux-navy via-lux-navy/80 to-transparent pb-6 pt-16">
+        <div className="hidden sm:block pointer-events-none absolute bottom-20 left-0 right-0 z-20 bg-gradient-to-t from-lux-navy via-lux-navy/80 to-transparent pb-6 pt-16">
           <div className="pointer-events-auto mx-auto flex max-w-7xl flex-col items-stretch gap-4 px-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 lg:px-12">
             <a
               href="tel:+919206001002"
@@ -246,17 +257,17 @@ export default function HeroSlider({ slides: slidesProp, sideStats: sideStatsPro
 
         <button
           type="button"
-          className="lux-hero-prev absolute left-3 top-[42%] z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-lux-navy/40 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 sm:left-5 md:left-8 lg:h-14 lg:w-14"
+          className="hidden lg:flex lux-hero-prev absolute left-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-lux-navy/55 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:left-3 sm:h-12 sm:w-12 lg:top-[42%] lg:left-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="h-6 w-6 lg:h-7 lg:w-7" />
+          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
         </button>
         <button
           type="button"
-          className="lux-hero-next absolute right-3 top-[42%] z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-lux-navy/40 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 sm:right-5 md:right-8 lg:h-14 lg:w-14"
+          className="hidden lg:flex lux-hero-next absolute right-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-lux-navy/55 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:right-3 sm:h-12 sm:w-12 lg:top-[42%] lg:right-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
           aria-label="Next slide"
         >
-          <ChevronRight className="h-6 w-6 lg:h-7 lg:w-7" />
+          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
         </button>
 
         <div className="pointer-events-none absolute bottom-[7.5rem] left-1/2 z-[25] hidden -translate-x-1/2 flex-col items-center gap-2 text-white/40 sm:bottom-[8.5rem] sm:flex lg:bottom-[9rem]">
