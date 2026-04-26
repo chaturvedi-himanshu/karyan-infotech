@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -22,15 +22,34 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
   const [mobileResOpen, setMobileResOpen] = useState(false);
   const [mobileComOpen, setMobileComOpen] = useState(false);
+  const [deskProjectsOpen, setDeskProjectsOpen] = useState(false);
+  const deskProjectsWrapRef = useRef<HTMLDivElement>(null);
 
   const { residentialProjects, commercialProjects, mainLinks, topBar } = nav;
 
-  useEffect(() => {
+  const closeAllNav = useCallback(() => {
     setMobileOpen(false);
     setMobileProjectsOpen(false);
     setMobileResOpen(false);
     setMobileComOpen(false);
-  }, [pathname]);
+    setDeskProjectsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      closeAllNav();
+    });
+  }, [pathname, closeAllNav]);
+
+  useEffect(() => {
+    if (!deskProjectsOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      const el = deskProjectsWrapRef.current;
+      if (el && !el.contains(e.target as Node)) setDeskProjectsOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [deskProjectsOpen]);
 
   const active = (href: string) =>
     href === "/"
@@ -96,64 +115,73 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               </Link>
             ))}
 
-            <div className="group/p relative px-1">
+            <div ref={deskProjectsWrapRef} className="relative px-1">
               <button
                 type="button"
+                aria-expanded={deskProjectsOpen}
+                aria-haspopup="true"
+                onClick={() => setDeskProjectsOpen((o) => !o)}
                 className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition ${
                   projectActive
                     ? "text-lux-gold-dim"
                     : "text-stone-700 hover:text-lux-navy"
-                }`}
+                } ${deskProjectsOpen ? "text-lux-navy" : ""}`}
               >
                 Projects
-                <ChevronDown className="h-4 w-4 opacity-60 transition group-hover/p:rotate-180" />
+                <ChevronDown
+                  className={`h-4 w-4 opacity-60 transition ${deskProjectsOpen ? "rotate-180" : ""}`}
+                />
               </button>
-              <div className="invisible absolute right-0 top-full z-50 w-[min(100vw-2rem,560px)] pt-3 opacity-0 transition group-hover/p:visible group-hover/p:opacity-100">
-                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-stone-200/90 bg-white shadow-2xl ring-1 ring-black/5">
-                  <div className="border-r border-stone-100 bg-stone-50/90 p-5">
-                    <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
-                      <Home className="h-3.5 w-3.5 shrink-0" />
-                      Residential
+              {deskProjectsOpen ? (
+                <div className="absolute right-0 top-full z-50 w-[min(100vw-2rem,560px)] pt-3">
+                  <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-stone-200/90 bg-white shadow-2xl ring-1 ring-black/5">
+                    <div className="border-r border-stone-100 bg-stone-50/90 p-5">
+                      <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
+                        <Home className="h-3.5 w-3.5 shrink-0" />
+                        Residential
+                      </div>
+                      <p className="mb-4 text-xs text-stone-500">Premium residences</p>
+                      <div className="flex flex-col gap-1">
+                        {residentialProjects.map((p) => (
+                          <Link
+                            key={p.href}
+                            href={p.href}
+                            onClick={() => setDeskProjectsOpen(false)}
+                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-white"
+                          >
+                            {p.name}
+                            <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
+                              {p.tag}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                    <p className="mb-4 text-xs text-stone-500">Premium residences</p>
-                    <div className="flex flex-col gap-1">
-                      {residentialProjects.map((p) => (
-                        <Link
-                          key={p.href}
-                          href={p.href}
-                          className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-white"
-                        >
-                          {p.name}
-                          <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
-                            {p.tag}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
-                      <Landmark className="h-3.5 w-3.5 shrink-0" />
-                      Commercial
-                    </div>
-                    <p className="mb-4 text-xs text-stone-500">Retail, offices & malls</p>
-                    <div className="flex flex-col gap-1">
-                      {commercialProjects.map((p) => (
-                        <Link
-                          key={p.href}
-                          href={p.href}
-                          className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-lux-cream/60"
-                        >
-                          {p.name}
-                          <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
-                            {p.tag}
-                          </span>
-                        </Link>
-                      ))}
+                    <div className="p-5">
+                      <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
+                        <Landmark className="h-3.5 w-3.5 shrink-0" />
+                        Commercial
+                      </div>
+                      <p className="mb-4 text-xs text-stone-500">Retail, offices & malls</p>
+                      <div className="flex flex-col gap-1">
+                        {commercialProjects.map((p) => (
+                          <Link
+                            key={p.href}
+                            href={p.href}
+                            onClick={() => setDeskProjectsOpen(false)}
+                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-lux-cream/60"
+                          >
+                            {p.name}
+                            <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
+                              {p.tag}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </nav>
 
@@ -183,6 +211,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                 <Link
                   key={l.href}
                   href={l.href}
+                  onClick={closeAllNav}
                   className="rounded-lg px-3 py-3 text-base font-medium text-stone-800 hover:bg-lux-cream"
                 >
                   {l.label}
@@ -215,6 +244,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                       <Link
                         key={p.href}
                         href={p.href}
+                        onClick={closeAllNav}
                         className="block py-2 pl-2 text-sm text-stone-700"
                       >
                         {p.name}
@@ -235,6 +265,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                       <Link
                         key={p.href}
                         href={p.href}
+                        onClick={closeAllNav}
                         className="block py-2 pl-2 text-sm text-stone-700"
                       >
                         {p.name}

@@ -218,7 +218,10 @@ export default function EnquiryModal({
                 <select
                   name="project"
                   value={form.project}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    e.currentTarget.blur();
+                  }}
                   className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm text-lux-navy outline-none ring-lux-gold/30 transition focus:border-lux-gold/50 focus:ring-2"
                 >
                   {PROJECT_OPTIONS.map((o) => (

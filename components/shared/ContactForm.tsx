@@ -92,7 +92,15 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
       </div>
       <div>
         <label style={labelStyle}>Project of Interest</label>
-        <select name="project" value={form.project} onChange={handleChange} style={inputStyle}>
+        <select
+          name="project"
+          value={form.project}
+          onChange={(e) => {
+            handleChange(e);
+            e.currentTarget.blur();
+          }}
+          style={inputStyle}
+        >
           <option value="">Select a project</option>
           <option value="trevana">Karyan Trevana</option>
           <option value="citywalk">Karyan CityWalk</option>
