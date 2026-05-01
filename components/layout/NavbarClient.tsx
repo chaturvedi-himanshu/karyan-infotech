@@ -7,7 +7,6 @@ import {
   ChevronDown,
   Menu,
   X,
-  Phone,
   Building2,
   Landmark,
   Home,
@@ -27,7 +26,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
   const [deskProjectsOpen, setDeskProjectsOpen] = useState(false);
   const deskProjectsWrapRef = useRef<HTMLDivElement>(null);
 
-  const { residentialProjects, commercialProjects, mainLinks, topBar } = nav;
+  const { residentialProjects, commercialProjects, mainLinks } = nav;
   const headerLogoSrc = nav.headerLogoSrc?.trim() || DEFAULT_HEADER_LOGO_SRC;
   const headerLogoAlt = nav.headerLogoAlt?.trim() || "Karyan Infratech";
 
@@ -66,30 +65,6 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
 
   return (
     <>
-      <div className="border-b border-theme-bg-soft bg-theme-bg text-[11px] font-medium uppercase tracking-[0.2em] text-theme-on-bg-muted">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
-          <a
-            href={topBar.phoneHref}
-            className="inline-flex items-center gap-2 text-theme-on-bg transition hover:text-theme-on-bg-muted"
-          >
-            <Phone className="h-3.5 w-3.5 text-theme-on-bg-subtle" />
-            {topBar.phone}
-          </a>
-          <div className="flex items-center gap-5">
-            {topBar.regionLabel ? (
-              <span className="hidden sm:inline">{topBar.regionLabel}</span>
-            ) : null}
-            <button
-              type="button"
-              onClick={() => openEnquiry()}
-              className="text-theme-on-bg transition hover:text-theme-on-bg-muted"
-            >
-              {topBar.enquireLabel ?? "Enquire"}
-            </button>
-          </div>
-        </div>
-      </div>
-
       <header className="sticky top-0 z-100 border-b border-stone-200/80 bg-white/90 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 lg:py-4">
           <div className="relative z-10 flex shrink-0 items-center">

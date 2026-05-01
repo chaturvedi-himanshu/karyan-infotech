@@ -45,7 +45,10 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <SectionWave fill="fill-lux-ivory" className="relative z-10 drop-shadow-sm" />
+        <SectionWave
+          fill="fill-lux-ivory"
+          className="relative z-10 drop-shadow-sm"
+        />
       </div>
 
       {/* Stats — glass cards, mesh blobs */}
@@ -65,7 +68,8 @@ export default function LuxuryHomeView({
             },
             {
               variant: "orbRings",
-              wrapClassName: "-right-1/4 top-1/2 h-[130%] w-[58%] -translate-y-1/2",
+              wrapClassName:
+                "-right-1/4 top-1/2 h-[130%] w-[58%] -translate-y-1/2",
               opacityClassName: "rotate-6 opacity-[0.22]",
             },
             {
@@ -85,7 +89,9 @@ export default function LuxuryHomeView({
                 <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-3xl font-semibold text-transparent md:text-4xl">
                   {m.value}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-lux-navy">{m.label}</p>
+                <p className="mt-2 text-sm font-semibold text-lux-navy">
+                  {m.label}
+                </p>
                 <p className="mt-1 text-xs text-stone-500">{m.sub}</p>
               </div>
             ))}
@@ -105,7 +111,8 @@ export default function LuxuryHomeView({
             { variant: "blobOrganic", opacityClassName: "opacity-90" },
             {
               variant: "meshPremium",
-              opacityClassName: "opacity-[0.26] mix-blend-multiply text-lux-navy",
+              opacityClassName:
+                "opacity-[0.26] mix-blend-multiply text-lux-navy",
             },
             {
               variant: "gradientMesh",
@@ -185,22 +192,22 @@ export default function LuxuryHomeView({
             {data.capabilities.map(({ title, text, icon }) => {
               const Icon = getLucideIcon(icon);
               return (
-              <div
-                key={title}
-                className="relative overflow-hidden rounded-3xl border border-stone-200/80 bg-gradient-to-br from-lux-ivory to-lux-cream/70 p-8 shadow-[0_24px_50px_-28px_rgba(10,22,40,0.18)] ring-1 ring-lux-gold/10 transition hover:shadow-[0_28px_60px_-24px_rgba(198,160,82,0.2)]"
-              >
-                <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-lux-gold/10 blur-2xl" />
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-bg text-lux-gold-bright shadow-lg">
-                  <Icon className="h-7 w-7" strokeWidth={1.35} />
+                <div
+                  key={title}
+                  className="relative overflow-hidden rounded-3xl border border-stone-200/80 bg-gradient-to-br from-lux-ivory to-lux-cream/70 p-8 shadow-[0_24px_50px_-28px_rgba(10,22,40,0.18)] ring-1 ring-lux-gold/10 transition hover:shadow-[0_28px_60px_-24px_rgba(198,160,82,0.2)]"
+                >
+                  <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-lux-gold/10 blur-2xl" />
+                  <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-bg text-lux-gold-bright shadow-lg">
+                    <Icon className="h-7 w-7" strokeWidth={1.35} />
+                  </div>
+                  <h3 className="font-display relative mt-6 text-xl font-medium text-lux-navy">
+                    {title}
+                  </h3>
+                  <p className="relative mt-3 text-sm leading-relaxed text-stone-600">
+                    {text}
+                  </p>
                 </div>
-                <h3 className="font-display relative mt-6 text-xl font-medium text-lux-navy">
-                  {title}
-                </h3>
-                <p className="relative mt-3 text-sm leading-relaxed text-stone-600">
-                  {text}
-                </p>
-              </div>
-            );
+              );
             })}
           </div>
         </div>
@@ -215,7 +222,8 @@ export default function LuxuryHomeView({
           layers={[
             {
               variant: "orbRings",
-              wrapClassName: "-right-32 top-1/2 h-[140%] w-[58%] -translate-y-1/2",
+              wrapClassName:
+                "-right-32 top-1/2 h-[140%] w-[58%] -translate-y-1/2",
               opacityClassName: "opacity-[0.72]",
             },
             {
@@ -247,7 +255,7 @@ export default function LuxuryHomeView({
             </div>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-lux-navy/15 bg-theme-bg px-6 py-3 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition hover:bg-theme-bg-muted"
+              className="inline-flex items-center gap-2 rounded-full border border-[#ead7b0]/70 bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] px-6 py-3 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition hover:brightness-110"
             >
               View all projects
               <ArrowRight className="h-4 w-4" />
@@ -295,7 +303,8 @@ export default function LuxuryHomeView({
             },
             {
               variant: "orbRings",
-              wrapClassName: "left-1/2 top-1/2 h-[125%] w-full -translate-x-1/2 -translate-y-1/2",
+              wrapClassName:
+                "left-1/2 top-1/2 h-[125%] w-full -translate-x-1/2 -translate-y-1/2",
               opacityClassName: "opacity-[0.07]",
             },
             {
@@ -318,21 +327,21 @@ export default function LuxuryHomeView({
             {data.pillars.map(({ title, text, icon }) => {
               const Icon = getLucideIcon(icon);
               return (
-              <div
-                key={title}
-                className="rounded-3xl border border-stone-200/90 bg-gradient-to-b from-lux-ivory to-lux-cream/50 p-8 shadow-sm"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lux-gold/15 text-lux-gold-dim">
-                  <Icon className="h-6 w-6" strokeWidth={1.5} />
+                <div
+                  key={title}
+                  className="rounded-3xl border border-stone-200/90 bg-gradient-to-b from-lux-ivory to-lux-cream/50 p-8 shadow-sm"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lux-gold/15 text-lux-gold-dim">
+                    <Icon className="h-6 w-6" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-display mt-7 text-xl font-medium text-lux-navy">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                    {text}
+                  </p>
                 </div>
-                <h3 className="font-display mt-7 text-xl font-medium text-lux-navy">
-                  {title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                  {text}
-                </p>
-              </div>
-            );
+              );
             })}
           </div>
         </div>
@@ -347,7 +356,8 @@ export default function LuxuryHomeView({
             { variant: "waveFluid", opacityClassName: "opacity-45" },
             {
               variant: "meshPremium",
-              opacityClassName: "opacity-[0.2] mix-blend-multiply text-lux-navy",
+              opacityClassName:
+                "opacity-[0.2] mix-blend-multiply text-lux-navy",
             },
             {
               variant: "stackWaves",
@@ -399,7 +409,10 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <SectionWave fill="fill-theme-bg" className="relative z-10 bg-lux-cream" />
+        <SectionWave
+          fill="fill-theme-bg"
+          className="relative z-10 bg-lux-cream"
+        />
       </div>
 
       {/* Process */}
@@ -467,7 +480,8 @@ export default function LuxuryHomeView({
           layers={[
             {
               variant: "orbRings",
-              wrapClassName: "left-1/2 top-full h-48 w-full -translate-x-1/2 -translate-y-full",
+              wrapClassName:
+                "left-1/2 top-full h-48 w-full -translate-x-1/2 -translate-y-full",
               opacityClassName: "opacity-15",
             },
             {
@@ -537,7 +551,9 @@ export default function LuxuryHomeView({
                   “{t.quote}”
                 </p>
                 <footer className="mt-8 border-t border-stone-100 pt-6">
-                  <p className="text-sm font-semibold text-lux-navy">{t.name}</p>
+                  <p className="text-sm font-semibold text-lux-navy">
+                    {t.name}
+                  </p>
                   <p className="text-xs text-stone-500">{t.role}</p>
                 </footer>
               </blockquote>
@@ -547,7 +563,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* FAQ */}
-      <section className="relative overflow-hidden bg-lux-ivory py-20 lg:py-28">
+      {/* <section className="relative overflow-hidden bg-lux-ivory py-20 lg:py-28">
         <SectionBgStack
           edgeFade="light"
           grain
@@ -598,7 +614,7 @@ export default function LuxuryHomeView({
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Location */}
       <section className="relative overflow-hidden bg-gradient-to-br from-lux-ivory via-lux-cream to-lux-cream py-20 lg:py-28">
@@ -668,7 +684,7 @@ export default function LuxuryHomeView({
                 </li>
               ))}
             </ul>
-            <EnquiryTrigger className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-theme-bg py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-theme-bg-muted">
+            <EnquiryTrigger className="mt-8 inline-flex w-full items-center justify-center rounded-xl border border-[#ead7b0]/70 bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg transition hover:brightness-110">
               Plan a site tour
             </EnquiryTrigger>
           </div>
@@ -815,13 +831,13 @@ export default function LuxuryHomeView({
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-2">
             {data.ecosystem.tags.map((x) => (
-                <span
-                  key={x}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-[11px] font-semibold uppercase tracking-widest text-white/55"
-                >
-                  {x}
-                </span>
-              ))}
+              <span
+                key={x}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-[11px] font-semibold uppercase tracking-widest text-white/55"
+              >
+                {x}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -868,9 +884,7 @@ export default function LuxuryHomeView({
               </span>
               {data.splitCta.phone}
             </a>
-            <p className="mt-4 text-sm text-stone-600">
-              {data.splitCta.hours}
-            </p>
+            <p className="mt-4 text-sm text-stone-600">{data.splitCta.hours}</p>
           </div>
           <div className="flex flex-col justify-center rounded-3xl border border-lux-gold/25 bg-theme-bg p-10 text-center text-white shadow-2xl lg:text-left">
             <h3 className="font-display text-2xl font-medium">
@@ -879,7 +893,7 @@ export default function LuxuryHomeView({
             <p className="mt-3 text-sm text-stone-400">
               {data.splitCta.rightBody}
             </p>
-            <EnquiryTrigger className="mt-8 inline-flex items-center justify-center rounded-xl bg-lux-gold px-8 py-4 text-sm font-semibold uppercase tracking-widest text-lux-navy transition hover:bg-lux-gold-bright">
+            <EnquiryTrigger className="mt-8 inline-flex items-center justify-center rounded-xl border border-[#ead7b0]/70 bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg transition hover:brightness-110">
               {data.splitCta.rightCtaLabel}
             </EnquiryTrigger>
           </div>
@@ -923,7 +937,7 @@ export default function LuxuryHomeView({
               {data.finalCta.body}
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <EnquiryTrigger className="inline-flex min-w-[220px] items-center justify-center rounded-xl bg-theme-bg px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-theme-bg-muted">
+              <EnquiryTrigger className="inline-flex min-w-[220px] items-center justify-center rounded-xl border border-[#ead7b0]/70 bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg transition hover:brightness-110">
                 {data.finalCta.primaryLabel}
               </EnquiryTrigger>
               <Link
