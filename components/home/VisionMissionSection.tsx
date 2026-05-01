@@ -54,7 +54,7 @@ export default function VisionMissionSection() {
                   key={card.title}
                   className="flex gap-5 p-6 bg-white shadow-sm rounded-sm hover:shadow-md transition-shadow border-l-4 border-[#c9a84c]"
                 >
-                  <div className="w-12 h-12 bg-[#1a1a2e] rounded-sm flex items-center justify-center flex-shrink-0">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-theme-bg">
                     <Icon className="w-5 h-5 text-[#c9a84c]" />
                   </div>
                   <div>

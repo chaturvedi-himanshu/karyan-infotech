@@ -121,7 +121,7 @@ export default function AdminShell({
                 href={href}
                 className="group flex gap-3 rounded-xl px-3 py-2.5 transition hover:bg-lux-cream"
               >
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-lux-navy transition group-hover:bg-lux-navy group-hover:text-white">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-stone-100 text-theme-fg transition group-hover:bg-theme-bg group-hover:text-theme-on-bg">
                   <Icon className="h-4 w-4" strokeWidth={1.75} />
                 </span>
                 <span className="min-w-0">

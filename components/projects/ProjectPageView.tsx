@@ -48,7 +48,7 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                   key={item.title}
                   className="flex gap-4 rounded-sm border-t-4 border-[#c9a84c] bg-lux-ivory p-6 shadow-lg"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[#1a1a2e]">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-theme-bg">
                     <Icon className="h-5 w-5 text-[#c9a84c]" />
                   </div>
                   <div>
@@ -120,7 +120,7 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                         key={arch.name}
                         className="rounded-sm border-t-4 border-[#c9a84c] bg-[#f8f5f0] p-5"
                       >
-                        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-sm bg-[#1a1a2e]">
+                        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-sm bg-theme-bg">
                           <Building2 className="h-5 w-5 text-[#c9a84c]" />
                         </div>
                         <h4 className="mb-1 text-sm font-bold text-[#1a1a2e]">{arch.name}</h4>
@@ -194,7 +194,7 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
               </div>
 
               {locationSidebar ? (
-                <div className="rounded-sm bg-[#1a1a2e] p-6 text-white">
+                <div className="rounded-sm bg-theme-bg p-6 text-white">
                   <h3 className="mb-4 flex items-center gap-2 text-base font-bold uppercase tracking-wider">
                     {(() => {
                       const Mp = getLucideIcon("MapPin");

@@ -122,7 +122,7 @@ export default function EnquiryModal({
     >
       <button
         type="button"
-        className="absolute inset-0 bg-lux-navy/60 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-theme-bg/65 backdrop-blur-sm transition-opacity"
         aria-label="Close enquiry"
         onClick={handleClose}
       />
@@ -172,7 +172,7 @@ export default function EnquiryModal({
               <button
                 type="button"
                 onClick={handleClose}
-                className="mt-8 rounded-xl bg-lux-navy px-8 py-3 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-lux-navy-soft"
+                className="mt-8 rounded-xl bg-theme-bg px-8 py-3 text-sm font-semibold uppercase tracking-widest text-theme-on-bg transition hover:bg-theme-bg-muted"
               >
                 Close
               </button>
@@ -256,7 +256,7 @@ export default function EnquiryModal({
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-lux-navy py-3.5 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-lux-navy-soft disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-theme-bg py-3.5 text-sm font-semibold uppercase tracking-widest text-theme-on-bg transition hover:bg-theme-bg-muted disabled:opacity-70"
               >
                 <Send className="h-4 w-4" />
                 {loading ? "Sending…" : "Submit enquiry"}

@@ -53,7 +53,7 @@ export default async function AdminLeadsPage() {
                     {row.createdAt ? row.createdAt.replace("T", " ").slice(0, 19) : "—"}
                   </td>
                   <td className="px-4 py-3">
-                    <span className="inline-flex rounded-full bg-lux-navy/10 px-2.5 py-0.5 text-xs font-semibold text-lux-navy">
+                    <span className="inline-flex rounded-full bg-theme-bg/10 px-2.5 py-0.5 text-xs font-semibold text-theme-fg">
                       {sourceLabel(row.source)}
                     </span>
                   </td>

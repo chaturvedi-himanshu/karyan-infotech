@@ -66,13 +66,13 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
 
   return (
     <>
-      <div className="bg-lux-navy text-[11px] font-medium uppercase tracking-[0.2em] text-white/70">
+      <div className="border-b border-theme-bg-soft bg-theme-bg text-[11px] font-medium uppercase tracking-[0.2em] text-theme-on-bg-muted">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
           <a
             href={topBar.phoneHref}
-            className="inline-flex items-center gap-2 text-white/90 transition hover:text-lux-gold-bright"
+            className="inline-flex items-center gap-2 text-theme-on-bg transition hover:text-theme-on-bg-muted"
           >
-            <Phone className="h-3.5 w-3.5 text-lux-gold" />
+            <Phone className="h-3.5 w-3.5 text-theme-on-bg-subtle" />
             {topBar.phone}
           </a>
           <div className="flex items-center gap-5">
@@ -82,7 +82,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
             <button
               type="button"
               onClick={() => openEnquiry()}
-              className="text-lux-gold-bright transition hover:text-white"
+              className="text-theme-on-bg transition hover:text-theme-on-bg-muted"
             >
               {topBar.enquireLabel ?? "Enquire"}
             </button>
@@ -110,7 +110,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                 className={`rounded-md px-3 py-2 text-sm font-medium transition ${
                   active(l.href)
                     ? "text-lux-gold-dim"
-                    : "text-stone-700 hover:text-lux-navy"
+                    : "text-theme-fg hover:text-theme-fg-soft"
                 }`}
               >
                 {l.label}
@@ -126,8 +126,8 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                 className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition ${
                   projectActive
                     ? "text-lux-gold-dim"
-                    : "text-stone-700 hover:text-lux-navy"
-                } ${deskProjectsOpen ? "text-lux-navy" : ""}`}
+                    : "text-theme-fg hover:text-theme-fg-soft"
+                } ${deskProjectsOpen ? "text-theme-fg" : ""}`}
               >
                 Projects
                 <ChevronDown
@@ -149,7 +149,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                             key={p.href}
                             href={p.href}
                             onClick={() => setDeskProjectsOpen(false)}
-                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-white"
+                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-white"
                           >
                             {p.name}
                             <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
@@ -171,7 +171,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                             key={p.href}
                             href={p.href}
                             onClick={() => setDeskProjectsOpen(false)}
-                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-lux-navy transition hover:border-lux-gold/25 hover:bg-lux-cream/60"
+                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-lux-cream/60"
                           >
                             {p.name}
                             <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
@@ -191,13 +191,13 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
             <button
               type="button"
               onClick={() => openEnquiry()}
-              className="hidden rounded-md bg-lux-navy px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-white transition hover:bg-lux-navy-soft sm:inline-block"
+              className="hidden rounded-md bg-theme-bg-muted px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-theme-on-bg transition hover:bg-theme-bg-elevated sm:inline-block"
             >
               Book visit
             </button>
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md border border-stone-200 p-2.5 text-lux-navy lg:hidden"
+              className="inline-flex items-center justify-center rounded-md border border-stone-200 p-2.5 text-theme-fg lg:hidden"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               onClick={() => setMobileOpen((o) => !o)}
             >
@@ -214,7 +214,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                   key={l.href}
                   href={l.href}
                   onClick={closeAllNav}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-stone-800 hover:bg-lux-cream"
+                  className="rounded-lg px-3 py-3 text-base font-medium text-theme-fg hover:bg-lux-cream"
                 >
                   {l.label}
                 </Link>
@@ -222,7 +222,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               <button
                 type="button"
                 onClick={() => setMobileProjectsOpen((v) => !v)}
-                className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-base font-medium text-stone-800 hover:bg-lux-cream"
+                className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-left text-base font-medium text-theme-fg hover:bg-lux-cream"
               >
                 Projects
                 <ChevronDown
@@ -247,7 +247,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                         key={p.href}
                         href={p.href}
                         onClick={closeAllNav}
-                        className="block py-2 pl-2 text-sm text-stone-700"
+                        className="block py-2 pl-2 text-sm text-theme-fg"
                       >
                         {p.name}
                       </Link>
@@ -268,7 +268,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                         key={p.href}
                         href={p.href}
                         onClick={closeAllNav}
-                        className="block py-2 pl-2 text-sm text-stone-700"
+                        className="block py-2 pl-2 text-sm text-theme-fg"
                       >
                         {p.name}
                       </Link>
@@ -281,7 +281,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                   setMobileOpen(false);
                   openEnquiry();
                 }}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-lux-navy py-3 text-sm font-semibold uppercase tracking-widest text-white"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-theme-bg-muted py-3 text-sm font-semibold uppercase tracking-widest text-theme-on-bg"
               >
                 <Building2 className="h-4 w-4" />
                 Book a site visit

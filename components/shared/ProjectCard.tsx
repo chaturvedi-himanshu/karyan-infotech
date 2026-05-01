@@ -44,10 +44,7 @@ export default function ProjectCard({
           </span>
         </div>
         <div className="absolute bottom-3 left-3">
-          <span
-            className="text-xs font-semibold uppercase px-2 py-1 text-white"
-            style={{ background: "rgba(0,0,0,0.6)" }}
-          >
+          <span className="bg-theme-bg/85 px-2 py-1 text-xs font-semibold uppercase text-theme-on-bg">
             {status}
           </span>
         </div>

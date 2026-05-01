@@ -6,7 +6,7 @@ export default function SectionWave({
 }: {
   flip?: boolean;
   className?: string;
-  /** Tailwind fill class, e.g. fill-white, fill-lux-navy, fill-lux-cream */
+  /** Tailwind fill class, e.g. fill-white, fill-theme-bg, fill-lux-cream */
   fill?: string;
 }) {
   return (
@@ -25,7 +25,7 @@ export default function SectionWave({
           d="M0,50 C240,10 480,90 720,48 S1080,-5 1440,35 L1440,100 L0,100 Z"
         />
         <path
-          className={`${fill} opacity-50`}
+          className={`${fill} opacity-[0.72]`}
           d="M0,70 C320,40 640,95 960,55 S1280,25 1440,60 L1440,100 L0,100 Z"
         />
       </svg>

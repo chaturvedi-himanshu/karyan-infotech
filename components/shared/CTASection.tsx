@@ -29,7 +29,7 @@ export default function CTASection({
   const { openEnquiry } = useEnquiry();
 
   return (
-    <section style={{ background: "#292929" }} className="py-12">
+    <section className="bg-theme-bg py-12">
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="flex flex-col items-center justify-between gap-6 text-center lg:flex-row lg:text-left">
           <div>

@@ -28,7 +28,7 @@ export default function ContactPageContent({ payload }: { payload: ContactPayloa
             {payload.heroTitle}
           </h2>
           <div className="mx-auto mt-3 h-0.5 w-10" style={{ background: "#F7B90F" }} />
-          <EnquiryTrigger className="mx-auto mt-6 inline-flex items-center justify-center rounded-md bg-[#292929] px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:opacity-90">
+          <EnquiryTrigger className="mx-auto mt-6 inline-flex items-center justify-center rounded-md bg-theme-bg px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-theme-on-bg transition hover:bg-theme-bg-muted">
             Quick enquiry (popup)
           </EnquiryTrigger>
         </div>

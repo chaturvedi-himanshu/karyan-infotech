@@ -199,7 +199,7 @@ export function CmsPrimaryButton({
     <button
       type="button"
       {...props}
-      className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-lux-navy to-lux-navy-mid px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:brightness-110 disabled:opacity-50 ${className}`}
+      className={`inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-theme-bg to-theme-bg-soft px-5 py-2.5 text-sm font-semibold text-theme-on-bg shadow-md transition hover:brightness-110 disabled:opacity-50 ${className}`}
     />
   );
 }

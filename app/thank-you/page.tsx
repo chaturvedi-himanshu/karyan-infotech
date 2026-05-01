@@ -40,7 +40,7 @@ export default function ThankYouPage() {
         {/* Contact options */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left">
           <div className="bg-lux-ivory p-5 rounded-sm shadow-sm flex gap-4">
-            <div className="w-11 h-11 bg-[#1a1a2e] rounded-sm flex items-center justify-center flex-shrink-0">
+            <div className="w-11 h-11 bg-theme-bg rounded-sm flex items-center justify-center flex-shrink-0">
               <Phone className="w-5 h-5 text-[#c9a84c]" />
             </div>
             <div>
@@ -56,7 +56,7 @@ export default function ThankYouPage() {
             </div>
           </div>
           <div className="bg-lux-ivory p-5 rounded-sm shadow-sm flex gap-4">
-            <div className="w-11 h-11 bg-[#1a1a2e] rounded-sm flex items-center justify-center flex-shrink-0">
+            <div className="w-11 h-11 bg-theme-bg rounded-sm flex items-center justify-center flex-shrink-0">
               <Mail className="w-5 h-5 text-[#c9a84c]" />
             </div>
             <div>
@@ -77,14 +77,14 @@ export default function ThankYouPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 bg-[#1a1a2e] text-white px-8 py-3.5 font-semibold uppercase tracking-wider text-sm hover:bg-[#c9a84c] transition-colors rounded-sm"
+            className="inline-flex items-center justify-center gap-2 bg-theme-bg text-white px-8 py-3.5 font-semibold uppercase tracking-wider text-sm hover:bg-[#c9a84c] transition-colors rounded-sm"
           >
             <Home className="w-4 h-4" />
             Back to Home
           </Link>
           <Link
             href="/projects"
-            className="inline-flex items-center justify-center gap-2 border-2 border-[#1a1a2e] text-[#1a1a2e] px-8 py-3.5 font-semibold uppercase tracking-wider text-sm hover:bg-[#1a1a2e] hover:text-white transition-colors rounded-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-sm border-2 border-theme-bg px-8 py-3.5 text-sm font-semibold uppercase tracking-wider text-theme-fg transition-colors hover:bg-theme-bg hover:text-theme-on-bg"
           >
             View Our Projects
           </Link>

@@ -32,20 +32,21 @@ export default function PageHeader({
             aria-hidden
           />
           <div
-            className="absolute inset-0 bg-gradient-to-r from-lux-navy via-lux-navy/88 to-lux-navy/55"
+            className="absolute inset-0 bg-[radial-gradient(ellipse_100%_120%_at_12%_45%,rgba(0,0,0,0.55),transparent_62%)]"
             aria-hidden
           />
           <div
-            className="absolute inset-0 bg-gradient-to-t from-lux-navy/95 via-lux-navy/25 to-lux-navy/40"
+            className="absolute inset-0 bg-gradient-to-r from-theme-bg/78 via-theme-bg/48 to-theme-bg/22"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-theme-bg/88 via-theme-bg/28 to-theme-bg/38"
             aria-hidden
           />
         </>
       ) : (
         <>
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-lux-navy via-lux-navy-mid to-[#0d1a2e]"
-            aria-hidden
-          />
+          <div className="absolute inset-0 bg-theme-bg" aria-hidden />
           <div
             className="absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-lux-gold/10 blur-3xl"
             aria-hidden
@@ -75,11 +76,11 @@ export default function PageHeader({
                 className="h-7 w-auto max-w-[160px] opacity-95 sm:h-8 sm:max-w-[200px]"
               />
             </div>
-            <h1 className="font-display text-3xl font-medium leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+            <h1 className="font-display text-3xl font-medium leading-[1.1] tracking-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.85),0_8px_32px_rgba(0,0,0,0.35)] sm:text-4xl md:text-5xl lg:text-[3.25rem]">
               {title}
             </h1>
             {description ? (
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-stone-300 sm:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-stone-100 [text-shadow:0_1px_2px_rgba(0,0,0,0.75)] sm:text-base">
                 {description}
               </p>
             ) : (
@@ -89,11 +90,11 @@ export default function PageHeader({
 
           <nav
             aria-label="Breadcrumb"
-            className="flex flex-wrap items-center gap-x-1 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/50"
+            className="flex flex-wrap items-center gap-x-1 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/75 [text-shadow:0_1px_2px_rgba(0,0,0,0.65)]"
           >
             <Link
               href="/"
-              className="rounded-md px-2 py-1 text-white/70 transition hover:bg-white/10 hover:text-lux-gold-bright"
+              className="rounded-md px-2 py-1 text-white/90 transition hover:bg-white/10 hover:text-lux-gold-bright"
             >
               Home
             </Link>
@@ -106,7 +107,7 @@ export default function PageHeader({
                 {crumb.href ? (
                   <Link
                     href={crumb.href}
-                    className="rounded-md px-2 py-1 text-white/70 transition hover:bg-white/10 hover:text-lux-gold-bright"
+                    className="rounded-md px-2 py-1 text-white/90 transition hover:bg-white/10 hover:text-lux-gold-bright"
                   >
                     {crumb.label}
                   </Link>

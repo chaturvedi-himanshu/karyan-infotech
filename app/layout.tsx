@@ -36,10 +36,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${outfit.variable}`}
     >
       <body
-        className={`${outfit.className} min-h-screen flex flex-col bg-lux-cream text-stone-800 antialiased`}
+        className={`${outfit.className} min-h-screen flex flex-col bg-theme-bg antialiased`}
       >
         <SiteShell>
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 bg-lux-ivory text-theme-fg">{children}</main>
         </SiteShell>
       </body>
     </html>

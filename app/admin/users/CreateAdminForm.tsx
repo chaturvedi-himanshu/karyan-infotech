@@ -60,7 +60,7 @@ export default function CreateAdminForm() {
       />
       <button
         type="submit"
-        className="w-full rounded-md bg-lux-navy py-2.5 text-sm font-semibold text-white hover:bg-lux-navy-soft"
+        className="w-full rounded-md bg-theme-bg py-2.5 text-sm font-semibold text-theme-on-bg hover:bg-theme-bg-muted"
       >
         Create admin
       </button>

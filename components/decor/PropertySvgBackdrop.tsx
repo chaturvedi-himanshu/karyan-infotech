@@ -16,8 +16,8 @@ export type PropertyBackdropVariant =
 
 const GOLD = "#c6a052";
 const GOLD_BRIGHT = "#e4c76b";
-const NAVY = "#0a1628";
-const NAVY_SOFT = "#1a2d4d";
+const NAVY = "#313131";
+const NAVY_SOFT = "#3a3a3a";
 const CREAM = "#faf7f2";
 
 export default function PropertySvgBackdrop({

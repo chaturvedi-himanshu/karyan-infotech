@@ -14,12 +14,12 @@ interface ButtonProps {
 
 const variants = {
   primary:
-    "bg-[#1a1a2e] text-white hover:bg-[#0f0f1a] border-2 border-[#1a1a2e]",
+    "bg-theme-bg text-theme-on-bg hover:bg-theme-bg-deep border-2 border-theme-bg",
   outline:
-    "bg-transparent text-[#1a1a2e] border-2 border-[#1a1a2e] hover:bg-[#1a1a2e] hover:text-white",
+    "bg-transparent text-theme-fg border-2 border-theme-bg hover:bg-theme-bg hover:text-theme-on-bg",
   gold: "bg-[#c9a84c] text-white hover:bg-[#b8943d] border-2 border-[#c9a84c]",
   white:
-    "bg-white text-[#1a1a2e] border-2 border-white hover:bg-transparent hover:text-white",
+    "bg-white text-theme-fg border-2 border-white hover:bg-transparent hover:text-theme-on-bg",
 };
 
 const sizes = {

@@ -36,12 +36,12 @@ function BentoProjectCard({ project, layout }: { project: Project; layout: "wide
           className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-lux-navy/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white backdrop-blur">
+          <span className="rounded-full bg-theme-bg/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-theme-on-bg backdrop-blur">
             {project.type}
           </span>
         </div>
         <div className="absolute bottom-4 left-4">
-          <span className="rounded-full bg-black/55 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur">
+          <span className="rounded-full bg-theme-bg/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-theme-on-bg backdrop-blur">
             {project.status}
           </span>
         </div>

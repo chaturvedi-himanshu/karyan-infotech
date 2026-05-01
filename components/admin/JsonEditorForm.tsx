@@ -280,7 +280,7 @@ export function JsonEditorForm({ endpoint, label = "JSON", variant }: Props) {
         <button
           type="button"
           onClick={() => void save()}
-          className="rounded-md bg-lux-navy px-4 py-2 text-sm font-semibold text-white"
+          className="rounded-md bg-theme-bg px-4 py-2 text-sm font-semibold text-theme-on-bg"
         >
           Save
         </button>

@@ -82,7 +82,7 @@ export default function LuxuryHomeView({
                 key={m.label}
                 className="group rounded-2xl border border-lux-ivory/70 bg-lux-ivory/70 p-6 shadow-[0_20px_60px_-24px_rgba(10,22,40,0.25)] ring-1 ring-lux-gold/15 backdrop-blur-md transition hover:-translate-y-0.5 hover:ring-lux-gold/35"
               >
-                <p className="font-display bg-gradient-to-br from-lux-navy to-lux-navy-soft bg-clip-text text-3xl font-semibold text-transparent md:text-4xl">
+                <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-3xl font-semibold text-transparent md:text-4xl">
                   {m.value}
                 </p>
                 <p className="mt-2 text-sm font-semibold text-lux-navy">{m.label}</p>
@@ -190,7 +190,7 @@ export default function LuxuryHomeView({
                 className="relative overflow-hidden rounded-3xl border border-stone-200/80 bg-gradient-to-br from-lux-ivory to-lux-cream/70 p-8 shadow-[0_24px_50px_-28px_rgba(10,22,40,0.18)] ring-1 ring-lux-gold/10 transition hover:shadow-[0_28px_60px_-24px_rgba(198,160,82,0.2)]"
               >
                 <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-lux-gold/10 blur-2xl" />
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-lux-navy text-lux-gold-bright shadow-lg">
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-bg text-lux-gold-bright shadow-lg">
                   <Icon className="h-7 w-7" strokeWidth={1.35} />
                 </div>
                 <h3 className="font-display relative mt-6 text-xl font-medium text-lux-navy">
@@ -247,7 +247,7 @@ export default function LuxuryHomeView({
             </div>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-lux-navy/15 bg-lux-navy px-6 py-3 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition hover:bg-lux-navy-soft"
+              className="inline-flex items-center gap-2 rounded-full border border-lux-navy/15 bg-theme-bg px-6 py-3 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition hover:bg-theme-bg-muted"
             >
               View all projects
               <ArrowRight className="h-4 w-4" />
@@ -399,11 +399,11 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <SectionWave fill="fill-lux-navy" className="relative z-10 bg-lux-cream" />
+        <SectionWave fill="fill-theme-bg" className="relative z-10 bg-lux-cream" />
       </div>
 
       {/* Process */}
-      <section className="relative overflow-hidden bg-lux-navy pb-24 pt-4 text-stone-200">
+      <section className="relative overflow-hidden bg-theme-bg pb-24 pt-4 text-stone-200">
         <SectionBgStack
           edgeFade="dark"
           bottomGlow
@@ -462,7 +462,7 @@ export default function LuxuryHomeView({
         </div>
       </section>
 
-      <div className="relative overflow-hidden bg-lux-navy">
+      <div className="relative overflow-hidden bg-theme-bg">
         <SectionBgStack
           layers={[
             {
@@ -480,7 +480,7 @@ export default function LuxuryHomeView({
         <SectionWave
           fill="fill-lux-ivory"
           flip
-          className="relative z-10 bg-lux-navy"
+          className="relative z-10 bg-theme-bg"
         />
       </div>
 
@@ -668,7 +668,7 @@ export default function LuxuryHomeView({
                 </li>
               ))}
             </ul>
-            <EnquiryTrigger className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-lux-navy py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-lux-navy-soft">
+            <EnquiryTrigger className="mt-8 inline-flex w-full items-center justify-center rounded-xl bg-theme-bg py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-theme-bg-muted">
               Plan a site tour
             </EnquiryTrigger>
           </div>
@@ -721,7 +721,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* Journal */}
-      <section className="relative overflow-hidden bg-lux-navy py-20 text-stone-300 lg:py-28">
+      <section className="relative overflow-hidden bg-theme-bg py-20 text-stone-300 lg:py-28">
         <SectionBgStack
           edgeFade="dark"
           topGlow
@@ -784,7 +784,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* Ecosystem */}
-      <section className="relative overflow-hidden bg-lux-navy-soft py-16 text-stone-300 lg:py-20">
+      <section className="relative overflow-hidden bg-theme-bg py-16 text-stone-300 lg:py-20">
         <SectionBgStack
           bottomGlow
           edgeFade="dark"
@@ -863,7 +863,7 @@ export default function LuxuryHomeView({
               href={data.splitCta.phoneHref}
               className="mt-8 inline-flex items-center gap-3 text-2xl font-semibold text-lux-navy transition hover:text-lux-gold-dim"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-lux-navy text-white">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-theme-bg text-white">
                 <Phone className="h-5 w-5" />
               </span>
               {data.splitCta.phone}
@@ -872,7 +872,7 @@ export default function LuxuryHomeView({
               {data.splitCta.hours}
             </p>
           </div>
-          <div className="flex flex-col justify-center rounded-3xl border border-lux-gold/25 bg-lux-navy p-10 text-center text-white shadow-2xl lg:text-left">
+          <div className="flex flex-col justify-center rounded-3xl border border-lux-gold/25 bg-theme-bg p-10 text-center text-white shadow-2xl lg:text-left">
             <h3 className="font-display text-2xl font-medium">
               {data.splitCta.rightTitle}
             </h3>
@@ -923,7 +923,7 @@ export default function LuxuryHomeView({
               {data.finalCta.body}
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <EnquiryTrigger className="inline-flex min-w-[220px] items-center justify-center rounded-xl bg-lux-navy px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-lux-navy-soft">
+              <EnquiryTrigger className="inline-flex min-w-[220px] items-center justify-center rounded-xl bg-theme-bg px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white transition hover:bg-theme-bg-muted">
                 {data.finalCta.primaryLabel}
               </EnquiryTrigger>
               <Link

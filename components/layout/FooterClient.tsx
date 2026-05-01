@@ -18,7 +18,7 @@ export default function FooterClient({
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-stone-200/90 bg-lux-navy text-stone-400">
+    <footer className="border-t border-theme-bg-soft bg-theme-bg text-theme-on-bg-muted">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
@@ -32,13 +32,13 @@ export default function FooterClient({
           </div>
 
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-theme-on-bg-subtle">
               Explore
             </p>
             <ul className="mt-5 space-y-2.5 text-sm">
               {footer.explore.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition hover:text-lux-gold-bright">
+                  <Link href={item.href} className="transition hover:text-theme-on-bg">
                     {item.label}
                   </Link>
                 </li>
@@ -47,25 +47,25 @@ export default function FooterClient({
           </div>
 
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-theme-on-bg-subtle">
               Residential
             </p>
             <ul className="mt-5 space-y-2.5 text-sm">
               {footer.residential.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition hover:text-lux-gold-bright">
+                  <Link href={item.href} className="transition hover:text-theme-on-bg">
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright">
+            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.2em] text-theme-on-bg-subtle">
               Commercial
             </p>
             <ul className="mt-5 space-y-2.5 text-sm">
               {footer.commercial.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="transition hover:text-lux-gold-bright">
+                  <Link href={item.href} className="transition hover:text-theme-on-bg">
                     {item.label}
                   </Link>
                 </li>
@@ -74,14 +74,14 @@ export default function FooterClient({
           </div>
 
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-theme-on-bg-subtle">
               Contact
             </p>
             <ul className="mt-5 space-y-3 text-sm">
               <li>
                 <a
                   href={footer.contactPhoneHref}
-                  className="transition hover:text-lux-gold-bright"
+                  className="transition hover:text-theme-on-bg"
                 >
                   {footer.contactPhone}
                 </a>
@@ -90,18 +90,18 @@ export default function FooterClient({
                 <button
                   type="button"
                   onClick={() => openEnquiry()}
-                  className="text-left transition hover:text-lux-gold-bright"
+                  className="text-left transition hover:text-theme-on-bg"
                 >
                   Enquiry form
                 </button>
               </li>
               <li>
-                <Link href="/contact" className="transition hover:text-lux-gold-bright">
+                <Link href="/contact" className="transition hover:text-theme-on-bg">
                   Contact &amp; map
                 </Link>
               </li>
             </ul>
-            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright">
+            <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.2em] text-theme-on-bg-subtle">
               Social
             </p>
             <ul className="mt-4 flex flex-wrap gap-4 text-sm">
@@ -111,7 +111,7 @@ export default function FooterClient({
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="transition hover:text-lux-gold-bright"
+                    className="transition hover:text-theme-on-bg"
                   >
                     {s.label}
                   </a>
@@ -121,14 +121,14 @@ export default function FooterClient({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-white/10 pt-8 text-xs leading-relaxed text-stone-500 md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-6 border-t border-theme-bg-soft pt-8 text-xs leading-relaxed text-theme-on-bg-subtle md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {footer.legalLine}
             {footer.disclaimerExtra ? (
               <span className="mt-2 block max-w-xl text-[11px] md:mt-1">{footer.disclaimerExtra}</span>
             ) : null}
           </p>
-          <a href="#top" className="shrink-0 text-lux-gold-bright transition hover:text-white">
+          <a href="#top" className="shrink-0 text-theme-on-bg transition hover:text-theme-on-bg-muted">
             Back to top ↑
           </a>
         </div>

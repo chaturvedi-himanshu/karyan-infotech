@@ -28,7 +28,7 @@ const AREAS = [
     body: "Hero slides, story sections, FAQs, journal teaser, and the final call-to-action.",
     where: "Your homepage at /.",
     Icon: Home,
-    accent: "from-lux-navy to-lux-navy-mid",
+    accent: "from-theme-bg to-theme-bg-soft",
   },
   {
     href: "/admin/projects",

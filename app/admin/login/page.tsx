@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
           <button
             type="submit"
-            className="w-full rounded-md bg-lux-navy py-2.5 text-sm font-semibold text-white"
+            className="w-full rounded-md bg-theme-bg py-2.5 text-sm font-semibold text-theme-on-bg"
           >
             Sign in
           </button>

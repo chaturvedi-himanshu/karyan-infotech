@@ -114,7 +114,7 @@ export default function HeroSlider({
   return (
     <div
       ref={rootRef}
-      className="relative min-h-[min(100svh,940px)] w-full overflow-hidden bg-lux-navy"
+      className="relative min-h-[min(100svh,940px)] w-full overflow-hidden bg-theme-bg"
     >
       <div className="hero-slider-inner relative min-h-[min(100svh,940px)] w-full">
         <div className="swiper-container absolute inset-0 h-full w-full">
@@ -127,10 +127,12 @@ export default function HeroSlider({
                     style={{ backgroundImage: `url('${slide.bg}')` }}
                     data-swiper-parallax="-8%"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-lux-navy via-lux-navy/88 to-lux-navy/55" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-lux-navy via-lux-navy/40 to-transparent" />
+                  {/* Read zone: darken behind headline column without crushing the whole slide */}
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_115%_at_14%_48%,rgba(0,0,0,0.58),transparent_58%)]" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-theme-bg/72 via-theme-bg/42 to-theme-bg/18" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-theme-bg/76 via-theme-bg/30 to-transparent" />
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_70%_20%,rgba(228,199,107,0.12),transparent_55%)]" />
-                  <div className="pointer-events-none absolute inset-0 z-5 opacity-[0.11] mix-blend-overlay">
+                  <div className="pointer-events-none absolute inset-0 z-5 opacity-[0.14] mix-blend-overlay">
                     <PropertySvgBackdrop variant="gradientMesh" />
                   </div>
                   <div className="pointer-events-none absolute left-0 top-0 z-[6] hidden h-full w-px bg-gradient-to-b from-lux-gold-bright/80 via-lux-gold/30 to-transparent lg:left-8 xl:left-12 lg:block" />
@@ -139,14 +141,14 @@ export default function HeroSlider({
                     <div className="grid w-full items-center gap-12 lg:grid-cols-12 lg:gap-10">
                       <div className="relative z-20 lg:col-span-7">
                         <div
-                          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-lux-gold-bright backdrop-blur-md"
+                          className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-theme-bg/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white backdrop-blur-md [text-shadow:0_1px_2px_rgba(0,0,0,0.6)]"
                           data-swiper-parallax="-80"
                         >
                           <Sparkles className="h-3.5 w-3.5" />
                           {slide.tag}
                         </div>
                         <div
-                          className="mb-6 h-px w-16 bg-gradient-to-r from-lux-gold-bright to-lux-gold/20"
+                          className="mb-6 h-px w-16 bg-gradient-to-r from-white to-white/25"
                           data-swiper-parallax="-100"
                         />
                         <div className="mb-3" data-swiper-parallax="-120">
@@ -155,17 +157,17 @@ export default function HeroSlider({
                             alt={brandLogoAlt}
                             variant="onDark"
                             asLink={false}
-                            className="h-7 w-auto max-w-[200px] opacity-90 sm:h-9 sm:max-w-[240px]"
+                            className="h-7 w-auto max-w-[200px] opacity-100 sm:h-9 sm:max-w-[240px]"
                           />
                         </div>
                         <h1
-                          className="font-display max-w-[22ch] text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-7xl"
+                          className="font-display max-w-[22ch] text-4xl font-medium leading-[1.05] tracking-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.85),0_8px_40px_rgba(0,0,0,0.35)] sm:text-5xl md:text-6xl lg:text-[3.5rem] xl:text-7xl"
                           data-swiper-parallax="-180"
                         >
                           {slide.title}
                         </h1>
                         <p
-                          className="mt-6 max-w-xl text-base leading-relaxed text-stone-300/95 sm:text-lg"
+                          className="mt-6 max-w-xl text-base leading-relaxed text-stone-100 sm:text-lg [text-shadow:0_1px_2px_rgba(0,0,0,0.75)]"
                           data-swiper-parallax="-260"
                         >
                           {slide.subtitle}
@@ -186,13 +188,13 @@ export default function HeroSlider({
                           </button>
                           <Link
                             href="/projects"
-                            className="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/5 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm transition hover:border-lux-gold/50 hover:bg-white/10"
+                            className="inline-flex items-center justify-center rounded-xl border border-white/35 bg-theme-bg/75 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-lg shadow-theme-bg/35 backdrop-blur-sm transition hover:border-white/50 hover:bg-theme-bg/90"
                           >
                             Full portfolio
                           </Link>
                           <Link
                             href={slide.exploreHref}
-                            className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-lux-gold-bright/90 underline-offset-4 transition hover:text-white hover:underline sm:ml-1"
+                            className="inline-flex items-center justify-center gap-1.5 text-sm font-medium text-white underline-offset-4 [text-shadow:0_1px_3px_rgba(0,0,0,0.75)] transition hover:text-white/90 hover:underline sm:ml-1"
                           >
                             View this project
                             <ArrowRight className="h-4 w-4" />
@@ -207,15 +209,17 @@ export default function HeroSlider({
                         {sideStats.map((s) => (
                           <div
                             key={s.label}
-                            className="rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.5)] backdrop-blur-md"
+                            className="rounded-2xl border border-white/15 bg-theme-bg/75 p-5 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.45)] backdrop-blur-md"
                           >
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-lux-gold-bright/80">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/90 [text-shadow:0_1px_2px_rgba(0,0,0,0.65)]">
                               {s.label}
                             </p>
                             <p className="font-display mt-2 text-3xl font-medium text-white">
                               {s.value}
                             </p>
-                            <p className="mt-1 text-xs text-stone-400">{s.hint}</p>
+                            <p className="mt-1 text-xs text-stone-200 [text-shadow:0_1px_2px_rgba(0,0,0,0.55)]">
+                              {s.hint}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -227,27 +231,27 @@ export default function HeroSlider({
           </div>
         </div>
 
-        <div className="hidden sm:block pointer-events-none absolute bottom-20 left-0 right-0 z-20 bg-gradient-to-t from-lux-navy via-lux-navy/80 to-transparent pb-6 pt-16">
+        <div className="hidden sm:block pointer-events-none absolute bottom-20 left-0 right-0 z-20 bg-gradient-to-t from-theme-bg via-theme-bg/68 to-transparent pb-6 pt-16">
           <div className="pointer-events-auto mx-auto flex max-w-7xl flex-col items-stretch gap-4 px-5 sm:flex-row sm:items-end sm:justify-between sm:px-8 lg:px-12">
             <a
               href="tel:+919206001002"
-              className="inline-flex w-fit items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white backdrop-blur-md transition hover:border-lux-gold/40 hover:bg-white/[0.14]"
+              className="inline-flex w-fit items-center gap-3 rounded-2xl border border-white/25 bg-theme-bg/80 px-4 py-3 text-white shadow-md shadow-theme-bg/35 backdrop-blur-md transition hover:border-white/40 hover:bg-theme-bg/90"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-lux-gold/20 text-lux-gold-bright">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-white">
                 <Phone className="h-4 w-4" />
               </span>
               <span>
-                <span className="block text-[10px] font-semibold uppercase tracking-widest text-white/50">
+                <span className="block text-[10px] font-semibold uppercase tracking-widest text-white/85 [text-shadow:0_1px_2px_rgba(0,0,0,0.55)]">
                   Call desk
                 </span>
-                <span className="text-sm font-semibold tracking-wide">
+                <span className="text-sm font-semibold tracking-wide [text-shadow:0_1px_3px_rgba(0,0,0,0.65)]">
                   +91 920 600 1002
                 </span>
               </span>
             </a>
             <div className="lux-hero-pagination flex flex-1 justify-center gap-1 pb-1 sm:pb-2" />
-            <div className="hidden items-center gap-2 text-white/45 sm:flex">
-              <MapPin className="h-4 w-4 text-lux-gold/80" />
+            <div className="hidden items-center gap-2 text-white/90 sm:flex [text-shadow:0_1px_2px_rgba(0,0,0,0.55)]">
+              <MapPin className="h-4 w-4 text-white/95" />
               <span className="text-xs font-medium uppercase tracking-widest">
                 Delhi NCR
               </span>
@@ -257,20 +261,20 @@ export default function HeroSlider({
 
         <button
           type="button"
-          className="hidden lg:flex lux-hero-prev absolute left-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-lux-navy/55 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:left-3 sm:h-12 sm:w-12 lg:top-[42%] lg:left-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
+          className="hidden lg:flex lux-hero-prev absolute left-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-theme-bg/85 text-white shadow-lg backdrop-blur-md transition hover:border-white/50 hover:bg-theme-bg max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:left-3 sm:h-12 sm:w-12 lg:top-[42%] lg:left-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
           aria-label="Previous slide"
         >
           <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
         </button>
         <button
           type="button"
-          className="hidden lg:flex lux-hero-next absolute right-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-lux-navy/55 text-white shadow-lg backdrop-blur-md transition hover:border-lux-gold/50 hover:bg-lux-gold/15 max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:right-3 sm:h-12 sm:w-12 lg:top-[42%] lg:right-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
+          className="hidden lg:flex lux-hero-next absolute right-2 z-30 h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-theme-bg/85 text-white shadow-lg backdrop-blur-md transition hover:border-white/50 hover:bg-theme-bg max-lg:top-auto max-lg:bottom-23 max-lg:translate-y-0 sm:right-3 sm:h-12 sm:w-12 lg:top-[42%] lg:right-8 lg:h-14 lg:w-14 lg:-translate-y-1/2"
           aria-label="Next slide"
         >
           <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
         </button>
 
-        <div className="pointer-events-none absolute bottom-[7.5rem] left-1/2 z-[25] hidden -translate-x-1/2 flex-col items-center gap-2 text-white/40 sm:bottom-[8.5rem] sm:flex lg:bottom-[9rem]">
+        <div className="pointer-events-none absolute bottom-[7.5rem] left-1/2 z-[25] hidden -translate-x-1/2 flex-col items-center gap-2 text-white/80 sm:bottom-[8.5rem] sm:flex lg:bottom-[9rem] [text-shadow:0_1px_3px_rgba(0,0,0,0.65)]">
           <span className="text-[10px] font-semibold uppercase tracking-[0.35em]">
             Scroll
           </span>
