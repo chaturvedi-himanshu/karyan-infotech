@@ -45,10 +45,10 @@ export const DEFAULT_HOME_PAYLOAD: HomePayload = {
     { label: "Desk", value: "24h", hint: "Enquiry response" },
   ],
   statCards: [
-    { value: "4+", label: "Signature developments", sub: "Live & upcoming" },
-    { value: "3", label: "Major corridors", sub: "NH-24 · DME · Wave City" },
-    { value: "1", label: "Group ethos", sub: "Delivery-first culture" },
-    { value: "24h", label: "Enquiry response", sub: "Business days" },
+    { value: "15+", label: "Years of experience", sub: "" },
+    { value: "13+", label: "Presence in over 13 cities", sub: "" },
+    { value: "1,363", label: "No. of shops", sub: "" },
+    { value: "17 Lacs", label: "Area delivered", sub: "sq. mtr" },
   ],
   philosophy: {
     badge: "Philosophy",

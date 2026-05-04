@@ -3,7 +3,7 @@ import { getAdminSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import AdminShell from "@/components/admin/AdminShell";
 import {
-  ArrowRight,
+  ArrowUpRight,
   FileText,
   FolderKanban,
   Home,
@@ -16,59 +16,80 @@ import {
 const AREAS = [
   {
     href: "/admin/settings",
-    title: "Site settings",
-    body: "Phone in the top bar, main menu links, footer columns, social links, and legal lines.",
-    where: "Every page — header and footer.",
+    title: "Site Settings",
+    body: "Top bar phone, navigation menus, footer columns, social links, and legal lines.",
+    where: "Every page — header & footer",
     Icon: Settings2,
-    accent: "from-stone-700 to-stone-900",
+    color: "text-slate-600",
+    bg: "bg-slate-100",
+    border: "border-slate-200",
+    tag: "Global",
   },
   {
     href: "/admin/home",
-    title: "Home page",
-    body: "Hero slides, story sections, FAQs, journal teaser, and the final call-to-action.",
-    where: "Your homepage at /.",
+    title: "Home Page",
+    body: "Hero slides, stat cards, philosophy, project portfolio, FAQs, and call-to-action strips.",
+    where: "Homepage at /",
     Icon: Home,
-    accent: "from-theme-bg to-theme-bg-soft",
+    color: "text-amber-700",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+    tag: "Page",
   },
   {
     href: "/admin/projects",
-    title: "Project detail pages",
-    body: "Each development: photos, specs, highlights, and enquiry wording.",
-    where: "URLs like /karyan-trevana, /karyan-citywalk…",
+    title: "Project Pages",
+    body: "Photos, specs, highlights, and enquiry wording for each development.",
+    where: "/karyan-trevana, /karyan-citywalk…",
     Icon: FolderKanban,
-    accent: "from-amber-700 to-orange-900",
+    color: "text-blue-700",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
+    tag: "Pages",
   },
   {
     href: "/admin/blog",
-    title: "Blog articles",
-    body: "Rich-text articles (Jodit), excerpts, dates, and images for news cards.",
-    where: "/blog and home page journal teaser.",
+    title: "Blog Articles",
+    body: "Rich-text articles, excerpts, dates, and images for news cards.",
+    where: "/blog and home journal teaser",
     Icon: Newspaper,
-    accent: "from-violet-700 to-indigo-900",
+    color: "text-violet-700",
+    bg: "bg-violet-50",
+    border: "border-violet-200",
+    tag: "Content",
   },
   {
     href: "/admin/leads",
-    title: "Form leads inbox",
-    body: "Submissions from the enquiry popup and the contact page form.",
-    where: "Not public — your team only.",
+    title: "Leads Inbox",
+    body: "All submissions from the enquiry popup and the contact page form.",
+    where: "Internal — not public",
     Icon: Inbox,
-    accent: "from-rose-800 to-red-950",
+    color: "text-rose-700",
+    bg: "bg-rose-50",
+    border: "border-rose-200",
+    tag: "CRM",
   },
   {
     href: "/admin/pages",
-    title: "About, Contact & lists",
-    body: "Company story, contact rows, map, projects grid, and blog intro.",
-    where: "/about, /contact, /projects, /blog header.",
+    title: "Other Pages",
+    body: "Company story, contact info, projects listing grid, and blog intro.",
+    where: "/about, /contact, /projects, /blog",
     Icon: FileText,
-    accent: "from-emerald-800 to-teal-900",
+    color: "text-emerald-700",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
+    tag: "Pages",
   },
   {
     href: "/admin/users",
-    title: "People who can edit",
-    body: "Create or review accounts that may log into this studio.",
-    where: "Does not appear on the public site.",
+    title: "Team & Access",
+    body: "Create and review accounts that can log into this content studio.",
+    where: "Internal — not public",
     Icon: Users,
-    accent: "from-slate-600 to-slate-800",
+    color: "text-indigo-700",
+    bg: "bg-indigo-50",
+    border: "border-indigo-200",
+    tag: "Admin",
   },
 ];
 
@@ -78,47 +99,85 @@ export default async function AdminHome() {
 
   return (
     <AdminShell
-      title="Welcome to your content studio"
-      subtitle="Pick an area to edit. Each card explains what visitors see on the live website."
+      title="Dashboard"
+      subtitle="Choose a section to edit. Changes go live on the public website immediately after saving."
       breadcrumbs={[{ label: "Overview" }]}
       userEmail={session.email}
     >
-      <div className="grid gap-5 md:grid-cols-2">
-        {AREAS.map((a) => {
-          const Icon = a.Icon;
-          return (
-          <Link
-            key={a.href}
-            href={a.href}
-            className="group relative overflow-hidden rounded-2xl border border-stone-200/90 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            <div
-              className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r opacity-90 ${a.accent}`}
-            />
-            <div className="flex items-start gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-lux-cream text-lux-navy ring-1 ring-stone-200/80 transition group-hover:ring-lux-gold/40">
-                <Icon className="h-6 w-6" strokeWidth={1.5} />
-              </span>
-              <div className="min-w-0 flex-1 space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-display text-lg font-semibold text-lux-navy">{a.title}</h2>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-stone-300 transition group-hover:text-lux-gold-dim" />
-                </div>
-                <p className="text-sm leading-relaxed text-stone-600">{a.body}</p>
-                <p className="rounded-lg bg-amber-50/90 px-3 py-2 text-xs leading-snug text-amber-950/90 ring-1 ring-amber-100">
-                  <span className="font-semibold text-amber-900">Visitors see this: </span>
-                  {a.where}
-                </p>
-              </div>
-            </div>
-          </Link>
-          );
-        })}
+      {/* Welcome strip */}
+      <div className="rounded-xl border border-[#F7B90F]/30 bg-gradient-to-r from-[#F7B90F]/8 to-amber-50/50 px-5 py-4">
+        <p className="text-sm font-semibold text-slate-800">
+          Welcome back
+          {session.email ? (
+            <span className="ml-1 font-normal text-slate-500">— {session.email}</span>
+          ) : null}
+        </p>
+        <p className="mt-0.5 text-xs text-slate-500">
+          You have access to all content areas below. After saving, open your site in a private
+          window to review live changes.
+        </p>
       </div>
 
-      <p className="text-center text-xs text-stone-500">
-        Tip: after saving any area, open your live site in a private window to review changes without cache.
-      </p>
+      {/* Content areas grid */}
+      <div>
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+          Content Areas
+        </p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {AREAS.map((a) => {
+            const Icon = a.Icon;
+            return (
+              <Link
+                key={a.href}
+                href={a.href}
+                className="group flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+              >
+                <div className="flex items-start justify-between">
+                  <span
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${a.bg} ${a.border} border ${a.color}`}
+                  >
+                    <Icon className="h-5 w-5" strokeWidth={1.75} />
+                  </span>
+                  <span
+                    className={`rounded-full ${a.bg} ${a.border} border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${a.color}`}
+                  >
+                    {a.tag}
+                  </span>
+                </div>
+
+                <div className="flex-1">
+                  <h2 className="text-[15px] font-bold text-slate-900">{a.title}</h2>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500">{a.body}</p>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
+                  <span className="truncate text-[11px] text-slate-400">
+                    <span className="font-medium text-slate-500">Visible: </span>
+                    {a.where}
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-300 transition group-hover:text-[#F7B90F]" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Help strip */}
+      <div className="rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-center">
+        <p className="text-xs text-slate-500">
+          <span className="font-semibold text-slate-700">Tip:</span> After saving any section, open{" "}
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900"
+          >
+            your live site
+          </a>{" "}
+          in a private window to verify the changes without browser cache.
+        </p>
+      </div>
     </AdminShell>
   );
 }

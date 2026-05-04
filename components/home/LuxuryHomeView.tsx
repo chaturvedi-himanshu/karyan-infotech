@@ -92,7 +92,9 @@ export default function LuxuryHomeView({
                 <p className="mt-2 text-sm font-semibold text-lux-navy">
                   {m.label}
                 </p>
-                <p className="mt-1 text-xs text-stone-500">{m.sub}</p>
+                {m.sub.trim() ? (
+                  <p className="mt-1 text-xs text-stone-500">{m.sub}</p>
+                ) : null}
               </div>
             ))}
           </div>

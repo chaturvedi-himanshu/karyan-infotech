@@ -6,6 +6,7 @@ import { DEFAULT_BLOG_POSTS } from "@/lib/cms/defaults/blogPosts";
 import {
   CmsField,
   CmsGhostButton,
+  CmsImageUpload,
   CmsInput,
   CmsItemCard,
   CmsPageIntro,
@@ -131,11 +132,12 @@ export default function BlogPortalForm() {
             </div>
             <CmsField
               label="Card image"
-              hint="Paste an image path (/images/…) or full image URL."
+              hint="Upload a file or paste a URL — shown as the blog post thumbnail."
             >
-              <CmsInput
+              <CmsImageUpload
                 value={post.image}
-                onChange={(e) => patchAt(i, (row) => ({ ...row, image: e.target.value }))}
+                onChange={(url) => patchAt(i, (row) => ({ ...row, image: url }))}
+                folder="blog/covers"
               />
             </CmsField>
             <CmsField
