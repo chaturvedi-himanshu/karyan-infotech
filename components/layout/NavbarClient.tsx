@@ -7,17 +7,15 @@ import {
   ChevronDown,
   Menu,
   X,
-  Building2,
   Landmark,
   Home,
+  Phone,
 } from "lucide-react";
-import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import { DEFAULT_HEADER_LOGO_SRC } from "@/lib/cms/defaults/siteSettings";
 import type { SiteNavPayload } from "@/lib/cms/types";
 
 export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
-  const { openEnquiry } = useEnquiry();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
@@ -26,7 +24,9 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
   const [deskProjectsOpen, setDeskProjectsOpen] = useState(false);
   const deskProjectsWrapRef = useRef<HTMLDivElement>(null);
 
-  const { residentialProjects, commercialProjects, mainLinks } = nav;
+  const { residentialProjects, commercialProjects, mainLinks, topBar } = nav;
+  const callLabel = topBar.phone?.trim() || "Call us";
+  const callHref = topBar.phoneHref?.trim() || "tel:";
   const headerLogoSrc = nav.headerLogoSrc?.trim() || DEFAULT_HEADER_LOGO_SRC;
   const headerLogoAlt = nav.headerLogoAlt?.trim() || "Karyan Infratech";
 
@@ -163,13 +163,13 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
           </nav>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => openEnquiry()}
-              className="hidden rounded-md bg-theme-bg-muted px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-theme-on-bg transition hover:bg-theme-bg-elevated sm:inline-block"
+            <a
+              href={callHref}
+              className="hidden items-center gap-2 rounded-md border border-stone-200/90 bg-lux-ivory px-3 py-2.5 text-sm font-semibold tabular-nums text-theme-fg transition hover:border-lux-gold/40 hover:bg-lux-cream hover:text-lux-gold-dim sm:inline-flex"
             >
-              Book visit
-            </button>
+              <Phone className="h-4 w-4 shrink-0 text-lux-gold-dim" aria-hidden />
+              <span>{callLabel}</span>
+            </a>
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-md border border-stone-200 p-2.5 text-theme-fg lg:hidden"
@@ -250,17 +250,14 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                     ))}
                 </div>
               )}
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  openEnquiry();
-                }}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-theme-bg-muted py-3 text-sm font-semibold uppercase tracking-widest text-theme-on-bg"
+              <a
+                href={callHref}
+                onClick={() => setMobileOpen(false)}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-stone-200 bg-lux-ivory py-3 text-sm font-semibold tabular-nums text-theme-fg transition hover:border-lux-gold/40 hover:bg-lux-cream"
               >
-                <Building2 className="h-4 w-4" />
-                Book a site visit
-              </button>
+                <Phone className="h-4 w-4 shrink-0 text-lux-gold-dim" aria-hidden />
+                {callLabel}
+              </a>
             </div>
           </div>
         )}
