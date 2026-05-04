@@ -216,7 +216,7 @@ export default function LuxuryHomeView({
         </div>
       </section>
 
-      {/* Portfolio */}
+      {/* Our Presence */}
       <section className="relative overflow-hidden bg-gradient-to-b from-lux-cream to-lux-ivory py-20 lg:py-28">
         <SectionBgStack
           diagonalSheen
@@ -247,27 +247,7 @@ export default function LuxuryHomeView({
           ]}
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-lux-gold-dim">
-                {data.portfolioIntro.eyebrow}
-              </p>
-              <h2 className="font-display mt-2 text-3xl font-medium text-lux-navy sm:text-4xl">
-                {data.portfolioIntro.title}
-              </h2>
-            </div>
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-[#ead7b0]/70 bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] px-6 py-3 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition hover:brightness-110"
-            >
-              View all projects
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="mt-12 border-t border-stone-200/60 pt-14">
-            <OurPresenceBlock band={data.presence} />
-          </div>
+          <OurPresenceBlock band={data.presence} />
         </div>
       </section>
 

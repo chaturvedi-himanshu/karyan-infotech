@@ -46,8 +46,12 @@ export type HomeHeroSlide = {
 
 /** Cities are chosen by id from `INDIA_PRESENCE_CITIES`; map markers use lat/lon from that registry. */
 export type HomePresenceBand = {
-  /** e.g. “Our presence” — shown in uppercase styling on the site */
+  /** Small uppercase eyebrow above heading, e.g. "Our reach" */
+  eyebrow: string;
+  /** Large heading, e.g. "Our Presence" */
   heading: string;
+  /** Subheading line below the heading */
+  subheading: string;
   /** Preset city ids (see `lib/cms/indiaPresenceCities.ts`) */
   cityIds: string[];
 };

@@ -32,6 +32,11 @@ export function migrateLegacyHomePresence(
 
   return {
     ...data,
-    presence: { heading, cityIds: Array.from(new Set(legacyIds)) },
+    presence: {
+      eyebrow: data.presence.eyebrow,
+      heading,
+      subheading: data.presence.subheading,
+      cityIds: Array.from(new Set(legacyIds)),
+    },
   };
 }

@@ -86,7 +86,9 @@ export const DEFAULT_HOME_PAYLOAD: HomePayload = {
     title: "Our presence across India",
   },
   presence: {
-    heading: "Our presence",
+    eyebrow: "Our reach",
+    heading: "Our Presence",
+    subheading: "From NCR to the coast — Karyan developments spanning 13+ cities across India.",
     cityIds: [
       "jhajjar",
       "wave-city",

@@ -625,41 +625,25 @@ export default function HomePortalForm() {
         description="Portfolio, process, testimonials, FAQs, location, and amenities"
       >
         <CmsSection
-          title="Our presence (India map)"
-          description="One map with dotted India, light-golden highlights by region, and a city list. Pick cities from the list — markers and regional glow update automatically."
-          where="Home page — portfolio band: India presence map only (project cards removed)"
-          defaultOpen={false}
+          title="Our Presence"
+          description="India map with golden city markers. Edit all text and add/remove cities — the map updates automatically."
+          where="Home page — full-width presence section below the project slider"
+          defaultOpen
         >
-          <div className="grid gap-3 sm:grid-cols-2">
-            <CmsField label="Eyebrow">
+          <div className="grid gap-3 sm:grid-cols-3">
+            <CmsField label="Eyebrow" hint="Small text above the heading, e.g. Our reach.">
               <CmsInput
-                value={data.portfolioIntro.eyebrow}
+                value={data.presence.eyebrow ?? ""}
                 onChange={(e) =>
                   patch((d) => ({
                     ...d,
-                    portfolioIntro: { ...d.portfolioIntro, eyebrow: e.target.value },
+                    presence: { ...d.presence, eyebrow: e.target.value },
                   }))
                 }
+                placeholder="Our reach"
               />
             </CmsField>
-            <CmsField label="Section heading">
-              <CmsInput
-                value={data.portfolioIntro.title}
-                onChange={(e) =>
-                  patch((d) => ({
-                    ...d,
-                    portfolioIntro: { ...d.portfolioIntro, title: e.target.value },
-                  }))
-                }
-              />
-            </CmsField>
-          </div>
-
-          <div className="mt-8 space-y-8 border-t border-slate-200 pt-8">
-            <CmsField
-              label="Heading"
-              hint="Shown large next to the city list (e.g. Our presence)."
-            >
+            <CmsField label="Heading" hint="Large display heading, e.g. Our Presence.">
               <CmsInput
                 value={data.presence.heading}
                 onChange={(e) =>
@@ -668,66 +652,77 @@ export default function HomePortalForm() {
                     presence: { ...d.presence, heading: e.target.value },
                   }))
                 }
+                placeholder="Our Presence"
               />
             </CmsField>
-            <CmsField
-              label="Cities on the map"
-              hint="Each city sits on its map coordinates. Regions (North, West, East, etc.) get a light golden glow when at least one city in that region is selected."
-            >
-              <div className="space-y-4">
-                {data.presence.cityIds.map((cityId, i) => (
-                  <CmsItemCard
-                    key={`p-${i}-${cityId || "empty"}`}
-                    title={`City ${i + 1}`}
-                    onRemove={() =>
-                      patch((d) => ({
-                        ...d,
-                        presence: {
-                          ...d.presence,
-                          cityIds: d.presence.cityIds.filter((_, j) => j !== i),
-                        },
-                      }))
-                    }
-                  >
-                    <CmsField label="City" hint="Choose a city — marker and regional highlight update on the map.">
-                      <CmsSelect
-                        value={cityId}
-                        onChange={(e) =>
-                          patch((d) => {
-                            const cityIds = [...d.presence.cityIds];
-                            cityIds[i] = e.target.value;
-                            return {
-                              ...d,
-                              presence: { ...d.presence, cityIds },
-                            };
-                          })
-                        }
-                      >
-                        <option value="">Select city…</option>
-                        {INDIA_PRESENCE_CITIES_SORTED.map((c) => (
-                          <option key={c.id} value={c.id}>
-                            {c.label}
-                          </option>
-                        ))}
-                      </CmsSelect>
-                    </CmsField>
-                  </CmsItemCard>
-                ))}
-                <CmsGhostButton
-                  onClick={() =>
+          </div>
+          <CmsField label="Subheading" hint="One sentence below the heading.">
+            <CmsInput
+              value={data.presence.subheading ?? ""}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  presence: { ...d.presence, subheading: e.target.value },
+                }))
+              }
+              placeholder="From NCR to the coast — Karyan developments spanning 13+ cities."
+            />
+          </CmsField>
+
+          <div className="mt-6 border-t border-slate-200 pt-6">
+            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+              Cities on the map
+            </p>
+            <div className="space-y-3">
+              {data.presence.cityIds.map((cityId, i) => (
+                <CmsItemCard
+                  key={`p-${i}-${cityId || "empty"}`}
+                  title={`City ${i + 1}`}
+                  onRemove={() =>
                     patch((d) => ({
                       ...d,
                       presence: {
                         ...d.presence,
-                        cityIds: [...d.presence.cityIds, ""],
+                        cityIds: d.presence.cityIds.filter((_, j) => j !== i),
                       },
                     }))
                   }
                 >
-                  + Add city
-                </CmsGhostButton>
-              </div>
-            </CmsField>
+                  <CmsField label="City" hint="Selecting a city places a golden marker on the India map.">
+                    <CmsSelect
+                      value={cityId}
+                      onChange={(e) =>
+                        patch((d) => {
+                          const cityIds = [...d.presence.cityIds];
+                          cityIds[i] = e.target.value;
+                          return { ...d, presence: { ...d.presence, cityIds } };
+                        })
+                      }
+                    >
+                      <option value="">Select city…</option>
+                      {INDIA_PRESENCE_CITIES_SORTED.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </CmsSelect>
+                  </CmsField>
+                </CmsItemCard>
+              ))}
+              <CmsGhostButton
+                onClick={() =>
+                  patch((d) => ({
+                    ...d,
+                    presence: {
+                      ...d.presence,
+                      cityIds: [...d.presence.cityIds, ""],
+                    },
+                  }))
+                }
+              >
+                + Add city
+              </CmsGhostButton>
+            </div>
           </div>
         </CmsSection>
 
