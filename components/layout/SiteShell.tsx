@@ -38,17 +38,23 @@ export default async function SiteShell({
   children: React.ReactNode;
 }) {
   const settings = await getSiteSettings();
+  const footer = {
+    ...settings.footer,
+    contactPhone: settings.nav.topBar.phone || settings.footer.contactPhone,
+    contactPhoneHref: settings.nav.topBar.phoneHref || settings.footer.contactPhoneHref,
+  };
   return (
     <EnquiryProvider
       brandLogoSrc={settings.nav.headerLogoSrc}
       brandLogoAlt={settings.nav.headerLogoAlt}
+      projectOptions={settings.projectInterestOptions}
     >
       {/* Use a real wrapper element so CSS vars cascade to all site UI */}
       <div style={themeCssVars(settings.themeColors)}>
         <NavbarClient nav={settings.nav} />
         {children}
         <FooterClient
-          footer={settings.footer}
+          footer={footer}
           logoSrc={settings.nav.headerLogoSrc}
           logoAlt={settings.nav.headerLogoAlt}
         />

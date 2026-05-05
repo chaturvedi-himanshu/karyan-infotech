@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx scripts/seed.ts",
-    "seed:about": "tsx scripts/seed-about-karyan.ts"
+    "seed:about": "tsx scripts/seed-about-karyan.ts",
+    "seed:project-options": "tsx scripts/seed-project-interest-options.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

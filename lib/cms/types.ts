@@ -28,6 +28,11 @@ export type SiteFooterPayload = {
   disclaimerExtra?: string;
 };
 
+export type SiteProjectInterestOption = {
+  value: string;
+  label: string;
+};
+
 /** Bottom-left floating image; click opens the global enquiry modal (see EnquiryFloatPromo). */
 export type SiteEnquiryFloatPromo = {
   enabled: boolean;
@@ -72,6 +77,7 @@ export type SitePageHeaderDefaults = {
 export type SiteSettingsBundle = {
   nav: SiteNavPayload;
   footer: SiteFooterPayload;
+  projectInterestOptions: SiteProjectInterestOption[];
   themeColors: SiteThemeColors;
   pageHeader: SitePageHeaderDefaults;
   enquiryFloatPromo: SiteEnquiryFloatPromo;

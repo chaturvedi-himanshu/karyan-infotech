@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-serif: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --color-lux-navy: #17314a;
   --color-lux-navy-mid: #2b4a69;
@@ -43,14 +43,14 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-cormorant), ui-serif, Georgia, serif;
+    font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: -0.02em;
   }
 }
 
 .font-display {
-  font-family: var(--font-cormorant), ui-serif, Georgia, serif;
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Swiper (hero) */
@@ -138,6 +138,174 @@
 
 @layer utilities {
   /* Runtime theme overrides (from SiteShell CSS variables) */
+  .bg-lux-navy {
+    background-color: var(--color-lux-navy);
+  }
+  .bg-lux-navy-mid {
+    background-color: var(--color-lux-navy-mid);
+  }
+  .bg-lux-navy-soft {
+    background-color: var(--color-lux-navy-soft);
+  }
+  .bg-lux-gold {
+    background-color: var(--color-lux-gold);
+  }
+  .bg-lux-gold-bright {
+    background-color: var(--color-lux-gold-bright);
+  }
+  .bg-lux-gold-dim {
+    background-color: var(--color-lux-gold-dim);
+  }
+  .bg-lux-cream {
+    background-color: var(--color-lux-cream);
+  }
+  .bg-lux-ivory {
+    background-color: var(--color-lux-ivory);
+  }
+  .bg-lux-charcoal {
+    background-color: var(--color-lux-charcoal);
+  }
+
+  .text-lux-navy {
+    color: var(--color-lux-navy);
+  }
+  .text-lux-navy-mid {
+    color: var(--color-lux-navy-mid);
+  }
+  .text-lux-navy-soft {
+    color: var(--color-lux-navy-soft);
+  }
+  .text-lux-gold {
+    color: var(--color-lux-gold);
+  }
+  .text-lux-gold-bright {
+    color: var(--color-lux-gold-bright);
+  }
+  .text-lux-gold-dim {
+    color: var(--color-lux-gold-dim);
+  }
+  .text-lux-cream {
+    color: var(--color-lux-cream);
+  }
+  .text-lux-ivory {
+    color: var(--color-lux-ivory);
+  }
+  .text-lux-charcoal {
+    color: var(--color-lux-charcoal);
+  }
+
+  .border-lux-navy {
+    border-color: var(--color-lux-navy);
+  }
+  .border-lux-navy-mid {
+    border-color: var(--color-lux-navy-mid);
+  }
+  .border-lux-navy-soft {
+    border-color: var(--color-lux-navy-soft);
+  }
+  .border-lux-gold {
+    border-color: var(--color-lux-gold);
+  }
+  .border-lux-gold-bright {
+    border-color: var(--color-lux-gold-bright);
+  }
+  .border-lux-gold-dim {
+    border-color: var(--color-lux-gold-dim);
+  }
+  .border-lux-cream {
+    border-color: var(--color-lux-cream);
+  }
+  .border-lux-ivory {
+    border-color: var(--color-lux-ivory);
+  }
+  .border-lux-charcoal {
+    border-color: var(--color-lux-charcoal);
+  }
+
+  .ring-lux-navy {
+    --tw-ring-color: var(--color-lux-navy);
+  }
+  .ring-lux-navy-mid {
+    --tw-ring-color: var(--color-lux-navy-mid);
+  }
+  .ring-lux-navy-soft {
+    --tw-ring-color: var(--color-lux-navy-soft);
+  }
+  .ring-lux-gold {
+    --tw-ring-color: var(--color-lux-gold);
+  }
+  .ring-lux-gold-bright {
+    --tw-ring-color: var(--color-lux-gold-bright);
+  }
+  .ring-lux-gold-dim {
+    --tw-ring-color: var(--color-lux-gold-dim);
+  }
+  .ring-lux-cream {
+    --tw-ring-color: var(--color-lux-cream);
+  }
+  .ring-lux-ivory {
+    --tw-ring-color: var(--color-lux-ivory);
+  }
+  .ring-lux-charcoal {
+    --tw-ring-color: var(--color-lux-charcoal);
+  }
+
+  .fill-lux-navy {
+    fill: var(--color-lux-navy);
+  }
+  .fill-lux-navy-mid {
+    fill: var(--color-lux-navy-mid);
+  }
+  .fill-lux-navy-soft {
+    fill: var(--color-lux-navy-soft);
+  }
+  .fill-lux-gold {
+    fill: var(--color-lux-gold);
+  }
+  .fill-lux-gold-bright {
+    fill: var(--color-lux-gold-bright);
+  }
+  .fill-lux-gold-dim {
+    fill: var(--color-lux-gold-dim);
+  }
+  .fill-lux-cream {
+    fill: var(--color-lux-cream);
+  }
+  .fill-lux-ivory {
+    fill: var(--color-lux-ivory);
+  }
+  .fill-lux-charcoal {
+    fill: var(--color-lux-charcoal);
+  }
+
+  .stroke-lux-navy {
+    stroke: var(--color-lux-navy);
+  }
+  .stroke-lux-navy-mid {
+    stroke: var(--color-lux-navy-mid);
+  }
+  .stroke-lux-navy-soft {
+    stroke: var(--color-lux-navy-soft);
+  }
+  .stroke-lux-gold {
+    stroke: var(--color-lux-gold);
+  }
+  .stroke-lux-gold-bright {
+    stroke: var(--color-lux-gold-bright);
+  }
+  .stroke-lux-gold-dim {
+    stroke: var(--color-lux-gold-dim);
+  }
+  .stroke-lux-cream {
+    stroke: var(--color-lux-cream);
+  }
+  .stroke-lux-ivory {
+    stroke: var(--color-lux-ivory);
+  }
+  .stroke-lux-charcoal {
+    stroke: var(--color-lux-charcoal);
+  }
+
   .bg-theme-bg {
     background-color: var(--color-theme-bg);
   }

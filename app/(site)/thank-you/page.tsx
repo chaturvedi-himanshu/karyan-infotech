@@ -2,13 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Home, Phone, Mail } from "lucide-react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
+import { getSiteSettings } from "@/lib/cms/getters";
 
 export const metadata: Metadata = {
   title: "Thank You",
   description: "Thank you for contacting Karyan Infratech.",
 };
 
-export default function ThankYouPage() {
+export default async function ThankYouPage() {
+  const settings = await getSiteSettings();
+  const contactPhone = settings.nav.topBar.phone || settings.footer.contactPhone;
+  const contactPhoneHref = settings.nav.topBar.phoneHref || settings.footer.contactPhoneHref;
+
   return (
     <div className="min-h-screen bg-[#f8f5f0] flex items-center justify-center px-4 pt-20">
       <div className="max-w-2xl w-full text-center">
@@ -48,10 +53,10 @@ export default function ThankYouPage() {
                 Call Us
               </p>
               <a
-                href="tel:+919999999999"
+                href={contactPhoneHref}
                 className="text-[#7a7a7a] text-sm hover:text-[#c9a84c] transition-colors"
               >
-                +91 99999 99999
+                {contactPhone}
               </a>
             </div>
           </div>

@@ -32,6 +32,8 @@ export default async function LuxuryHomePage() {
       projectsList={projectsList}
       brandLogoSrc={site.nav.headerLogoSrc}
       brandLogoAlt={site.nav.headerLogoAlt}
+      deskPhone={site.nav.topBar.phone}
+      deskPhoneHref={site.nav.topBar.phoneHref}
     />
   );
 }

@@ -1,12 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
+import type { SiteProjectInterestOption } from "@/lib/cms/types";
 
 interface ContactFormProps {
   dark?: boolean;
 }
 
+const PROJECT_OPTIONS_FALLBACK: SiteProjectInterestOption[] = [
+  { value: "", label: "Select a project" },
+  { value: "trevana", label: "Karyan Trevana" },
+  { value: "citywalk", label: "Karyan CityWalk" },
+  { value: "avenue-iv", label: "Karyan Avenue IV" },
+  { value: "square", label: "Karyan Square" },
+  { value: "other", label: "Other / General" },
+];
+
 export default function ContactForm({ dark = false }: ContactFormProps) {
+  const { projectOptions } = useEnquiry();
+  const options = projectOptions.length ? projectOptions : PROJECT_OPTIONS_FALLBACK;
   const [form, setForm] = useState({ name: "", email: "", mobile: "", project: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -101,12 +114,11 @@ export default function ContactForm({ dark = false }: ContactFormProps) {
           }}
           style={inputStyle}
         >
-          <option value="">Select a project</option>
-          <option value="trevana">Karyan Trevana</option>
-          <option value="citywalk">Karyan CityWalk</option>
-          <option value="avenue-iv">Karyan Avenue IV</option>
-          <option value="square">Karyan Square</option>
-          <option value="other">Other / General</option>
+          {options.map((o) => (
+            <option key={o.value || "any"} value={o.value}>
+              {o.label}
+            </option>
+          ))}
         </select>
       </div>
       <div>

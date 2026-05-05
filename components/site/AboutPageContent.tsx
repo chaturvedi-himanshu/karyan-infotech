@@ -32,7 +32,7 @@ export type AboutPayload = {
 
 export default function AboutPageContent({ payload }: { payload: AboutPayload }) {
   const storySections: AboutStorySection[] =
-    payload.storySections?.length
+    payload.storySections !== undefined
       ? payload.storySections
       : [
           {

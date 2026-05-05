@@ -10,7 +10,7 @@ export async function GET() {
   if (denied) return denied;
   await connectMongo();
   const doc = await SiteSettingsModel.findOne({ key: "default" }).lean();
-  if (!doc) return NextResponse.json({ nav: null, footer: null, themeColors: null, pageHeader: null, enquiryFloatPromo: null });
+  if (!doc) return NextResponse.json({ nav: null, footer: null, projectInterestOptions: null, themeColors: null, pageHeader: null, enquiryFloatPromo: null });
   const promo =
     doc.enquiryFloatPromo && typeof doc.enquiryFloatPromo === "object"
       ? { ...DEFAULT_SITE_SETTINGS.enquiryFloatPromo, ...(doc.enquiryFloatPromo as object) }
@@ -19,11 +19,22 @@ export async function GET() {
     doc.pageHeader && typeof doc.pageHeader === "object"
       ? { ...DEFAULT_SITE_SETTINGS.pageHeader, ...(doc.pageHeader as object) }
       : DEFAULT_SITE_SETTINGS.pageHeader;
+  const projectInterestOptions = Array.isArray(doc.projectInterestOptions)
+    ? (doc.projectInterestOptions as unknown[])
+        .map((row) => {
+          if (!row || typeof row !== "object") return null;
+          const r = row as Record<string, unknown>;
+          const value = typeof r.value === "string" ? r.value : "";
+          const label = typeof r.label === "string" ? r.label : "";
+          return label.trim() ? { value: value.trim(), label: label.trim() } : null;
+        })
+        .filter((x): x is { value: string; label: string } => !!x)
+    : DEFAULT_SITE_SETTINGS.projectInterestOptions;
   const themeColors =
     doc.themeColors && typeof doc.themeColors === "object"
       ? { ...DEFAULT_SITE_SETTINGS.themeColors, ...(doc.themeColors as object) }
       : DEFAULT_SITE_SETTINGS.themeColors;
-  return NextResponse.json({ nav: doc.nav, footer: doc.footer, themeColors, pageHeader, enquiryFloatPromo: promo });
+  return NextResponse.json({ nav: doc.nav, footer: doc.footer, projectInterestOptions, themeColors, pageHeader, enquiryFloatPromo: promo });
 }
 
 export async function PUT(req: Request) {
@@ -41,6 +52,17 @@ export async function PUT(req: Request) {
     body.pageHeader && typeof body.pageHeader === "object"
       ? { ...DEFAULT_SITE_SETTINGS.pageHeader, ...body.pageHeader }
       : DEFAULT_SITE_SETTINGS.pageHeader;
+  const projectInterestOptions = Array.isArray(body.projectInterestOptions)
+    ? (body.projectInterestOptions as unknown[])
+        .map((row) => {
+          if (!row || typeof row !== "object") return null;
+          const r = row as Record<string, unknown>;
+          const value = typeof r.value === "string" ? r.value : "";
+          const label = typeof r.label === "string" ? r.label : "";
+          return label.trim() ? { value: value.trim(), label: label.trim() } : null;
+        })
+        .filter((x): x is { value: string; label: string } => !!x)
+    : DEFAULT_SITE_SETTINGS.projectInterestOptions;
   const themeColors =
     body.themeColors && typeof body.themeColors === "object"
       ? { ...DEFAULT_SITE_SETTINGS.themeColors, ...body.themeColors }
@@ -48,7 +70,7 @@ export async function PUT(req: Request) {
   await connectMongo();
   await SiteSettingsModel.findOneAndUpdate(
     { key: "default" },
-    { $set: { key: "default", nav: body.nav, footer: body.footer, themeColors, pageHeader, enquiryFloatPromo } },
+    { $set: { key: "default", nav: body.nav, footer: body.footer, projectInterestOptions, themeColors, pageHeader, enquiryFloatPromo } },
     { upsert: true }
   );
   revalidatePath("/", "layout");

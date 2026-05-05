@@ -4,8 +4,9 @@ import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { X, Send, CheckCircle2 } from "lucide-react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
+import type { SiteProjectInterestOption } from "@/lib/cms/types";
 
-const PROJECT_OPTIONS = [
+const PROJECT_OPTIONS_FALLBACK: SiteProjectInterestOption[] = [
   { value: "", label: "Select a project" },
   { value: "trevana", label: "Karyan Trevana" },
   { value: "citywalk", label: "Karyan CityWalk" },
@@ -36,12 +37,14 @@ export default function EnquiryModal({
   defaultProject = "",
   logoSrc,
   logoAlt,
+  projectOptions = PROJECT_OPTIONS_FALLBACK,
 }: {
   isOpen: boolean;
   onClose: () => void;
   defaultProject?: string;
   logoSrc?: string;
   logoAlt?: string;
+  projectOptions?: SiteProjectInterestOption[];
 }) {
   const panelId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -233,7 +236,7 @@ export default function EnquiryModal({
                   }}
                   className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm text-lux-navy outline-none ring-lux-gold/30 transition focus:border-lux-gold/50 focus:ring-2"
                 >
-                  {PROJECT_OPTIONS.map((o) => (
+                  {projectOptions.map((o) => (
                     <option key={o.value || "any"} value={o.value}>
                       {o.label}
                     </option>

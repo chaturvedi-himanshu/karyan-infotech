@@ -82,7 +82,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition ${
+                className={`rounded-md px-3 py-2 text-base font-medium transition ${
                   active(l.href)
                     ? "text-lux-gold-dim"
                     : "text-theme-fg hover:text-theme-fg-soft"
@@ -98,7 +98,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                 aria-expanded={deskProjectsOpen}
                 aria-haspopup="true"
                 onClick={() => setDeskProjectsOpen((o) => !o)}
-                className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition ${
+                className={`flex items-center gap-1 rounded-md px-3 py-2 text-base font-medium transition ${
                   projectActive
                     ? "text-lux-gold-dim"
                     : "text-theme-fg hover:text-theme-fg-soft"
@@ -165,7 +165,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition ${
+                className={`rounded-md px-3 py-2 text-base font-medium transition ${
                   active(l.href)
                     ? "text-lux-gold-dim"
                     : "text-theme-fg hover:text-theme-fg-soft"

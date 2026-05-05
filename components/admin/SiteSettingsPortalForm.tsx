@@ -29,12 +29,13 @@ export default function SiteSettingsPortalForm() {
       .then((j) => {
         const nav = j.nav ?? {};
         const footer = j.footer ?? {};
+        const projectInterestOptions = j.projectInterestOptions ?? [];
         const themeColors = j.themeColors ?? {};
         const pageHeader = j.pageHeader ?? {};
         const enquiryFloatPromo = j.enquiryFloatPromo ?? {};
         const merged = deepMerge(
           DEFAULT_SITE_SETTINGS as unknown as Record<string, unknown>,
-          { nav, footer, themeColors, pageHeader, enquiryFloatPromo } as Record<string, unknown>
+          { nav, footer, projectInterestOptions, themeColors, pageHeader, enquiryFloatPromo } as Record<string, unknown>
         );
         setData(merged as SiteSettingsBundle);
       });
@@ -356,6 +357,83 @@ export default function SiteSettingsPortalForm() {
                 }
               />
             </CmsField>
+          </div>
+        </CmsSection>
+      </CmsGroup>
+
+      <CmsGroup
+        icon={<Menu className="h-4 w-4" />}
+        title="Lead forms"
+        description="Options for Project of Interest used in all enquiry forms"
+      >
+        <CmsSection
+          title="Project interest options"
+          description="Shown in contact page form, popup enquiry modal, and other shared forms."
+          where="All enquiry forms — Project of Interest dropdown"
+          defaultOpen
+        >
+          <div className="space-y-4">
+            {data.projectInterestOptions.map((item, i) => (
+              <CmsItemCard
+                key={i}
+                title={`Option ${i + 1}`}
+                onRemove={() =>
+                  patch((d) => ({
+                    ...d,
+                    projectInterestOptions: d.projectInterestOptions.filter((_, j) => j !== i),
+                  }))
+                }
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <CmsField label="Label (visitor sees this)">
+                    <CmsInput
+                      value={item.label}
+                      onChange={(e) =>
+                        patch((d) => {
+                          const projectInterestOptions = [...d.projectInterestOptions];
+                          projectInterestOptions[i] = {
+                            ...projectInterestOptions[i],
+                            label: e.target.value,
+                          };
+                          return { ...d, projectInterestOptions };
+                        })
+                      }
+                    />
+                  </CmsField>
+                  <CmsField
+                    label="Value (saved in leads)"
+                    hint="Short slug like citywalk, trevana, or other."
+                  >
+                    <CmsInput
+                      value={item.value}
+                      onChange={(e) =>
+                        patch((d) => {
+                          const projectInterestOptions = [...d.projectInterestOptions];
+                          projectInterestOptions[i] = {
+                            ...projectInterestOptions[i],
+                            value: e.target.value,
+                          };
+                          return { ...d, projectInterestOptions };
+                        })
+                      }
+                    />
+                  </CmsField>
+                </div>
+              </CmsItemCard>
+            ))}
+            <CmsGhostButton
+              onClick={() =>
+                patch((d) => ({
+                  ...d,
+                  projectInterestOptions: [
+                    ...d.projectInterestOptions,
+                    { label: "", value: "" },
+                  ],
+                }))
+              }
+            >
+              + Add project option
+            </CmsGhostButton>
           </div>
         </CmsSection>
       </CmsGroup>

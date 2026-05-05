@@ -15,12 +15,19 @@ export default function LuxuryHomeView({
   projectsList,
   brandLogoSrc,
   brandLogoAlt,
+  deskPhone,
+  deskPhoneHref,
 }: {
   data: HomePayload;
   projectsList: ProjectsListPayload;
   brandLogoSrc?: string;
   brandLogoAlt?: string;
+  deskPhone?: string;
+  deskPhoneHref?: string;
 }) {
+  const callDeskPhone = deskPhone?.trim() || data.splitCta.phone;
+  const callDeskPhoneHref = deskPhoneHref?.trim() || data.splitCta.phoneHref;
+
   return (
     <>
       <HeroSlider
@@ -87,14 +94,14 @@ export default function LuxuryHomeView({
                 key={m.label}
                 className="group rounded-2xl border border-lux-ivory/70 bg-lux-ivory/70 p-6 shadow-[0_20px_60px_-24px_rgba(10,22,40,0.25)] ring-1 ring-lux-gold/15 backdrop-blur-md transition hover:-translate-y-0.5 hover:ring-lux-gold/35"
               >
-                <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-3xl font-semibold text-transparent md:text-4xl">
+                <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-4xl font-semibold text-transparent md:text-5xl">
                   {m.value}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-lux-navy">
+                <p className="mt-2 text-base font-semibold text-lux-navy md:text-lg">
                   {m.label}
                 </p>
                 {m.sub.trim() ? (
-                  <p className="mt-1 text-xs text-stone-500">{m.sub}</p>
+                  <p className="mt-1 text-sm text-stone-500">{m.sub}</p>
                 ) : null}
               </div>
             ))}
@@ -839,13 +846,13 @@ export default function LuxuryHomeView({
               {data.splitCta.leftTitle}
             </h2>
             <a
-              href={data.splitCta.phoneHref}
+              href={callDeskPhoneHref}
               className="mt-8 inline-flex items-center gap-3 text-2xl font-semibold text-lux-navy transition hover:text-lux-gold-dim"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-theme-bg text-white">
                 <Phone className="h-5 w-5" />
               </span>
-              {data.splitCta.phone}
+              {callDeskPhone}
             </a>
             <p className="mt-4 text-sm text-stone-600">{data.splitCta.hours}</p>
           </div>

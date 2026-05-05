@@ -35,6 +35,7 @@ async function main() {
         key: "default",
         nav: DEFAULT_SITE_SETTINGS.nav,
         footer: DEFAULT_SITE_SETTINGS.footer,
+        projectInterestOptions: DEFAULT_SITE_SETTINGS.projectInterestOptions,
         themeColors: DEFAULT_SITE_SETTINGS.themeColors,
         pageHeader: DEFAULT_SITE_SETTINGS.pageHeader,
         enquiryFloatPromo: DEFAULT_SITE_SETTINGS.enquiryFloatPromo,

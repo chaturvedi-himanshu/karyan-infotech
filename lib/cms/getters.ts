@@ -31,9 +31,11 @@ export async function getSiteSettings(): Promise<SiteSettingsBundle> {
     if (doc?.nav && doc?.footer) {
       const raw = doc as Record<string, unknown>;
       const pr = raw.enquiryFloatPromo;
+      const ir = raw.projectInterestOptions;
       const hr = raw.pageHeader;
       const tr = raw.themeColors;
       const defPromo = DEFAULT_SITE_SETTINGS.enquiryFloatPromo;
+      const defInterest = DEFAULT_SITE_SETTINGS.projectInterestOptions;
       const defHeader = DEFAULT_SITE_SETTINGS.pageHeader;
       const defTheme = DEFAULT_SITE_SETTINGS.themeColors;
       const enquiryFloatPromo: SiteSettingsBundle["enquiryFloatPromo"] =
@@ -44,6 +46,17 @@ export async function getSiteSettings(): Promise<SiteSettingsBundle> {
         hr && typeof hr === "object" && !Array.isArray(hr)
           ? { ...defHeader, ...(hr as Partial<typeof defHeader>) }
           : defHeader;
+      const projectInterestOptions: SiteSettingsBundle["projectInterestOptions"] = Array.isArray(ir)
+        ? (ir as unknown[])
+            .map((row) => {
+              if (!row || typeof row !== "object") return null;
+              const r = row as Record<string, unknown>;
+              const value = typeof r.value === "string" ? r.value : "";
+              const label = typeof r.label === "string" ? r.label : "";
+              return label.trim() ? { value: value.trim(), label: label.trim() } : null;
+            })
+            .filter((x): x is { value: string; label: string } => !!x)
+        : defInterest;
       const themeColors: SiteSettingsBundle["themeColors"] =
         tr && typeof tr === "object" && !Array.isArray(tr)
           ? { ...defTheme, ...(tr as Partial<typeof defTheme>) }
@@ -51,6 +64,7 @@ export async function getSiteSettings(): Promise<SiteSettingsBundle> {
       return {
         nav: doc.nav as SiteSettingsBundle["nav"],
         footer: doc.footer as SiteSettingsBundle["footer"],
+        projectInterestOptions,
         themeColors,
         pageHeader,
         enquiryFloatPromo,

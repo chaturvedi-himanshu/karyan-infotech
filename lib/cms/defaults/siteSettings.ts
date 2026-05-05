@@ -55,6 +55,14 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsBundle = {
     disclaimerExtra:
       "Images are for representation. This site is informational; terms are subject to final agreements and applicable law.",
   },
+  projectInterestOptions: [
+    { value: "", label: "Select a project" },
+    { value: "trevana", label: "Karyan Trevana" },
+    { value: "citywalk", label: "Karyan CityWalk" },
+    { value: "avenue-iv", label: "Karyan Avenue IV" },
+    { value: "square", label: "Karyan Square" },
+    { value: "other", label: "Other / General" },
+  ],
   themeColors: {
     luxNavy: "#17314a",
     luxNavyMid: "#2b4a69",
