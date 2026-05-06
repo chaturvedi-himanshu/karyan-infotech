@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { EnquiryTrigger } from "@/components/enquiry/EnquiryProvider";
 import { ArrowRight, Award, CheckCircle2, Phone } from "lucide-react";
+import { FaCity, FaLeaf, FaLightbulb, FaLandmark } from "react-icons/fa";
 import HeroSlider from "@/components/home/HeroSlider";
 import HomeSiteProjectsSection from "@/components/home/HomeSiteProjectsSection";
 import OurPresenceBlock from "@/components/home/OurPresenceBlock";
@@ -11,6 +12,7 @@ import SectionWave from "@/components/decor/SectionWave";
 import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
 import type { BlogPostPayload, HomePayload } from "@/lib/cms/types";
 import { getLucideIcon } from "@/lib/cms/icons";
+import type { IconType } from "react-icons";
 
 const HOME_SECTION_KEYS = [
   "stats",
@@ -26,6 +28,15 @@ const HOME_SECTION_KEYS = [
   "journal",
   "splitCta",
 ] as const;
+
+function capabilityReactIcon(title: string, text: string): IconType {
+  const haystack = `${title} ${text}`.toLowerCase();
+  if (haystack.includes("land") || haystack.includes("ground")) return FaLeaf;
+  if (haystack.includes("generations") || haystack.includes("lasting")) return FaLandmark;
+  if (haystack.includes("future") || haystack.includes("innovation")) return FaLightbulb;
+  if (haystack.includes("beauty") || haystack.includes("function")) return FaCity;
+  return FaCity;
+}
 
 export default function LuxuryHomeView({
   data,
@@ -238,6 +249,7 @@ export default function LuxuryHomeView({
           <div className="mt-14 grid gap-6 sm:grid-cols-2">
             {data.capabilities.map(({ title, text, icon }) => {
               const Icon = getLucideIcon(icon);
+              const ReactIcon = capabilityReactIcon(title, text);
               return (
                 <div
                   key={title}
@@ -245,7 +257,9 @@ export default function LuxuryHomeView({
                 >
                   <div className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-lux-gold/10 blur-2xl" />
                   <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-theme-bg text-lux-gold-bright shadow-lg">
-                    <Icon className="h-7 w-7" strokeWidth={1.35} />
+                    {/* Prefer rich semantic icon from react-icons for this themed content. */}
+                    <ReactIcon className="h-7 w-7" />
+                    <Icon className="hidden h-7 w-7" strokeWidth={1.35} />
                   </div>
                   <h3 className="font-display relative mt-6 text-xl font-medium text-lux-navy">
                     {title}

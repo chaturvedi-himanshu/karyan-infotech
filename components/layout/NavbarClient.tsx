@@ -77,106 +77,106 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
             />
           </div>
 
-          <nav className="hidden items-center gap-1 lg:flex">
-            {mainLinks.slice(0, 2).map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`rounded-md px-3 py-2 text-base font-medium transition ${
-                  active(l.href)
-                    ? "text-lux-gold-dim"
-                    : "text-theme-fg hover:text-theme-fg-soft"
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
+          <div className="hidden items-center gap-3 lg:flex">
+            <nav className="flex items-center gap-1">
+              {mainLinks.slice(0, 2).map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`rounded-md px-3 py-2 text-base font-medium transition ${
+                    active(l.href)
+                      ? "text-lux-gold-dim"
+                      : "text-theme-fg hover:text-theme-fg-soft"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              ))}
 
-            <div ref={deskProjectsWrapRef} className="relative px-1">
-              <button
-                type="button"
-                aria-expanded={deskProjectsOpen}
-                aria-haspopup="true"
-                onClick={() => setDeskProjectsOpen((o) => !o)}
-                className={`flex items-center gap-1 rounded-md px-3 py-2 text-base font-medium transition ${
-                  projectActive
-                    ? "text-lux-gold-dim"
-                    : "text-theme-fg hover:text-theme-fg-soft"
-                } ${deskProjectsOpen ? "text-theme-fg" : ""}`}
-              >
-                Projects
-                <ChevronDown
-                  className={`h-4 w-4 opacity-60 transition ${deskProjectsOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-              {deskProjectsOpen ? (
-                <div className="absolute right-0 left-0 mx-auto top-full z-50 w-[min(100vw-2rem,560px)] pt-3">
-                  <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-stone-200/90 bg-white shadow-2xl ring-1 ring-black/5">
-                    <div className="border-r border-stone-100 bg-stone-50/90 p-5">
-                      <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
-                        <Home className="h-3.5 w-3.5 shrink-0" />
-                        Residential
+              <div ref={deskProjectsWrapRef} className="relative px-1">
+                <button
+                  type="button"
+                  aria-expanded={deskProjectsOpen}
+                  aria-haspopup="true"
+                  onClick={() => setDeskProjectsOpen((o) => !o)}
+                  className={`flex items-center gap-1 rounded-md px-3 py-2 text-base font-medium transition ${
+                    projectActive
+                      ? "text-lux-gold-dim"
+                      : "text-theme-fg hover:text-theme-fg-soft"
+                  } ${deskProjectsOpen ? "text-theme-fg" : ""}`}
+                >
+                  Projects
+                  <ChevronDown
+                    className={`h-4 w-4 opacity-60 transition ${deskProjectsOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {deskProjectsOpen ? (
+                  <div className="absolute right-0 left-0 mx-auto top-full z-50 w-[min(100vw-2rem,560px)] pt-3">
+                    <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-stone-200/90 bg-white shadow-2xl ring-1 ring-black/5">
+                      <div className="border-r border-stone-100 bg-stone-50/90 p-5">
+                        <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
+                          <Home className="h-3.5 w-3.5 shrink-0" />
+                          Residential
+                        </div>
+                        <p className="mb-4 text-xs text-stone-500">Premium residences</p>
+                        <div className="flex flex-col gap-1">
+                          {residentialProjects.map((p) => (
+                            <Link
+                              key={p.href}
+                              href={p.href}
+                              onClick={() => setDeskProjectsOpen(false)}
+                              className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-white"
+                            >
+                              {p.name}
+                              <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
+                                {p.tag}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                      <p className="mb-4 text-xs text-stone-500">Premium residences</p>
-                      <div className="flex flex-col gap-1">
-                        {residentialProjects.map((p) => (
-                          <Link
-                            key={p.href}
-                            href={p.href}
-                            onClick={() => setDeskProjectsOpen(false)}
-                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-white"
-                          >
-                            {p.name}
-                            <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
-                              {p.tag}
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
-                        <Landmark className="h-3.5 w-3.5 shrink-0" />
-                        Commercial
-                      </div>
-                      <p className="mb-4 text-xs text-stone-500">Retail, offices & malls</p>
-                      <div className="flex flex-col gap-1">
-                        {commercialProjects.map((p) => (
-                          <Link
-                            key={p.href}
-                            href={p.href}
-                            onClick={() => setDeskProjectsOpen(false)}
-                            className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-lux-cream/60"
-                          >
-                            {p.name}
-                            <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
-                              {p.tag}
-                            </span>
-                          </Link>
-                        ))}
+                      <div className="p-5">
+                        <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim">
+                          <Landmark className="h-3.5 w-3.5 shrink-0" />
+                          Commercial
+                        </div>
+                        <p className="mb-4 text-xs text-stone-500">Retail, offices & malls</p>
+                        <div className="flex flex-col gap-1">
+                          {commercialProjects.map((p) => (
+                            <Link
+                              key={p.href}
+                              href={p.href}
+                              onClick={() => setDeskProjectsOpen(false)}
+                              className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:border-theme-bg-soft hover:bg-lux-cream/60"
+                            >
+                              {p.name}
+                              <span className="mt-0.5 block text-[11px] font-normal text-stone-500">
+                                {p.tag}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ) : null}
-            </div>
+                ) : null}
+              </div>
 
-            {mainLinks.slice(2).map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`rounded-md px-3 py-2 text-base font-medium transition ${
-                  active(l.href)
-                    ? "text-lux-gold-dim"
-                    : "text-theme-fg hover:text-theme-fg-soft"
-                }`}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+              {mainLinks.slice(2).map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`rounded-md px-3 py-2 text-base font-medium transition ${
+                    active(l.href)
+                      ? "text-lux-gold-dim"
+                      : "text-theme-fg hover:text-theme-fg-soft"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
 
-          <div className="flex items-center gap-2">
             <a
               href={callHref}
               className="hidden items-center gap-2 rounded-md border border-stone-200/90 bg-lux-ivory px-3 py-2.5 text-sm font-semibold tabular-nums text-theme-fg transition hover:border-lux-gold/40 hover:bg-lux-cream hover:text-lux-gold-dim sm:inline-flex"
@@ -184,15 +184,16 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               <Phone className="h-4 w-4 shrink-0 text-lux-gold-dim" aria-hidden />
               <span>{callLabel}</span>
             </a>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md border border-stone-200 p-2.5 text-theme-fg lg:hidden"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              onClick={() => setMobileOpen((o) => !o)}
-            >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
           </div>
+
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md border border-stone-200 p-2.5 text-theme-fg lg:hidden"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileOpen((o) => !o)}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
 
         {mobileOpen && (
