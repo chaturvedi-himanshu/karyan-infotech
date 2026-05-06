@@ -66,16 +66,15 @@ export default function HomePortalForm() {
     setData((prev) => (prev ? fn(structuredClone(prev)) : prev));
   }, []);
 
-  async function save() {
-    if (!data) return;
+  async function persistHome(nextData: HomePayload, savingLabel = "Saving…") {
     const normalized: HomePayload = {
-      ...data,
+      ...nextData,
       presence: {
-        ...data.presence,
-        cityIds: normalizePresenceCityIds(data.presence.cityIds),
+        ...nextData.presence,
+        cityIds: normalizePresenceCityIds(nextData.presence.cityIds),
       },
     };
-    setStatus("Saving…");
+    setStatus(savingLabel);
     const res = await fetch("/api/admin/home", {
       method: "PUT",
       credentials: "include",
@@ -84,6 +83,12 @@ export default function HomePortalForm() {
     });
     if (res.ok) setData(normalized);
     setStatus(res.ok ? "Saved successfully." : "Could not save. Try again.");
+    return res.ok;
+  }
+
+  async function save() {
+    if (!data) return;
+    await persistHome(data);
   }
 
   if (!data) {
@@ -258,13 +263,14 @@ export default function HomePortalForm() {
                 >
                   <CmsImageUpload
                     value={slide.bg}
-                    onChange={(url) =>
-                      patch((d) => {
-                        const heroSlides = [...d.heroSlides];
-                        heroSlides[i] = { ...heroSlides[i], bg: url };
-                        return { ...d, heroSlides };
-                      })
-                    }
+                    onChange={async (url) => {
+                      if (!data) return;
+                      const heroSlides = [...data.heroSlides];
+                      heroSlides[i] = { ...heroSlides[i], bg: url };
+                      const nextData: HomePayload = { ...data, heroSlides };
+                      setData(nextData);
+                      await persistHome(nextData, "Saving hero image…");
+                    }}
                     folder="home/hero-slides"
                   />
                 </CmsField>
