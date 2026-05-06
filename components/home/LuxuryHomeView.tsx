@@ -70,79 +70,75 @@ export default function LuxuryHomeView({
 
       <div className="flex flex-col">
       {/* Wave into light band */}
-      <div
-        className="relative z-20 -mt-14 overflow-hidden bg-lux-ivory md:-mt-20"
-        style={{ order: sectionOrder("stats") }}
-      >
-        <SectionBgStack
-          layers={[
-            {
-              variant: "waveFluid",
-              wrapClassName: "inset-x-0 -top-[35%] bottom-0 h-[150%]",
-              opacityClassName: "opacity-[0.32]",
-            },
-            {
-              variant: "meshPremium",
-              wrapClassName: "inset-0",
-              opacityClassName: "opacity-[0.12] text-lux-navy",
-            },
-          ]}
-        />
-          <SectionWave
-            fill="fill-lux-ivory"
-            className="relative z-10 drop-shadow-sm"
+      <div style={{ order: sectionOrder("stats") }}>
+        <div className="relative z-20 -mt-14 overflow-hidden bg-lux-ivory md:-mt-20">
+          <SectionBgStack
+            layers={[
+              {
+                variant: "waveFluid",
+                wrapClassName: "inset-x-0 -top-[35%] bottom-0 h-[150%]",
+                opacityClassName: "opacity-[0.32]",
+              },
+              {
+                variant: "meshPremium",
+                wrapClassName: "inset-0",
+                opacityClassName: "opacity-[0.12] text-lux-navy",
+              },
+            ]}
           />
-      </div>
-
-      {/* Stats — glass cards, mesh blobs */}
-      <section className="relative z-10 overflow-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/80 to-lux-cream pb-6 pt-2">
-        <SectionBgStack
-          topGlow
-          bottomGlow
-          grain
-          layers={[
-            {
-              variant: "meshPremium",
-              opacityClassName: "text-lux-navy",
-            },
-            {
-              variant: "scatterDots",
-              opacityClassName: "opacity-[0.42] mix-blend-multiply",
-            },
-            {
-              variant: "orbRings",
-              wrapClassName:
-                "-right-1/4 top-1/2 h-[130%] w-[58%] -translate-y-1/2",
-              opacityClassName: "rotate-6 opacity-[0.22]",
-            },
-            {
-              variant: "ribbonArcs",
-              wrapClassName: "-left-1/3 top-0 h-2/3 w-2/3",
-              opacityClassName: "opacity-[0.12]",
-            },
-          ]}
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {data.statCards.map((m) => (
-              <div
-                key={m.label}
-                className="group rounded-2xl border border-lux-ivory/70 bg-lux-ivory/70 p-6 shadow-[0_20px_60px_-24px_rgba(10,22,40,0.25)] ring-1 ring-lux-gold/15 backdrop-blur-md transition hover:-translate-y-0.5 hover:ring-lux-gold/35"
-              >
-                <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-4xl font-semibold text-transparent md:text-5xl">
-                  {m.value}
-                </p>
-                <p className="mt-2 text-base font-semibold text-lux-navy md:text-lg">
-                  {m.label}
-                </p>
-                {m.sub.trim() ? (
-                  <p className="mt-1 text-sm text-stone-500">{m.sub}</p>
-                ) : null}
-              </div>
-            ))}
-          </div>
+          <SectionWave fill="fill-lux-ivory" className="relative z-10 drop-shadow-sm" />
         </div>
-      </section>
+
+        {/* Stats — glass cards, mesh blobs */}
+        <section className="relative z-10 overflow-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/80 to-lux-cream pb-6 pt-2">
+          <SectionBgStack
+            topGlow
+            bottomGlow
+            grain
+            layers={[
+              {
+                variant: "meshPremium",
+                opacityClassName: "text-lux-navy",
+              },
+              {
+                variant: "scatterDots",
+                opacityClassName: "opacity-[0.42] mix-blend-multiply",
+              },
+              {
+                variant: "orbRings",
+                wrapClassName:
+                  "-right-1/4 top-1/2 h-[130%] w-[58%] -translate-y-1/2",
+                opacityClassName: "rotate-6 opacity-[0.22]",
+              },
+              {
+                variant: "ribbonArcs",
+                wrapClassName: "-left-1/3 top-0 h-2/3 w-2/3",
+                opacityClassName: "opacity-[0.12]",
+              },
+            ]}
+          />
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {data.statCards.map((m) => (
+                <div
+                  key={m.label}
+                  className="group rounded-2xl border border-lux-ivory/70 bg-lux-ivory/70 p-6 shadow-[0_20px_60px_-24px_rgba(10,22,40,0.25)] ring-1 ring-lux-gold/15 backdrop-blur-md transition hover:-translate-y-0.5 hover:ring-lux-gold/35"
+                >
+                  <p className="font-display bg-gradient-to-br from-theme-bg to-theme-bg-elevated bg-clip-text text-4xl font-semibold text-transparent md:text-5xl">
+                    {m.value}
+                  </p>
+                  <p className="mt-2 text-base font-semibold text-lux-navy md:text-lg">
+                    {m.label}
+                  </p>
+                  {m.sub.trim() ? (
+                    <p className="mt-1 text-sm text-stone-500">{m.sub}</p>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
 
       <div style={{ order: sectionOrder("projects") }}>
         <HomeSiteProjectsSection payload={projectsList} />
@@ -186,31 +182,29 @@ export default function LuxuryHomeView({
         </div>
       </section>
 
-      <div className="relative overflow-hidden bg-lux-ivory">
-        <SectionBgStack
-          layers={[
-            {
-              variant: "meshPremium",
-              opacityClassName: "opacity-[0.12] text-lux-navy",
-            },
-            {
-              variant: "waveFluid",
-              wrapClassName: "bottom-0 left-0 right-0 h-32",
-              opacityClassName: "opacity-20",
-            },
-          ]}
-        />
-        <SectionWave
-          fill="fill-lux-ivory"
-          className="relative z-10 bg-lux-ivory"
-        />
-      </div>
+      <div style={{ order: sectionOrder("capabilities") }}>
+        <div className="relative overflow-hidden bg-lux-ivory">
+          <SectionBgStack
+            layers={[
+              {
+                variant: "meshPremium",
+                opacityClassName: "opacity-[0.12] text-lux-navy",
+              },
+              {
+                variant: "waveFluid",
+                wrapClassName: "bottom-0 left-0 right-0 h-32",
+                opacityClassName: "opacity-20",
+              },
+            ]}
+          />
+          <SectionWave
+            fill="fill-lux-ivory"
+            className="relative z-10 bg-lux-ivory"
+          />
+        </div>
 
-      {/* Capabilities — ribbon + cards like service tiles */}
-      <section
-        className="relative overflow-hidden bg-lux-ivory pb-14 pt-3"
-        style={{ order: sectionOrder("capabilities") }}
-      >
+        {/* Capabilities — ribbon + cards like service tiles */}
+        <section className="relative overflow-hidden bg-lux-ivory pb-14 pt-3">
         <SectionBgStack
           topGlow
           grain
@@ -264,7 +258,8 @@ export default function LuxuryHomeView({
             })}
           </div>
         </div>
-      </section>
+        </section>
+      </div>
 
       {/* Our Presence */}
       <section
@@ -368,28 +363,25 @@ export default function LuxuryHomeView({
 
       
 
-      {/* Wave into dark process */}
-      <div className="relative overflow-hidden bg-lux-cream">
-        <SectionBgStack
-          layers={[
-            {
-              variant: "blobOrganic",
-              opacityClassName: "opacity-[0.14]",
-            },
-            {
-              variant: "scatterDots",
-              opacityClassName: "opacity-20 mix-blend-multiply",
-            },
-          ]}
-        />
-       
-      </div>
+      <div style={{ order: sectionOrder("process") }}>
+        {/* Wave into dark process */}
+        <div className="relative overflow-hidden bg-lux-cream">
+          <SectionBgStack
+            layers={[
+              {
+                variant: "blobOrganic",
+                opacityClassName: "opacity-[0.14]",
+              },
+              {
+                variant: "scatterDots",
+                opacityClassName: "opacity-20 mix-blend-multiply",
+              },
+            ]}
+          />
+        </div>
 
-      {/* Process */}
-      <section
-        className="relative overflow-hidden bg-theme-bg pb-24 pt-4 text-stone-200"
-        style={{ order: sectionOrder("process") }}
-      >
+        {/* Process */}
+        <section className="relative overflow-hidden bg-theme-bg pb-24 pt-4 text-stone-200">
         <SectionBgStack
           edgeFade="dark"
           bottomGlow
@@ -446,29 +438,30 @@ export default function LuxuryHomeView({
             ))}
           </div>
         </div>
-      </section>
+        </section>
 
-      <div className="relative overflow-hidden bg-theme-bg">
-        <SectionBgStack
-          layers={[
-            {
-              variant: "orbRings",
-              wrapClassName:
-                "left-1/2 top-full h-48 w-full -translate-x-1/2 -translate-y-full",
-              opacityClassName: "opacity-15",
-            },
-            {
-              variant: "waveFluid",
-              wrapClassName: "inset-x-0 bottom-0 h-28",
-              opacityClassName: "opacity-20",
-            },
-          ]}
-        />
-        <SectionWave
-          fill="fill-lux-ivory"
-          flip
-          className="relative z-10 bg-theme-bg"
-        />
+        <div className="relative overflow-hidden bg-theme-bg">
+          <SectionBgStack
+            layers={[
+              {
+                variant: "orbRings",
+                wrapClassName:
+                  "left-1/2 top-full h-48 w-full -translate-x-1/2 -translate-y-full",
+                opacityClassName: "opacity-15",
+              },
+              {
+                variant: "waveFluid",
+                wrapClassName: "inset-x-0 bottom-0 h-28",
+                opacityClassName: "opacity-20",
+              },
+            ]}
+          />
+          <SectionWave
+            fill="fill-lux-ivory"
+            flip
+            className="relative z-10 bg-theme-bg"
+          />
+        </div>
       </div>
 
       {/* Testimonials */}
