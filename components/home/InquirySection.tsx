@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 
 export default function InquirySection() {
   const [form, setForm] = useState({ name: "", email: "", mobile: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = window.setTimeout(() => {
+      setSubmitted(false);
+      setForm({ name: "", email: "", mobile: "" });
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [submitted]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,9 +24,30 @@ export default function InquirySection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "contact_page",
+          name: form.name.trim(),
+          email: form.email.trim(),
+          mobile: form.mobile.trim(),
+          project: "",
+          message: "",
+          pagePath: typeof window !== "undefined" ? window.location.pathname : "/about",
+        }),
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(typeof j.error === "string" ? j.error : "Request failed");
+      }
+      setSubmitted(true);
+    } catch {
+      alert("We could not send your enquiry. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {

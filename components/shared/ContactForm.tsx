@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
 import type { SiteProjectInterestOption } from "@/lib/cms/types";
 
@@ -31,6 +31,21 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = window.setTimeout(() => {
+      setSubmitted(false);
+      setForm({
+        name: "",
+        email: "",
+        mobile: "",
+        project: normalizedFixedProject,
+        message: "",
+      });
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [submitted, normalizedFixedProject]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
