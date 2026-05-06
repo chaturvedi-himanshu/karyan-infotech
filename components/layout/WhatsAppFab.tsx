@@ -22,7 +22,7 @@ export default function WhatsAppFab({ href, phone }: Props) {
   }
 
   return (
-    <div className="lux-whatsapp-fab pointer-events-none fixed bottom-24 right-5 z-[70] sm:bottom-24 sm:right-6">
+    <div className="lux-whatsapp-fab pointer-events-none fixed bottom-8 right-5 z-[70] sm:bottom-8 sm:right-6">
       <div className="pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full">
         <a
           href={targetHref}

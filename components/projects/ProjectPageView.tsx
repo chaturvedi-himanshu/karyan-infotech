@@ -7,6 +7,7 @@ import { Building2, CheckCircle2, Download } from "lucide-react";
 import type { ProjectPayload } from "@/lib/cms/types";
 import { getLucideIcon, projectIcon } from "@/lib/cms/icons";
 import ProjectVideoPlayer from "@/components/projects/ProjectVideoPlayer";
+import ProjectGalleryCarousel from "@/components/projects/ProjectGalleryCarousel";
 
 export function projectMetadata(data: ProjectPayload): Metadata {
   return {
@@ -167,19 +168,8 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
 
               {gallery.length ? (
                 <>
-                  <h3 className="mb-5 mt-10 text-xl font-bold text-[#1a1a2e]">Project Gallery</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    {gallery.map((img) => (
-                      <div key={img.src} className="relative h-52 overflow-hidden rounded-sm">
-                        <Image
-                          src={img.src}
-                          alt={img.alt}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 50vw, 33vw"
-                        />
-                      </div>
-                    ))}
+                  <div className="mt-10">
+                    <ProjectGalleryCarousel title="Project Gallery" images={gallery} />
                   </div>
                 </>
               ) : null}

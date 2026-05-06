@@ -10,7 +10,8 @@
     "seed": "tsx scripts/seed.ts",
     "seed:about": "tsx scripts/seed-about-karyan.ts",
     "seed:project-options": "tsx scripts/seed-project-interest-options.ts",
-    "seed:blog:beautiful": "tsx scripts/seed-blog-beautiful.ts"
+    "seed:blog:beautiful": "tsx scripts/seed-blog-beautiful.ts",
+    "seed:home:about": "tsx scripts/seed-home-about.ts"
   },
   "dependencies": {
     "aos": "^2.3.4",

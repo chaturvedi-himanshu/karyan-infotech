@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EnquiryTrigger } from "@/components/enquiry/EnquiryProvider";
 import { ArrowRight, Award, CheckCircle2, Phone } from "lucide-react";
 import HeroSlider from "@/components/home/HeroSlider";
@@ -56,10 +57,10 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <SectionWave
-          fill="fill-lux-ivory"
-          className="relative z-10 drop-shadow-sm"
-        />
+          <SectionWave
+            fill="fill-lux-ivory"
+            className="relative z-10 drop-shadow-sm"
+          />
       </div>
 
       {/* Stats — glass cards, mesh blobs */}
@@ -134,7 +135,7 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:flex lg:items-center lg:gap-20 lg:px-8 lg:py-28">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:flex lg:items-center lg:gap-16 lg:px-8 lg:py-20">
           <div className="max-w-xl lg:max-w-md">
             <span className="inline-flex items-center rounded-full border border-lux-gold/30 bg-lux-ivory/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-lux-gold-dim shadow-sm backdrop-blur">
               {data.philosophy.badge}
@@ -170,7 +171,7 @@ export default function LuxuryHomeView({
       </div>
 
       {/* Capabilities — ribbon + cards like service tiles */}
-      <section className="relative overflow-hidden bg-lux-ivory pb-20 pt-4">
+      <section className="relative overflow-hidden bg-lux-ivory pb-14 pt-3">
         <SectionBgStack
           topGlow
           grain
@@ -227,7 +228,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* Our Presence */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-lux-cream to-lux-ivory py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-gradient-to-b from-lux-cream to-lux-ivory py-14 lg:py-20">
         <SectionBgStack
           diagonalSheen
           bottomGlow
@@ -262,7 +263,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* Why */}
-      <section className="relative overflow-hidden bg-lux-ivory py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-lux-ivory py-14 lg:py-20">
         <SectionBgStack
           edgeFade="light"
           topGlow
@@ -320,53 +321,7 @@ export default function LuxuryHomeView({
         </div>
       </section>
 
-      {/* Promises checklist */}
-      {/* <section className="relative overflow-hidden border-y border-stone-200/80 bg-lux-cream py-16 lg:py-20">
-        <SectionBgStack
-          topGlow
-          grain
-          layers={[
-            { variant: "waveFluid", opacityClassName: "opacity-45" },
-            {
-              variant: "meshPremium",
-              opacityClassName:
-                "opacity-[0.2] mix-blend-multiply text-lux-navy",
-            },
-            {
-              variant: "stackWaves",
-              wrapClassName: "bottom-0 left-0 right-0 h-52",
-              opacityClassName: "opacity-30",
-            },
-            {
-              variant: "scatterDots",
-              opacityClassName: "opacity-25",
-            },
-          ]}
-        />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-lux-gold-dim">
-                {data.promisesIntro.eyebrow}
-              </p>
-              <h2 className="font-display mt-3 text-3xl font-medium text-lux-navy sm:text-4xl">
-                {data.promisesIntro.title}
-              </h2>
-            </div>
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {data.promises.map((line) => (
-                <li
-                  key={line}
-                  className="flex gap-3 rounded-2xl border border-stone-200/80 bg-lux-ivory/95 px-4 py-3 text-sm text-stone-700 shadow-sm"
-                >
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-lux-gold-dim" />
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section> */}
+      
 
       {/* Wave into dark process */}
       <div className="relative overflow-hidden bg-lux-cream">
@@ -382,10 +337,7 @@ export default function LuxuryHomeView({
             },
           ]}
         />
-        <SectionWave
-          fill="fill-theme-bg"
-          className="relative z-10 bg-lux-cream"
-        />
+       
       </div>
 
       {/* Process */}
@@ -472,7 +424,7 @@ export default function LuxuryHomeView({
       </div>
 
       {/* Testimonials */}
-      <section className="relative overflow-hidden bg-lux-ivory py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-lux-ivory py-14 lg:py-20">
         <SectionBgStack
           topGlow
           diagonalSheen
@@ -590,7 +542,7 @@ export default function LuxuryHomeView({
       </section> */}
 
       {/* Location */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-lux-ivory via-lux-cream to-lux-cream py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-gradient-to-br from-lux-ivory via-lux-cream to-lux-cream py-14 lg:py-20">
         <SectionBgStack
           diagonalSheen
           bottomGlow
@@ -664,8 +616,8 @@ export default function LuxuryHomeView({
         </div>
       </section>
 
-      {/* Amenities */}
-      <section className="relative overflow-hidden border-t border-stone-200/80 bg-lux-ivory py-20 lg:py-28">
+      {/* About */}
+      <section className="relative overflow-hidden border-t border-stone-200/80 bg-lux-ivory py-14 lg:py-20">
         <SectionBgStack
           topGlow
           grain
@@ -688,29 +640,55 @@ export default function LuxuryHomeView({
           ]}
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-lux-gold-dim">
-              {data.amenitiesIntro.eyebrow}
-            </p>
-            <h2 className="font-display mt-3 text-3xl font-medium text-lux-navy sm:text-4xl">
-              {data.amenitiesIntro.title}
-            </h2>
+          <div className="grid gap-8 rounded-3xl border border-stone-200/90 bg-gradient-to-br from-lux-ivory via-lux-cream/70 to-lux-ivory p-6 shadow-[0_24px_60px_-36px_rgba(15,23,42,0.35)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-stretch lg:gap-10 lg:p-10">
+            <div className="relative overflow-hidden rounded-2xl border border-stone-200/90 bg-white shadow-lg">
+              {data.aboutSection.logoSrc?.trim() ? (
+                <>
+                  <div className="relative h-[260px] w-full sm:h-[320px] lg:h-full lg:min-h-[420px]">
+                    <Image
+                      src={data.aboutSection.logoSrc}
+                      alt={data.aboutSection.logoAlt || "Karyan about image"}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
+                </>
+              ) : (
+                <div className="flex h-[260px] items-center justify-center sm:h-[320px] lg:h-full lg:min-h-[420px]">
+                  <p className="text-sm font-medium text-stone-500">Upload About image from admin</p>
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-lux-gold-dim">
+                {data.aboutSection.eyebrow}
+              </p>
+              <h2 className="font-display mt-3 text-3xl font-medium leading-tight text-lux-navy sm:text-4xl lg:text-[2.7rem]">
+                {data.aboutSection.title}
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-stone-700">
+                {data.aboutSection.description}
+              </p>
+              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                {data.aboutSection.points.map((point) => (
+                  <li
+                    key={point}
+                    className="rounded-xl border border-stone-200/90 bg-white/80 px-4 py-3 text-sm font-medium text-stone-700 shadow-sm"
+                  >
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <ul className="mx-auto mt-14 flex max-w-4xl flex-wrap justify-center gap-3">
-            {data.amenities.map((a) => (
-              <li
-                key={a}
-                className="rounded-full border border-stone-200/90 bg-gradient-to-r from-lux-ivory to-lux-cream/70 px-5 py-2.5 text-sm font-medium text-stone-700 shadow-sm"
-              >
-                {a}
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
       {/* Journal */}
-      <section className="relative overflow-hidden bg-theme-bg py-20 text-stone-300 lg:py-28">
+      <section className="relative overflow-hidden bg-theme-bg py-14 text-stone-300 lg:py-20">
         <SectionBgStack
           edgeFade="dark"
           topGlow
@@ -801,8 +779,7 @@ export default function LuxuryHomeView({
       </section> */}
 
       {/* Split CTA — phone + form */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-lux-cream via-lux-ivory to-lux-cream py-20 lg:py-28">
-        <SectionBgStack
+      <section className="relative overflow-hidden bg-gradient-to-br from-lux-cream via-lux-ivory to-lux-cream py-14 lg:py-20">        <SectionBgStack
           diagonalSheen
           topGlow
           bottomGlow
@@ -859,7 +836,7 @@ export default function LuxuryHomeView({
       </section>
 
       {/* Final CTA */}
-      <section className="relative overflow-hidden bg-lux-ivory pb-24 pt-8 lg:pb-32">
+      {/* <section className="relative overflow-hidden bg-lux-ivory pb-24 pt-8 lg:pb-32">
         <SectionBgStack
           topGlow
           edgeFade="light"
@@ -907,7 +884,7 @@ export default function LuxuryHomeView({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }

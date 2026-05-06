@@ -65,7 +65,7 @@ export default async function SiteShell({
             href={settings.nav.topBar.whatsappHref}
             phone={settings.nav.topBar.whatsapp || settings.nav.topBar.phone}
           />
-          <CallNowFab href={settings.nav.topBar.phoneHref} />
+          {/* <CallNowFab href={settings.nav.topBar.phoneHref} /> */}
           <EnquiryFloatPromo promo={settings.enquiryFloatPromo} />
         </div>
       </EnquiryProvider>

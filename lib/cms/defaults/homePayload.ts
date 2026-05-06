@@ -224,18 +224,22 @@ export const DEFAULT_HOME_PAYLOAD: HomePayload = {
       { corridor: "Wave City", projects: "Avenue IV" },
     ],
   },
-  amenitiesIntro: {
-    eyebrow: "Product craft",
-    title: "Infrastructure that supports daily dignity.",
+  aboutSection: {
+    eyebrow: "About Karyan",
+    title: "A legacy-led developer building value with discipline.",
+    description:
+      "Karyan Infratech is driven by clarity, design integrity, and execution rigor. Across residential and commercial projects, we focus on useful planning, transparent delivery, and long-term asset value for buyers and investors.",
+    logoSrc: "https://karyaninfratech.co.in/wp-content/uploads/2023/03/logo.png",
+    logoAlt: "Karyan Infratech",
+    points: [
+      "Legacy-backed developer approach",
+      "Design, engineering, and delivery alignment",
+      "Compliance-first execution standards",
+      "Customer-focused support from enquiry to handover",
+      "Strategic NCR growth corridor presence",
+      "Long-term value creation mindset",
+    ],
   },
-  amenities: [
-    "Curated arrival lobbies",
-    "High ceilings & generous glazing",
-    "Power & backup planning",
-    "Fire-life safety compliance",
-    "Visitor parking strategy",
-    "Landscaped arrival courts",
-  ],
   journalIntro: {
     eyebrow: "Journal",
     title: "Ideas for buyers & operators.",

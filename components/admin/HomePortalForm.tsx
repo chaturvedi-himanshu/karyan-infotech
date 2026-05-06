@@ -638,7 +638,7 @@ export default function HomePortalForm() {
       <CmsGroup
         icon={<BookOpen className="h-4 w-4" />}
         title="Content sections"
-        description="Portfolio, process, testimonials, FAQs, location, and amenities"
+        description="Portfolio, process, testimonials, FAQs, location, and About section"
       >
         <CmsSection
           title="Our Presence"
@@ -1175,45 +1175,86 @@ export default function HomePortalForm() {
         </CmsSection>
 
         <CmsSection
-          title="Amenities & craft"
-          description="Short intro plus bullet list of product features."
-          where='Home page — "Product craft" list'
+          title="About section"
+          description="Left image, intro copy, and highlights for the About block on home page."
+          where='Home page — section replacing "Product craft"'
           defaultOpen={false}
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <CmsField label="Eyebrow">
               <CmsInput
-                value={data.amenitiesIntro.eyebrow}
+                value={data.aboutSection.eyebrow}
                 onChange={(e) =>
                   patch((d) => ({
                     ...d,
-                    amenitiesIntro: { ...d.amenitiesIntro, eyebrow: e.target.value },
+                    aboutSection: { ...d.aboutSection, eyebrow: e.target.value },
                   }))
                 }
               />
             </CmsField>
             <CmsField label="Heading">
               <CmsInput
-                value={data.amenitiesIntro.title}
+                value={data.aboutSection.title}
                 onChange={(e) =>
                   patch((d) => ({
                     ...d,
-                    amenitiesIntro: { ...d.amenitiesIntro, title: e.target.value },
+                    aboutSection: { ...d.aboutSection, title: e.target.value },
                   }))
                 }
               />
             </CmsField>
           </div>
-          <CmsField label="Bullet lines" hint="One amenity per line.">
+          <CmsField label="Description">
             <CmsTextarea
-              value={data.amenities.join("\n")}
+              value={data.aboutSection.description}
               onChange={(e) =>
                 patch((d) => ({
                   ...d,
-                  amenities: e.target.value
-                    .split("\n")
-                    .map((x) => x.trim())
-                    .filter(Boolean),
+                  aboutSection: { ...d.aboutSection, description: e.target.value },
+                }))
+              }
+              className="min-h-[120px]"
+            />
+          </CmsField>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <CmsField label="Left image">
+              <CmsImageUpload
+                value={data.aboutSection.logoSrc}
+                onChange={(url) =>
+                  patch((d) => ({
+                    ...d,
+                    aboutSection: { ...d.aboutSection, logoSrc: url },
+                  }))
+                }
+                folder="home/about"
+                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+              />
+            </CmsField>
+            <CmsField label="Image alt text">
+              <CmsInput
+                value={data.aboutSection.logoAlt}
+                onChange={(e) =>
+                  patch((d) => ({
+                    ...d,
+                    aboutSection: { ...d.aboutSection, logoAlt: e.target.value },
+                  }))
+                }
+              />
+            </CmsField>
+          </div>
+          <CmsField label="Highlight lines" hint="One point per line.">
+            <CmsTextarea
+              value={data.aboutSection.points.join("\n")}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  aboutSection: {
+                    ...d.aboutSection,
+                    points: e.target.value
+                      .split("\n")
+                      .map((x) => x.trim())
+                      .filter(Boolean),
+                  },
                 }))
               }
               className="min-h-[140px]"

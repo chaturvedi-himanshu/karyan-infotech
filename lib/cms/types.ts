@@ -138,8 +138,14 @@ export type HomePayload = {
     corridorsTitle: string;
     corridors: { corridor: string; projects: string }[];
   };
-  amenitiesIntro: { eyebrow: string; title: string };
-  amenities: string[];
+  aboutSection: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    logoSrc: string;
+    logoAlt: string;
+    points: string[];
+  };
   journalIntro: { eyebrow: string; title: string; ctaLabel: string; ctaHref: string };
   journalTeasers: { title: string; href: string; hint: string }[];
   ecosystem: { eyebrow: string; body: string; tags: string[] };
