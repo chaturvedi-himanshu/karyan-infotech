@@ -18,6 +18,7 @@ export async function GET(
     slug: doc.slug,
     metaTitle: doc.metaTitle,
     metaDescription: doc.metaDescription,
+    seo: doc.seo ?? null,
     payload: doc.payload,
   });
 }
@@ -44,6 +45,7 @@ export async function PUT(
         slug,
         metaTitle: body.metaTitle,
         metaDescription: body.metaDescription,
+        seo: body.seo ?? null,
         payload: body.payload,
       },
     },

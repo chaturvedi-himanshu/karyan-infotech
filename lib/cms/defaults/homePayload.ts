@@ -1,6 +1,19 @@
 import type { HomePayload } from "../types";
 
 export const DEFAULT_HOME_PAYLOAD: HomePayload = {
+  metadata: {
+    title: "Karyan Infratech",
+    description:
+      "Premium residential and commercial developments by Karyan Infratech across NCR.",
+  },
+  seo: {
+    keywords: "",
+    robots: "index,follow",
+    canonical: "",
+    hreflangs: [],
+    schemaJsonLd: "",
+    metaTags: [],
+  },
   sectionOrder: [
     "stats",
     "projects",

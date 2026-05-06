@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 type FloorPlanImage = {
   src: string;
   alt: string;
+  label?: string;
 };
 
 export default function ProjectFloorPlansLightbox({
@@ -73,6 +74,11 @@ export default function ProjectFloorPlansLightbox({
               className="object-cover transition duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
+            {plan.label?.trim() ? (
+              <span className="absolute left-3 top-3 z-10 rounded-full border border-white/35 bg-black/55 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur">
+                {plan.label}
+              </span>
+            ) : null}
             <div className="absolute inset-0 bg-black/0 transition group-hover:bg-black/15" />
           </button>
         ))}
@@ -133,6 +139,11 @@ export default function ProjectFloorPlansLightbox({
                             className="object-contain"
                             sizes="100vw"
                           />
+                          {plan.label?.trim() ? (
+                            <span className="absolute left-4 top-4 z-10 rounded-full border border-white/35 bg-black/60 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur">
+                              {plan.label}
+                            </span>
+                          ) : null}
                         </div>
                       </SwiperSlide>
                     ))}

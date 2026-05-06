@@ -19,6 +19,7 @@ import {
   deepMerge,
 } from "./cms-ui";
 import { parseLines } from "./form-helpers";
+import SeoFields from "./SeoFields";
 
 export default function ProjectPortalForm({ slug }: { slug: string }) {
   const [data, setData] = useState<ProjectPayload | null>(null);
@@ -83,7 +84,7 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
       >
         <CmsSection
           title="SEO — search listing"
-          description="Title and short summary for Google search results."
+          description="Title, description, keywords, robots, OpenGraph, Twitter, schema, hreflang."
           where="Google snippet and browser tab — not shown as large headings on the page"
           defaultOpen
         >
@@ -106,6 +107,10 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
               }
             />
           </CmsField>
+          <SeoFields
+            value={data.seo}
+            onChange={(seo) => patch((d) => ({ ...d, seo }))}
+          />
         </CmsSection>
       </CmsGroup>
 
@@ -562,11 +567,30 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
                     }
                   />
                 </CmsField>
+                <CmsField label="Label (optional)">
+                  <CmsInput
+                    value={g.label ?? ""}
+                    onChange={(e) =>
+                      patch((d) => {
+                        const gallery = [...d.gallery];
+                        gallery[i] = {
+                          ...gallery[i],
+                          label: e.target.value || undefined,
+                        };
+                        return { ...d, gallery };
+                      })
+                    }
+                    placeholder="e.g. Entrance View"
+                  />
+                </CmsField>
               </CmsItemCard>
             ))}
             <CmsGhostButton
               onClick={() =>
-                patch((d) => ({ ...d, gallery: [...d.gallery, { src: "", alt: "" }] }))
+                patch((d) => ({
+                  ...d,
+                  gallery: [...d.gallery, { src: "", alt: "", label: "" }],
+                }))
               }
             >
               + Add image

@@ -133,17 +133,17 @@ export default function HomeProjectsSlider({ projects }: { projects: Project[] }
 
   return (
     <div ref={rootRef} className="home-projects-carousel-root relative mt-14">
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-stretch sm:gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:items-stretch sm:gap-4">
         <button
           ref={prevRef}
           type="button"
           aria-label="Previous project"
-          className="order-2 flex h-12 w-12 shrink-0 items-center justify-center self-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:order-1 sm:self-center"
+          className="order-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:order-1 sm:flex"
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
         </button>
 
-        <div className="swiper home-projects-swiper home-projects-swiper--3d order-1 min-h-0 min-w-0 flex-1 overflow-hidden sm:order-2">
+        <div className="swiper home-projects-swiper home-projects-swiper--3d order-1 min-h-0 min-w-0 basis-full overflow-hidden sm:order-2 sm:basis-auto sm:flex-1">
           <div className="swiper-wrapper">
             {projects.map((project) => (
               <div key={project.href} className="swiper-slide">
@@ -157,7 +157,7 @@ export default function HomeProjectsSlider({ projects }: { projects: Project[] }
           ref={nextRef}
           type="button"
           aria-label="Next project"
-          className="order-3 flex h-12 w-12 shrink-0 items-center justify-center self-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:self-center"
+          className="order-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:order-3 sm:flex"
         >
           <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
         </button>

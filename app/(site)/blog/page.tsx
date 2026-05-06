@@ -4,6 +4,8 @@ import PageHeader from "@/components/layout/PageHeader";
 import BlogCard from "@/components/shared/BlogCard";
 import CTASection from "@/components/shared/CTASection";
 import { getBlogPosts, getSitePage } from "@/lib/cms/getters";
+import SeoJsonLd from "@/components/seo/SeoJsonLd";
+import { buildSeoMetadata } from "@/lib/seo/metadata";
 
 type BlogIntroPayload = {
   headerBgImage?: string;
@@ -16,7 +18,11 @@ type BlogIntroPayload = {
 export async function generateMetadata(): Promise<Metadata> {
   const doc = await getSitePage("blog");
   if (!doc) return { title: "Blog" };
-  return { title: doc.metaTitle, description: doc.metaDescription };
+  return buildSeoMetadata({
+    title: doc.metaTitle,
+    description: doc.metaDescription,
+    seo: doc.seo,
+  });
 }
 
 export default async function BlogPage() {
@@ -25,6 +31,7 @@ export default async function BlogPage() {
   const intro = doc.payload as BlogIntroPayload;
   return (
     <>
+      <SeoJsonLd raw={doc.seo?.schemaJsonLd} />
       <PageHeader
         title={intro.headerHeading || doc.metaTitle}
         subheading={intro.headerSubheading}

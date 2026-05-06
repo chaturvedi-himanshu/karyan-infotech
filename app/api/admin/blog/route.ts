@@ -20,6 +20,7 @@ export async function GET() {
       href: r.href,
       image: r.image,
       order: r.order,
+      seo: r.seo ?? undefined,
     })),
   });
 }
@@ -46,6 +47,7 @@ export async function PUT(req: Request) {
         href: p.href,
         image: p.image,
         order: p.order ?? i,
+        seo: p.seo ?? undefined,
       }))
     );
   }

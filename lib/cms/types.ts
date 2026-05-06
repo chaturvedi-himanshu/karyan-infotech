@@ -1,6 +1,36 @@
 export type NavLink = { label: string; href: string };
 export type NavProject = { name: string; href: string; tag: string };
 
+export type SeoConfig = {
+  /** Comma-separated keywords */
+  keywords?: string;
+  /** Example: "index,follow" or "noindex,nofollow" */
+  robots?: string;
+  canonical?: string;
+  hreflangs?: { lang: string; url: string }[];
+  /** Raw JSON-LD object text */
+  schemaJsonLd?: string;
+  /** Extra name/content meta tags */
+  metaTags?: { name: string; content: string }[];
+  openGraph?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
+    type?: string;
+    siteName?: string;
+    locale?: string;
+  };
+  twitter?: {
+    card?: string;
+    title?: string;
+    description?: string;
+    image?: string;
+    site?: string;
+    creator?: string;
+  };
+};
+
 export type SiteNavPayload = {
   /** Header brand image (HTTPS URL). Falls back to the main site logo if unset. */
   headerLogoSrc?: string;
@@ -109,6 +139,8 @@ export type HomePresenceBand = {
 };
 
 export type HomePayload = {
+  metadata?: { title: string; description: string };
+  seo?: SeoConfig;
   /** Reorderable homepage section keys controlled from admin. */
   sectionOrder: string[];
   heroSlides: HomeHeroSlide[];
@@ -173,6 +205,7 @@ export type ProjectHighlight = {
 
 export type ProjectPayload = {
   metadata: { title: string; description: string };
+  seo?: SeoConfig;
   header: {
     title: string;
     breadcrumbs: { label: string; href?: string }[];
@@ -187,7 +220,7 @@ export type ProjectPayload = {
   unitTypes?: { size: string; area: string; ideal: string }[];
   architectsTitle?: string;
   architects?: { name: string; role: string; description: string }[];
-  gallery: { src: string; alt: string }[];
+  gallery: { src: string; alt: string; label?: string }[];
   floorPlansTitle?: string;
   floorPlans?: { src: string; alt: string; label?: string }[];
   downloads?: {
@@ -231,4 +264,5 @@ export type BlogPostPayload = {
   href: string;
   image: string;
   order?: number;
+  seo?: SeoConfig;
 };

@@ -6,6 +6,8 @@ import { getBlogPostBySlug, getBlogPosts } from "@/lib/cms/getters";
 import { stripHtml } from "@/lib/html/stripHtml";
 import BlogArticleBody from "@/components/blog/BlogArticleBody";
 import { Calendar, Clock3 } from "lucide-react";
+import SeoJsonLd from "@/components/seo/SeoJsonLd";
+import { buildSeoMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -13,10 +15,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
   if (!post) return { title: "Article" };
-  return {
+  return buildSeoMetadata({
     title: post.title,
     description: stripHtml(post.excerpt).slice(0, 200),
-  };
+    seo: post.seo,
+  });
 }
 
 export async function generateStaticParams() {
@@ -39,6 +42,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <SeoJsonLd raw={post.seo?.schemaJsonLd} />
       <section
         data-aos-skip
         className="relative h-[min(72vh,760px)] w-full overflow-hidden bg-theme-bg"

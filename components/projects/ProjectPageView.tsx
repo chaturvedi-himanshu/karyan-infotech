@@ -9,12 +9,15 @@ import { getLucideIcon, projectIcon } from "@/lib/cms/icons";
 import ProjectVideoPlayer from "@/components/projects/ProjectVideoPlayer";
 import ProjectGalleryCarousel from "@/components/projects/ProjectGalleryCarousel";
 import ProjectFloorPlansLightbox from "@/components/projects/ProjectFloorPlansLightbox";
+import SeoJsonLd from "@/components/seo/SeoJsonLd";
+import { buildSeoMetadata } from "@/lib/seo/metadata";
 
 export function projectMetadata(data: ProjectPayload): Metadata {
-  return {
+  return buildSeoMetadata({
     title: data.metadata.title,
     description: data.metadata.description,
-  };
+    seo: data.seo,
+  });
 }
 
 export default function ProjectPageView({ data }: { data: ProjectPayload }) {
@@ -43,6 +46,7 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
 
   return (
     <>
+      <SeoJsonLd raw={data.seo?.schemaJsonLd} />
       <PageHeader title={header.title} breadcrumbs={header.breadcrumbs} bgImage={header.bgImage} />
 
       <section className="bg-lux-ivory py-20">

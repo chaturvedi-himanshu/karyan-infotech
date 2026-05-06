@@ -146,6 +146,7 @@ export async function getBlogPosts(): Promise<BlogPostPayload[]> {
         href: r.href,
         image: r.image,
         order: r.order,
+        seo: (r.seo as BlogPostPayload["seo"]) ?? undefined,
       }));
     }
   } catch {
@@ -170,6 +171,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostPayload |
 export async function getSitePage(slug: string): Promise<{
   metaTitle: string;
   metaDescription: string;
+  seo?: import("./types").SeoConfig;
   payload: Record<string, unknown>;
 } | null> {
   const fallback = DEFAULT_SITE_PAGES.find((p) => p.slug === slug);
@@ -180,6 +182,7 @@ export async function getSitePage(slug: string): Promise<{
       return {
         metaTitle: doc.metaTitle,
         metaDescription: doc.metaDescription,
+        seo: (doc.seo as import("./types").SeoConfig) ?? undefined,
         payload: (doc.payload ?? {}) as Record<string, unknown>,
       };
     }
@@ -190,6 +193,7 @@ export async function getSitePage(slug: string): Promise<{
   return {
     metaTitle: fallback.metaTitle,
     metaDescription: fallback.metaDescription,
+    seo: undefined,
     payload: { ...fallback.payload } as Record<string, unknown>,
   };
 }

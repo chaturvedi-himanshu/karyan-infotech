@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FileText, Globe, LayoutTemplate, MapPin } from "lucide-react";
+import type { SeoConfig } from "@/lib/cms/types";
 import { DEFAULT_SITE_PAGES } from "@/lib/cms/defaults/sitePages";
 import {
   CmsCheckbox,
@@ -18,6 +19,7 @@ import {
   CmsTextarea,
   deepMerge,
 } from "./cms-ui";
+import SeoFields from "./SeoFields";
 
 const CONTACT_ICONS = ["Phone", "Mail", "MapPin", "Clock"] as const;
 
@@ -95,6 +97,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
   const [payload, setPayload] = useState<Record<string, unknown>>(
     () => ({ ...((fallback?.payload as Record<string, unknown>) ?? {}) })
   );
+  const [seo, setSeo] = useState<SeoConfig>({});
   const [status, setStatus] = useState("");
 
   useEffect(() => {
@@ -105,6 +108,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
       if (cancelled || !doc) return;
       setMetaTitle(doc.metaTitle ?? fallback.metaTitle);
       setMetaDescription(doc.metaDescription ?? fallback.metaDescription);
+      setSeo((doc.seo ?? {}) as SeoConfig);
       const merged = deepMerge(
         { ...(fallback.payload as Record<string, unknown>) },
         (doc.payload ?? {}) as Record<string, unknown>
@@ -130,7 +134,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
       method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ metaTitle, metaDescription, payload }),
+      body: JSON.stringify({ metaTitle, metaDescription, seo, payload }),
     });
     setStatus(res.ok ? "Saved successfully." : "Could not save. Try again.");
   }
@@ -171,7 +175,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
       >
         <CmsSection
           title="SEO — search listing"
-          description="Title and description shown in Google results."
+          description="Title, description, keywords, robots, OpenGraph, Twitter, schema, hreflang."
           where="Google snippet and browser tab — not the large visible headings on the page"
           defaultOpen
         >
@@ -187,6 +191,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
               onChange={(e) => setMetaDescription(e.target.value)}
             />
           </CmsField>
+          <SeoFields value={seo} onChange={setSeo} />
         </CmsSection>
       </CmsGroup>
 

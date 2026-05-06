@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { BookOpen, Layers, MessageSquare, Megaphone } from "lucide-react";
+import { BookOpen, Globe, Layers, MessageSquare, Megaphone } from "lucide-react";
 import type { HomePayload } from "@/lib/cms/types";
 import { DEFAULT_HOME_PAYLOAD } from "@/lib/cms/defaults/homePayload";
 import { INDIA_PRESENCE_CITIES_SORTED } from "@/lib/cms/indiaPresenceCities";
@@ -22,6 +22,7 @@ import {
   CmsTextarea,
   deepMerge,
 } from "./cms-ui";
+import SeoFields from "./SeoFields";
 
 const HOME_SECTION_CATALOG: { id: string; label: string }[] = [
   { id: "stats", label: "Stats band" },
@@ -158,6 +159,52 @@ export default function HomePortalForm() {
               );
             })}
           </div>
+        </CmsSection>
+      </CmsGroup>
+
+      <CmsGroup
+        icon={<Globe className="h-4 w-4" />}
+        title="Search & discovery"
+        description="Home page SEO fields used by search engines and social previews"
+      >
+        <CmsSection
+          title="SEO — home page"
+          description="Keywords, robots, canonical, OpenGraph, Twitter, schema, hreflang."
+          where="Home page metadata"
+          defaultOpen={false}
+        >
+          <CmsField label="SEO title (home)">
+            <CmsInput
+              value={data.metadata?.title ?? ""}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  metadata: {
+                    title: e.target.value,
+                    description: d.metadata?.description ?? "",
+                  },
+                }))
+              }
+            />
+          </CmsField>
+          <CmsField label="SEO description (home)">
+            <CmsTextarea
+              value={data.metadata?.description ?? ""}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  metadata: {
+                    title: d.metadata?.title ?? "",
+                    description: e.target.value,
+                  },
+                }))
+              }
+            />
+          </CmsField>
+          <SeoFields
+            value={data.seo}
+            onChange={(seo) => patch((d) => ({ ...d, seo }))}
+          />
         </CmsSection>
       </CmsGroup>
 

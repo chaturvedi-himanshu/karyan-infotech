@@ -1,5 +1,6 @@
 import LuxuryHomeView from "@/components/home/LuxuryHomeView";
 import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
+import SeoJsonLd from "@/components/seo/SeoJsonLd";
 import { DEFAULT_SITE_PAGES } from "@/lib/cms/defaults/sitePages";
 import { getBlogPosts, getHomeContent, getSitePage, getSiteSettings } from "@/lib/cms/getters";
 
@@ -28,14 +29,17 @@ export default async function LuxuryHomePage() {
     (projectsDoc?.payload ?? undefined) as Record<string, unknown> | undefined
   );
   return (
-    <LuxuryHomeView
-      data={data}
-      projectsList={projectsList}
-      brandLogoSrc={site.nav.headerLogoSrc}
-      brandLogoAlt={site.nav.headerLogoAlt}
-      deskPhone={site.nav.topBar.phone}
-      deskPhoneHref={site.nav.topBar.phoneHref}
-      blogPosts={blogPosts.slice(0, 10)}
-    />
+    <>
+      <SeoJsonLd raw={data.seo?.schemaJsonLd} />
+      <LuxuryHomeView
+        data={data}
+        projectsList={projectsList}
+        brandLogoSrc={site.nav.headerLogoSrc}
+        brandLogoAlt={site.nav.headerLogoAlt}
+        deskPhone={site.nav.topBar.phone}
+        deskPhoneHref={site.nav.topBar.phoneHref}
+        blogPosts={blogPosts.slice(0, 10)}
+      />
+    </>
   );
 }

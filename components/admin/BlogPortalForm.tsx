@@ -15,6 +15,7 @@ import {
 } from "./cms-ui";
 import BlogJoditEditor from "./BlogJoditEditor";
 import { slugify } from "./form-helpers";
+import SeoFields from "./SeoFields";
 
 export default function BlogPortalForm() {
   const [posts, setPosts] = useState<BlogPostPayload[]>([]);
@@ -148,6 +149,12 @@ export default function BlogPortalForm() {
                 value={post.href}
                 onChange={(e) => patchAt(i, (row) => ({ ...row, href: e.target.value }))}
                 placeholder="/blog/your-slug"
+              />
+            </CmsField>
+            <CmsField label="Advanced SEO">
+              <SeoFields
+                value={post.seo}
+                onChange={(seo) => patchAt(i, (row) => ({ ...row, seo }))}
               />
             </CmsField>
           </CmsItemCard>
