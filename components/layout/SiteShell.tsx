@@ -53,7 +53,7 @@ export default async function SiteShell({
         projectOptions={settings.projectInterestOptions}
       >
         {/* Use a real wrapper element so CSS vars cascade to all site UI */}
-        <div className="overflow-x-hidden" style={themeCssVars(settings.themeColors)}>
+        <div className="overflow-x-clip" style={themeCssVars(settings.themeColors)}>
           <NavbarClient nav={settings.nav} />
           {children}
           <FooterClient

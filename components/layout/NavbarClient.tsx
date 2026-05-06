@@ -65,7 +65,7 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
 
   return (
     <>
-      <header className="sticky top-0 z-100 border-b border-stone-200/80 bg-white/90 shadow-sm backdrop-blur-md">
+      <header className="sticky top-0 z-[100] border-b border-stone-200/80 bg-white/90 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 lg:py-4">
           <div className="relative z-10 flex shrink-0 items-center">
             <SiteBrandLogo
