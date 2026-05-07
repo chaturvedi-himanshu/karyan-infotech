@@ -1,6 +1,33 @@
 import type { Metadata } from "next";
 import type { SeoConfig } from "@/lib/cms/types";
 
+type OpenGraphType = NonNullable<
+  NonNullable<Metadata["openGraph"]> extends { type?: infer T } ? T : never
+>;
+
+const OPEN_GRAPH_TYPES = [
+  "website",
+  "article",
+  "book",
+  "profile",
+  "music.song",
+  "music.album",
+  "music.playlist",
+  "music.radio_station",
+  "video.movie",
+  "video.episode",
+  "video.tv_show",
+  "video.other",
+] as const satisfies readonly OpenGraphType[];
+
+function parseOpenGraphType(raw?: string): OpenGraphType | undefined {
+  const value = raw?.trim();
+  if (!value) return undefined;
+  return (OPEN_GRAPH_TYPES as readonly string[]).includes(value)
+    ? (value as OpenGraphType)
+    : undefined;
+}
+
 function parseKeywords(raw?: string): string[] | undefined {
   if (!raw?.trim()) return undefined;
   const list = raw
@@ -67,7 +94,7 @@ export function buildSeoMetadata({
       url: seo?.openGraph?.url?.trim() || canonical || undefined,
       siteName: seo?.openGraph?.siteName?.trim() || undefined,
       locale: seo?.openGraph?.locale?.trim() || undefined,
-      type: seo?.openGraph?.type?.trim() || "website",
+      type: parseOpenGraphType(seo?.openGraph?.type) ?? "website",
       images: seo?.openGraph?.image?.trim() ? [seo.openGraph.image.trim()] : undefined,
     },
     twitter: {
