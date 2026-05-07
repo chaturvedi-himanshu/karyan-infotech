@@ -18,27 +18,33 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+function normalizeProjectType(raw: string): string {
+  return raw.trim().toLowerCase();
+}
+
 export default async function ProjectsPage({
   searchParams,
 }: {
-  searchParams?: { type?: string | string[] };
+  searchParams?:
+    | { type?: string | string[] }
+    | Promise<{ type?: string | string[] }>;
 }) {
+  const resolvedSearchParams = await Promise.resolve(searchParams ?? {});
   const doc = await getSitePage("projects");
   if (!doc) notFound();
   const payload = doc.payload as ProjectsListPayload;
-  const rawType = Array.isArray(searchParams?.type)
-    ? searchParams?.type[0]
-    : searchParams?.type;
+  const rawType = Array.isArray(resolvedSearchParams.type)
+    ? resolvedSearchParams.type[0]
+    : resolvedSearchParams.type;
   const activeType = rawType?.toLowerCase().trim();
-  const filteredPayload: ProjectsListPayload =
-    activeType === "residential" || activeType === "commercial"
-      ? {
-          ...payload,
-          projects: payload.projects.filter((project) =>
-            project.type.toLowerCase().includes(activeType)
-          ),
-        }
-      : payload;
+  const filteredPayload: ProjectsListPayload = activeType
+    ? {
+        ...payload,
+        projects: payload.projects.filter((project) =>
+          normalizeProjectType(project.type) === activeType
+        ),
+      }
+    : payload;
   return (
     <>
       <SeoJsonLd raw={doc.seo?.schemaJsonLd} />

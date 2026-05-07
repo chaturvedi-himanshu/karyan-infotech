@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FileText, Image, PhoneCall, Search } from "lucide-react";
 import type { ProjectPayload } from "@/lib/cms/types";
 import { DEFAULT_PROJECT_PAGES } from "@/lib/cms/defaults/projectsSeed";
+import { buildDefaultProjectPayload } from "@/lib/cms/projects";
 import {
   CmsField,
   CmsGhostButton,
@@ -32,8 +33,15 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
   }, []);
 
   useEffect(() => {
-    const seed = DEFAULT_PROJECT_PAGES.find((x) => x.slug === slug)?.payload;
-    if (!seed) return;
+    const seed =
+      DEFAULT_PROJECT_PAGES.find((x) => x.slug === slug)?.payload ??
+      buildDefaultProjectPayload(
+        slug,
+        slug
+          .split("-")
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(" ")
+      );
     fetch(`/api/admin/projects/${slug}`, { credentials: "include" })
       .then(async (r) => {
         if (!r.ok) throw new Error(`Could not load project (${r.status})`);

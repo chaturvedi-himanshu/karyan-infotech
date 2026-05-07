@@ -3,17 +3,16 @@ import { getAdminSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import AdminShell from "@/components/admin/AdminShell";
 import { ArrowRight } from "lucide-react";
-
-const projects = [
-  { slug: "karyan-square", label: "Karyan Square", blurb: "Retail & offices — Wave City" },
-  { slug: "karyan-citywalk", label: "Karyan CityWalk", blurb: "High-street retail — expressway" },
-  { slug: "karyan-trevana", label: "Karyan Trevana", blurb: "Residential towers — NH-24" },
-  { slug: "karyan-avenue-iv", label: "Avenue IV", blurb: "Flagship commercial — Wave City" },
-];
+import { getSitePage } from "@/lib/cms/getters";
+import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
+import { collectProjectsFromListing } from "@/lib/cms/projects";
 
 export default async function AdminProjectsIndex() {
   const session = await getAdminSession();
   if (!session) redirect("/admin/login");
+  const projectsDoc = await getSitePage("projects");
+  const listingPayload = projectsDoc?.payload as ProjectsListPayload | undefined;
+  const projects = listingPayload ? collectProjectsFromListing(listingPayload) : [];
 
   return (
     <AdminShell
@@ -22,6 +21,11 @@ export default async function AdminProjectsIndex() {
       breadcrumbs={[{ label: "Overview", href: "/admin" }, { label: "Project pages" }]}
       userEmail={session.email}
     >
+      {projects.length === 0 ? (
+        <p className="rounded-2xl border border-dashed border-stone-200 bg-white px-5 py-8 text-sm text-stone-600">
+          No projects found in listing page yet. Add cards in Admin - Pages - Projects first.
+        </p>
+      ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {projects.map((p) => (
           <Link
@@ -32,6 +36,7 @@ export default async function AdminProjectsIndex() {
             <div>
               <h2 className="font-display text-lg font-semibold text-lux-navy">{p.label}</h2>
               <p className="mt-1 text-sm text-stone-600">{p.blurb}</p>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">{p.type}</p>
               <p className="mt-3 text-xs text-stone-500">
                 Live URL: <span className="font-mono text-stone-700">/{p.slug}</span>
               </p>

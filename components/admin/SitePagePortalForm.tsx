@@ -24,6 +24,7 @@ import {
 import SeoFields from "./SeoFields";
 
 const CONTACT_ICONS = ["Phone", "Mail", "MapPin", "Clock"] as const;
+const PROJECT_TYPE_OPTIONS = ["residential", "commercial"] as const;
 
 type AboutPayload = {
   headerBgImage?: string;
@@ -166,6 +167,13 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
   const contact = payload as unknown as ContactPayload;
   const projectsList = payload as unknown as ProjectsListPayload;
   const blogIntro = payload as unknown as BlogIntroPayload;
+  const knownProjectTypes = Array.from(
+    new Set(
+      (projectsList.projects ?? [])
+        .map((row) => row.type?.trim().toLowerCase())
+        .filter((x): x is string => Boolean(x))
+    )
+  );
 
   return (
     <div className="space-y-10">
@@ -786,6 +794,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
                     </CmsField>
                     <CmsField label="Type tag" hint="Residential, Retail…">
                       <CmsInput
+                        list="project-type-options"
                         value={proj.type}
                         onChange={(e) =>
                           patchPayload((p) => {
@@ -794,6 +803,7 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
                             return { ...p, projects };
                           })
                         }
+                        placeholder="residential / commercial / retail"
                       />
                     </CmsField>
                     <CmsField label="Location line">
@@ -908,6 +918,12 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
           </CmsSection>
         </CmsGroup>
       ) : null}
+
+      <datalist id="project-type-options">
+        {Array.from(new Set([...PROJECT_TYPE_OPTIONS, ...knownProjectTypes])).map((type) => (
+          <option key={type} value={type} />
+        ))}
+      </datalist>
 
       <CmsSaveBar onSave={save} status={status} label="Save page" />
     </div>

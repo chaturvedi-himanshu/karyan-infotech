@@ -18,6 +18,7 @@ import { DEFAULT_HOME_PAYLOAD } from "./defaults/homePayload";
 import { DEFAULT_BLOG_POSTS } from "./defaults/blogPosts";
 import { DEFAULT_SITE_PAGES } from "./defaults/sitePages";
 import { DEFAULT_PROJECT_PAGES } from "./defaults/projectsSeed";
+import { buildDefaultProjectPayload, slugFromProjectHref } from "./projects";
 
 function defaultProject(slug: string): ProjectPayload | null {
   const row = DEFAULT_PROJECT_PAGES.find((p) => p.slug === slug);
@@ -119,16 +120,42 @@ export async function getHomeContent(): Promise<HomePayload> {
 }
 
 export async function getProjectPayload(slug: string): Promise<ProjectPayload | null> {
+  const normalizedSlug = slug.trim().toLowerCase();
   try {
     await connectMongo();
-    const doc = await ProjectPageModel.findOne({ slug }).lean();
+    const doc = await ProjectPageModel.findOne({ slug: normalizedSlug }).lean();
     if (doc?.payload && typeof doc.payload === "object") {
       return doc.payload as ProjectPayload;
     }
   } catch {
     /* fall through */
   }
-  return defaultProject(slug);
+  const seeded = defaultProject(normalizedSlug);
+  if (seeded) return seeded;
+
+  // Fallback: if the slug exists in the projects listing, return a generated template
+  // so new listing entries do not 404 before full details are saved.
+  const listingDoc = await getSitePage("projects");
+  const listingPayload = listingDoc?.payload as
+    | { projects?: { title?: string; href?: string }[] }
+    | undefined;
+  const row = (listingPayload?.projects ?? []).find(
+    (p) => slugFromProjectHref(p.href ?? "") === normalizedSlug
+  );
+  if (row) {
+    const title = row.title?.trim() || normalizedSlug;
+    return buildDefaultProjectPayload(normalizedSlug, title);
+  }
+  // Final safety: for new project-like slugs, provide a starter payload
+  // instead of 404 so admin can fill details right away.
+  if (normalizedSlug.startsWith("karyan-")) {
+    const title = normalizedSlug
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+    return buildDefaultProjectPayload(normalizedSlug, title);
+  }
+  return null;
 }
 
 export async function getBlogPosts(): Promise<BlogPostPayload[]> {

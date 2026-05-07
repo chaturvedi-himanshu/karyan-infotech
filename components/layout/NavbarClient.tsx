@@ -8,21 +8,30 @@ import {
   Menu,
   X,
   Landmark,
-  Home,
   Phone,
 } from "lucide-react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import { DEFAULT_HEADER_LOGO_SRC } from "@/lib/cms/defaults/siteSettings";
 import type { SiteNavPayload } from "@/lib/cms/types";
 
-export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
+function typeHref(type: string): string {
+  return `/projects?type=${encodeURIComponent(type.toLowerCase())}`;
+}
+
+export default function NavbarClient({
+  nav,
+  projectTypes = [],
+}: {
+  nav: SiteNavPayload;
+  projectTypes?: string[];
+}) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false);
   const [deskProjectsOpen, setDeskProjectsOpen] = useState(false);
   const deskProjectsWrapRef = useRef<HTMLDivElement>(null);
 
-  const { residentialProjects, commercialProjects, mainLinks, topBar } = nav;
+  const { mainLinks, topBar } = nav;
   const callLabel = topBar.phone?.trim() || "Call us";
   const callHref = topBar.phoneHref?.trim() || "tel:";
   const headerLogoSrc = nav.headerLogoSrc?.trim() || DEFAULT_HEADER_LOGO_SRC;
@@ -56,6 +65,9 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
       : pathname === href || pathname.startsWith(`${href}/`);
 
   const projectActive = pathname === "/projects" || pathname.startsWith("/projects/");
+  const typeLinks = (projectTypes.length ? projectTypes : ["residential", "commercial"])
+    .map((type) => type.trim())
+    .filter(Boolean);
 
   return (
     <>
@@ -107,22 +119,17 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
                 {deskProjectsOpen ? (
                   <div className="absolute left-0 right-0 top-full z-50 mx-auto w-[min(100vw-2rem,320px)] pt-3">
                     <div className="overflow-hidden rounded-xl border border-stone-200/90 bg-white p-2 shadow-2xl ring-1 ring-black/5">
-                      <Link
-                        href="/projects?type=residential"
-                        onClick={() => setDeskProjectsOpen(false)}
-                        className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:bg-lux-cream"
-                      >
-                        <Home className="h-4 w-4 shrink-0 text-lux-gold-dim" />
-                        Residential
-                      </Link>
-                      <Link
-                        href="/projects?type=commercial"
-                        onClick={() => setDeskProjectsOpen(false)}
-                        className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:bg-lux-cream"
-                      >
-                        <Landmark className="h-4 w-4 shrink-0 text-lux-gold-dim" />
-                        Commercial
-                      </Link>
+                      {typeLinks.map((type) => (
+                        <Link
+                          key={type}
+                          href={typeHref(type)}
+                          onClick={() => setDeskProjectsOpen(false)}
+                          className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-theme-fg transition hover:bg-lux-cream"
+                        >
+                          <Landmark className="h-4 w-4 shrink-0 text-lux-gold-dim" />
+                          {type}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 ) : null}
@@ -187,22 +194,17 @@ export default function NavbarClient({ nav }: { nav: SiteNavPayload }) {
               </button>
               {mobileProjectsOpen && (
                 <div className="ml-2 border-l-2 border-lux-gold/40 pl-3">
-                  <Link
-                    href="/projects?type=residential"
-                    onClick={closeAllNav}
-                    className="flex items-center gap-2 py-2 text-sm font-semibold uppercase tracking-wide text-lux-gold-dim"
-                  >
-                    <Home className="h-4 w-4 shrink-0" />
-                    Residential
-                  </Link>
-                  <Link
-                    href="/projects?type=commercial"
-                    onClick={closeAllNav}
-                    className="mt-2 flex items-center gap-2 py-2 text-sm font-semibold uppercase tracking-wide text-lux-gold-dim"
-                  >
-                    <Landmark className="h-4 w-4 shrink-0" />
-                    Commercial
-                  </Link>
+                  {typeLinks.map((type, index) => (
+                    <Link
+                      key={type}
+                      href={typeHref(type)}
+                      onClick={closeAllNav}
+                      className={`${index > 0 ? "mt-2 " : ""}flex items-center gap-2 py-2 text-sm font-semibold uppercase tracking-wide text-lux-gold-dim`}
+                    >
+                      <Landmark className="h-4 w-4 shrink-0" />
+                      {type}
+                    </Link>
+                  ))}
                 </div>
               )}
               <a

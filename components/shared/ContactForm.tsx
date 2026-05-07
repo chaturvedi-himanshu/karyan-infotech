@@ -64,7 +64,6 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
     const name = form.name.trim();
     const email = form.email.trim();
     const mobile = form.mobile.trim();
-    const message = form.message.trim();
 
     if (!/^[A-Za-z][A-Za-z\s.'-]{1,79}$/.test(name)) {
       nextErrors.name = "Enter a valid name (2-80 letters).";
@@ -75,12 +74,6 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
     if (!/^\d{10}$/.test(mobile)) {
       nextErrors.mobile = "Phone number must be exactly 10 digits.";
     }
-    if (message && message.length < 10) {
-      nextErrors.message = "Message should be at least 10 characters.";
-    } else if (message.length > 500) {
-      nextErrors.message = "Message can be maximum 500 characters.";
-    }
-
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };

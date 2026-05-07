@@ -2,15 +2,9 @@ import { getAdminSession } from "@/lib/auth/session";
 import { redirect, notFound } from "next/navigation";
 import AdminShell from "@/components/admin/AdminShell";
 import ProjectPortalForm from "@/components/admin/ProjectPortalForm";
-
-const labels: Record<string, string> = {
-  "karyan-square": "Karyan Square",
-  "karyan-citywalk": "Karyan CityWalk",
-  "karyan-trevana": "Karyan Trevana",
-  "karyan-avenue-iv": "Avenue IV",
-};
-
-const allowed = new Set(Object.keys(labels));
+import { getSitePage } from "@/lib/cms/getters";
+import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
+import { collectProjectsFromListing } from "@/lib/cms/projects";
 
 export default async function AdminProjectEditorPage({
   params,
@@ -20,9 +14,13 @@ export default async function AdminProjectEditorPage({
   const session = await getAdminSession();
   if (!session) redirect("/admin/login");
   const { slug } = await params;
-  if (!allowed.has(slug)) notFound();
+  const projectsDoc = await getSitePage("projects");
+  const listingPayload = projectsDoc?.payload as ProjectsListPayload | undefined;
+  const projects = listingPayload ? collectProjectsFromListing(listingPayload) : [];
+  const project = projects.find((row) => row.slug === slug);
+  if (!project) notFound();
 
-  const name = labels[slug] ?? slug;
+  const name = project.label;
 
   return (
     <AdminShell
