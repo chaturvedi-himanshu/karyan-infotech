@@ -67,18 +67,8 @@ export default function InquirySection() {
     }
   };
 
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    border: "1px solid #ddd",
-    padding: "10px 14px",
-    fontSize: "14px",
-    color: "#292929",
-    background: "#fff",
-    outline: "none",
-  };
-
   return (
-    <section style={{ background: "#f5f5f5" }} className="py-16">
+    <section className="bg-lux-cream py-16">
       <div className="max-w-[1200px] mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Left: heading */}
@@ -91,18 +81,17 @@ export default function InquirySection() {
               />
             </div>
             <h4
-              className="text-xs font-bold uppercase tracking-widest mb-2"
-              style={{ color: "#655E56" }}
+              className="mb-2 text-xs font-bold uppercase tracking-widest text-theme-fg-muted"
             >
               QUICK INQUIRY
             </h4>
             <h2
-              className="font-bold leading-tight mb-4"
-              style={{ color: "#292929", fontSize: "clamp(20px, 2.5vw, 28px)" }}
+              className="mb-4 font-bold leading-tight text-theme-fg"
+              style={{ fontSize: "clamp(20px, 2.5vw, 28px)" }}
             >
               To stay updated with our projects and more
             </h2>
-            <div className="w-10 h-0.5" style={{ background: "#F7B90F" }} />
+            <div className="h-0.5 w-10 bg-lux-gold" />
           </div>
 
           {/* Right: Form */}
@@ -110,19 +99,18 @@ export default function InquirySection() {
             {submitted ? (
               <div className="p-6 text-center">
                 <div
-                  className="text-3xl font-bold mb-2"
-                  style={{ color: "#F7B90F" }}
+                  className="mb-2 text-3xl font-bold text-lux-gold"
                 >
                   ✓
                 </div>
-                <p className="font-semibold" style={{ color: "#292929" }}>
+                <p className="font-semibold text-theme-fg">
                   Thank you! We&apos;ll be in touch soon.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#5e646a" }}>
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-theme-fg-muted">
                     Your name*
                   </label>
                   <input
@@ -131,7 +119,7 @@ export default function InquirySection() {
                     required
                     value={form.name}
                     onChange={handleChange}
-                    style={inputStyle}
+                    className="w-full border border-stone-300 bg-white px-[14px] py-[10px] text-sm text-theme-fg outline-none transition focus:border-lux-gold/60 focus:ring-2 focus:ring-lux-gold/25"
                     placeholder="Your name"
                   />
                   {errors.name ? (
@@ -139,7 +127,7 @@ export default function InquirySection() {
                   ) : null}
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#5e646a" }}>
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-theme-fg-muted">
                     Your email*
                   </label>
                   <input
@@ -148,7 +136,7 @@ export default function InquirySection() {
                     required
                     value={form.email}
                     onChange={handleChange}
-                    style={inputStyle}
+                    className="w-full border border-stone-300 bg-white px-[14px] py-[10px] text-sm text-theme-fg outline-none transition focus:border-lux-gold/60 focus:ring-2 focus:ring-lux-gold/25"
                     placeholder="Your email"
                   />
                   {errors.email ? (
@@ -156,7 +144,7 @@ export default function InquirySection() {
                   ) : null}
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#5e646a" }}>
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-theme-fg-muted">
                     Your Mobile*
                   </label>
                   <input
@@ -168,7 +156,7 @@ export default function InquirySection() {
                     maxLength={10}
                     value={form.mobile}
                     onChange={handleChange}
-                    style={inputStyle}
+                    className="w-full border border-stone-300 bg-white px-[14px] py-[10px] text-sm text-theme-fg outline-none transition focus:border-lux-gold/60 focus:ring-2 focus:ring-lux-gold/25"
                     placeholder="Your mobile number"
                   />
                   {errors.mobile ? (
@@ -178,13 +166,7 @@ export default function InquirySection() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 font-semibold uppercase tracking-wider text-sm transition-colors"
-                  style={{
-                    background: loading ? "#e0a800" : "#F7B90F",
-                    color: "#fff",
-                    border: "none",
-                    cursor: loading ? "wait" : "pointer",
-                  }}
+                  className="w-full bg-lux-gold py-3 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-lux-gold-dim disabled:cursor-wait disabled:opacity-80"
                 >
                   {loading ? "Sending..." : "Submit"}
                 </button>

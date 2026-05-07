@@ -43,7 +43,7 @@ export default function CTASection({
             <h2 className="mb-2 text-2xl font-bold text-white md:text-3xl">
               {title}
             </h2>
-            <p style={{ color: "#aaa" }} className="text-sm">
+            <p className="text-sm text-theme-on-bg-muted">
               {description}
             </p>
           </div>
@@ -51,8 +51,7 @@ export default function CTASection({
             {primaryHref ? (
               <Link
                 href={primaryHref}
-                className="px-7 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
-                style={{ background: "#F7B90F" }}
+                className="bg-lux-gold px-7 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-lux-gold-dim"
               >
                 {primaryLabel}
               </Link>
@@ -64,20 +63,14 @@ export default function CTASection({
                     enquiryProject ? { project: enquiryProject } : undefined
                   )
                 }
-                className="px-7 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90"
-                style={{ background: "#F7B90F" }}
+                className="bg-lux-gold px-7 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-lux-gold-dim"
               >
                 {primaryLabel}
               </button>
             )}
             <a
               href={secondaryHref}
-              className="flex items-center gap-2 px-7 py-3 text-sm font-semibold uppercase tracking-wider transition-colors"
-              style={{
-                background: "transparent",
-                border: "1px solid #555",
-                color: "#aaa",
-              }}
+              className="flex items-center gap-2 border border-theme-bg-elevated px-7 py-3 text-sm font-semibold uppercase tracking-wider text-theme-on-bg-muted transition-colors hover:border-lux-gold/45 hover:text-white"
             >
               <Phone className="h-4 w-4" />
               {secondaryLabel}
