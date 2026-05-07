@@ -9,7 +9,11 @@ if (!uri) {
 }
 
 async function main() {
-  await mongoose.connect(uri);
+  const mongoUri = uri;
+  if (!mongoUri) {
+    throw new Error("MONGODB_URI is missing in environment.");
+  }
+  await mongoose.connect(mongoUri);
   const before = await LeadSubmissionModel.countDocuments();
   const result = await LeadSubmissionModel.deleteMany({});
   const after = await LeadSubmissionModel.countDocuments();
