@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { FileText, Image, PhoneCall, Search } from "lucide-react";
 import type { ProjectPayload } from "@/lib/cms/types";
 import { DEFAULT_PROJECT_PAGES } from "@/lib/cms/defaults/projectsSeed";
-import { buildDefaultProjectPayload } from "@/lib/cms/projects";
+import { buildDefaultProjectPayload, normalizeProjectSlug } from "@/lib/cms/projects";
 import {
   CmsField,
   CmsGhostButton,
@@ -25,8 +26,10 @@ import { parseLines } from "./form-helpers";
 import SeoFields from "./SeoFields";
 
 export default function ProjectPortalForm({ slug }: { slug: string }) {
+  const router = useRouter();
   const [data, setData] = useState<ProjectPayload | null>(null);
   const [status, setStatus] = useState("");
+  const [urlSlug, setUrlSlug] = useState(slug);
 
   const patch = useCallback((fn: (d: ProjectPayload) => ProjectPayload) => {
     setData((prev) => (prev ? fn(structuredClone(prev)) : prev));
@@ -60,8 +63,17 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
       });
   }, [slug]);
 
+  useEffect(() => {
+    setUrlSlug(slug);
+  }, [slug]);
+
   async function save() {
     if (!data) return;
+    const nextSeg = normalizeProjectSlug(urlSlug);
+    if (!nextSeg) {
+      showAdminErrorToast("URL slug cannot be empty.");
+      return;
+    }
     setStatus("Saving…");
     const payload = structuredClone(data);
     if (!String(payload.leasingBox?.title ?? "").trim()) {
@@ -70,19 +82,30 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
     if (!String(payload.locationSidebar?.title ?? "").trim()) {
       payload.locationSidebar = undefined;
     }
+    const rename = nextSeg !== normalizeProjectSlug(slug);
     const res = await fetch(`/api/admin/projects/${slug}`, {
       method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: rename ? JSON.stringify({ payload, nextSlug: nextSeg }) : JSON.stringify(payload),
     });
-    if (!res.ok) showAdminErrorToast("Project save failed. Please try again.");
-    setStatus(res.ok ? "Saved successfully." : "Could not save. Try again.");
+    const json = (await res.json().catch(() => ({}))) as { ok?: boolean; slug?: string; error?: string };
+    if (!res.ok) {
+      showAdminErrorToast(
+        typeof json.error === "string" ? json.error : "Project save failed. Please try again."
+      );
+      setStatus("Could not save. Try again.");
+      return;
+    }
+    setStatus("Saved successfully.");
+    if (typeof json.slug === "string" && normalizeProjectSlug(json.slug) !== normalizeProjectSlug(slug)) {
+      router.replace(`/admin/projects/${normalizeProjectSlug(json.slug)}`);
+    }
   }
 
   if (!data) return <CmsLoadingSkeleton label="Loading project content…" />;
 
-  const publicPath = `/${slug}`;
+  const publicPath = `/${normalizeProjectSlug(urlSlug)}`;
 
   return (
     <div className="space-y-10">
@@ -102,10 +125,36 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
         description="How this project appears in Google search results and the browser tab"
       >
         <CmsSection
+          title="Project name"
+          description="Used on the public hero, enquiry flows, and the portfolio card on /projects."
+          where="Everywhere this development is named — save at the bottom to sync the listing card."
+          defaultOpen
+        >
+          <CmsField label="Project name" hint="Matches the hero title; saving updates the card title on /projects when this slug is listed.">
+            <CmsInput
+              value={data.header.title}
+              onChange={(e) =>
+                patch((d) => ({ ...d, header: { ...d.header, title: e.target.value } }))
+              }
+            />
+          </CmsField>
+          <CmsField
+            label="URL slug"
+            hint="Public path segment only — lowercase letters, numbers, hyphens (e.g. karyan-9). Saving renames the live URL, portfolio links, and admin editor."
+          >
+            <CmsInput
+              value={urlSlug}
+              onChange={(e) => setUrlSlug(e.target.value)}
+              spellCheck={false}
+              autoCapitalize="off"
+              autoCorrect="off"
+            />
+          </CmsField>
+        </CmsSection>
+        <CmsSection
           title="SEO — search listing"
           description="Title, description, keywords, robots, OpenGraph, Twitter, schema, hreflang."
           where="Google snippet and browser tab — not shown as large headings on the page"
-          defaultOpen
         >
           <CmsField label="SEO title">
             <CmsInput
@@ -145,7 +194,7 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
           where="Top of the project page — full-width photo with the project name"
           defaultOpen
         >
-          <CmsField label="Project name in hero">
+          <CmsField label="Hero title" hint="Same as Project name above — edit either field.">
             <CmsInput
               value={data.header.title}
               onChange={(e) =>

@@ -1,9 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+
+import ProjectMediaLightbox, {
+  type MediaLightboxImage,
+} from "@/components/projects/ProjectMediaLightbox";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,8 +18,10 @@ export default function ProjectGalleryCarousel({
   images,
 }: {
   title?: string;
-  images: { src: string; alt: string; label?: string }[];
+  images: MediaLightboxImage[];
 }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
   return (
     <div className="relative">
       <div className="mb-5 flex items-center justify-between gap-4">
@@ -51,9 +58,14 @@ export default function ProjectGalleryCarousel({
           768: { slidesPerView: 2, spaceBetween: 18 },
         }}
       >
-        {images.map((img) => (
-          <SwiperSlide key={img.src} className="h-auto">
-            <div className="relative h-64 overflow-hidden rounded-sm">
+        {images.map((img, index) => (
+          <SwiperSlide key={`${img.src}-${index}`} className="h-auto">
+            <button
+              type="button"
+              onClick={() => setLightboxIndex(index)}
+              className="relative block h-64 w-full overflow-hidden rounded-sm text-left outline-none ring-lux-gold/40 transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-offset-2"
+              aria-label={`Open gallery image ${index + 1} in full screen`}
+            >
               <Image
                 src={img.src}
                 alt={img.alt}
@@ -66,10 +78,17 @@ export default function ProjectGalleryCarousel({
                   {img.label}
                 </span>
               ) : null}
-            </div>
+            </button>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <ProjectMediaLightbox
+        images={images}
+        activeIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        backdropAriaLabel="Close gallery popup"
+      />
     </div>
   );
 }

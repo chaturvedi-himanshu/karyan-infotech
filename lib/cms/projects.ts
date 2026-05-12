@@ -1,6 +1,37 @@
 import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
 import type { ProjectPayload } from "@/lib/cms/types";
 
+/** Lowercase URL segment: letters, numbers, hyphens only (e.g. karyan-9). */
+export function normalizeProjectSlug(raw: string): string {
+  return raw
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function migrateProjectPayloadSlug(
+  payload: ProjectPayload,
+  oldSlug: string,
+  newSlug: string
+): ProjectPayload {
+  const next = structuredClone(payload);
+  const o = oldSlug.toLowerCase();
+  const n = newSlug.toLowerCase();
+  const ep = next.cta.enquiryProject?.trim().toLowerCase();
+  if (!ep || ep === o) {
+    next.cta = { ...next.cta, enquiryProject: n };
+  }
+  if (next.specs?.length) {
+    next.specs = next.specs.map((row) =>
+      row.label.trim().toLowerCase() === "slug" ? { ...row, value: n } : row
+    );
+  }
+  return next;
+}
+
 export function slugFromProjectHref(href: string): string | null {
   const value = href.trim();
   if (!value) return null;
