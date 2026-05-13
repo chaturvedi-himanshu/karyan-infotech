@@ -82,17 +82,6 @@
   transform: scale(1.28);
 }
 
-/* Home portfolio: horizontal 3D coverflow; each slide is a vertical (image + text) card */
-.home-projects-swiper--3d.swiper {
-  width: 100%;
-  padding-block: 1.75rem;
-  box-sizing: border-box;
-}
-.home-projects-swiper--3d .swiper-slide {
-  height: auto;
-  box-sizing: border-box;
-}
-
 /* Floating “Call now” FAB (see CallNowFab) */
 @keyframes lux-call-fab-float {
   0%,

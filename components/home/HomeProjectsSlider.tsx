@@ -1,16 +1,17 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef } from "react";
-import Swiper from "swiper/bundle";
+import { ArrowRight } from "lucide-react";
 import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent";
 
 type Project = ProjectsListPayload["projects"][number];
 
-/** Vertical card: image on top, copy below — fits two-across horizontal 3D carousel. */
-function PortfolioStackCard({ project }: { project: Project }) {
+function PortfolioStackCard({
+  project,
+  imagePriority = false,
+}: {
+  project: Project;
+  imagePriority?: boolean;
+}) {
   return (
     <Link
       href={project.href}
@@ -21,8 +22,10 @@ function PortfolioStackCard({ project }: { project: Project }) {
           src={project.image}
           alt={project.title}
           fill
-          sizes="(max-width: 640px) 92vw, 44vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition duration-500 group-hover:scale-[1.03]"
+          priority={imagePriority}
+          {...(imagePriority ? { fetchPriority: "high" as const } : {})}
         />
         <div className="absolute left-3 top-3 flex flex-wrap gap-2 sm:left-4 sm:top-4">
           <span className="rounded-full bg-theme-bg/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-theme-on-bg backdrop-blur">
@@ -52,118 +55,15 @@ function PortfolioStackCard({ project }: { project: Project }) {
   );
 }
 
+/** Portfolio cards in a responsive grid (3 columns on large screens). */
 export default function HomeProjectsSlider({ projects }: { projects: Project[] }) {
-  const rootRef = useRef<HTMLDivElement>(null);
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
-  const pagRef = useRef<HTMLDivElement>(null);
-  const trackKey = projects.map((p) => p.href).join("|");
-
-  useEffect(() => {
-    const root = rootRef.current;
-    const container = root?.querySelector(".home-projects-swiper--3d");
-    if (!root || !container || !projects.length) return;
-
-    const swiper = new Swiper(container as HTMLElement, {
-      direction: "horizontal",
-      loop: projects.length > 2,
-      slidesPerView: 1.08,
-      centeredSlides: true,
-      spaceBetween: 16,
-      speed: 700,
-      grabCursor: true,
-      watchOverflow: true,
-      effect: "coverflow",
-      coverflowEffect: {
-        rotate: 28,
-        stretch: 0,
-        depth: 160,
-        modifier: 1,
-        slideShadows: true,
-      },
-      autoplay: {
-        enabled: true,
-        delay: 3000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: false,
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 22,
-          centeredSlides: false,
-        },
-      },
-      navigation:
-        prevRef.current && nextRef.current
-          ? {
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
-            }
-          : undefined,
-      pagination: pagRef.current
-        ? {
-            el: pagRef.current,
-            clickable: true,
-            bulletClass: "swiper-pagination-bullet lux-bullet",
-            bulletActiveClass: "swiper-pagination-bullet-active lux-bullet-active",
-          }
-        : undefined,
-    });
-
-    const pauseHover = () => {
-      if (swiper.autoplay?.running) swiper.autoplay.pause();
-    };
-    const resumeHover = () => {
-      if (swiper.params.autoplay.disableOnInteraction) return;
-      swiper.autoplay.paused = false;
-      swiper.autoplay.run();
-    };
-    root.addEventListener("mouseenter", pauseHover);
-    root.addEventListener("mouseleave", resumeHover);
-
-    return () => {
-      root.removeEventListener("mouseenter", pauseHover);
-      root.removeEventListener("mouseleave", resumeHover);
-      swiper.destroy(true, true);
-    };
-  }, [trackKey, projects.length]);
-
   if (!projects.length) return null;
 
   return (
-    <div ref={rootRef} className="home-projects-carousel-root relative mt-14">
-      <div className="flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:items-stretch sm:gap-4">
-        <button
-          ref={prevRef}
-          type="button"
-          aria-label="Previous project"
-          className="order-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:order-1 sm:flex"
-        >
-          <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
-        </button>
-
-        <div className="swiper home-projects-swiper home-projects-swiper--3d order-1 min-h-0 min-w-0 basis-full overflow-hidden sm:order-2 sm:basis-auto sm:flex-1">
-          <div className="swiper-wrapper">
-            {projects.map((project) => (
-              <div key={project.href} className="swiper-slide">
-                <PortfolioStackCard project={project} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button
-          ref={nextRef}
-          type="button"
-          aria-label="Next project"
-          className="order-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full border border-lux-navy/10 bg-lux-ivory text-lux-navy shadow-sm transition hover:border-lux-gold/50 hover:bg-lux-cream hover:text-lux-gold-dim sm:order-3 sm:flex"
-        >
-          <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
-        </button>
-      </div>
-
-      <div ref={pagRef} className="home-projects-pagination mt-8 text-center" />
+    <div className="relative mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project, index) => (
+        <PortfolioStackCard key={project.href} project={project} imagePriority={index < 2} />
+      ))}
     </div>
   );
 }

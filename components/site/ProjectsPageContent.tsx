@@ -36,8 +36,8 @@ export default function ProjectsPageContent({ payload }: { payload: ProjectsList
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
-            {payload.projects.map((project) => (
-              <ProjectCard key={project.title} {...project} />
+            {payload.projects.map((project, index) => (
+              <ProjectCard key={project.title} {...project} imagePriority={index < 2} />
             ))}
           </div>
         </div>

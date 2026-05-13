@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { connectMongo } from "@/lib/mongodb";
 import { SiteSettingsModel } from "@/models/SiteSettings";
 import { HomeContentModel } from "@/models/HomeContent";
@@ -25,7 +26,7 @@ function defaultProject(slug: string): ProjectPayload | null {
   return row ? row.payload : null;
 }
 
-export async function getSiteSettings(): Promise<SiteSettingsBundle> {
+async function loadSiteSettingsFromDb(): Promise<SiteSettingsBundle> {
   try {
     await connectMongo();
     const doc = await SiteSettingsModel.findOne({ key: "default" }).lean();
@@ -86,6 +87,12 @@ export async function getSiteSettings(): Promise<SiteSettingsBundle> {
   }
   return DEFAULT_SITE_SETTINGS;
 }
+
+/** Cached across requests; invalidated when admin saves site settings (`revalidateTag`). */
+export const getSiteSettings = unstable_cache(loadSiteSettingsFromDb, ["site-settings-bundle"], {
+  tags: ["site-settings"],
+  revalidate: 86_400,
+});
 
 function mergeHomePayloadFromDoc(raw: Record<string, unknown>): HomePayload {
   const base = { ...DEFAULT_HOME_PAYLOAD, ...raw } as HomePayload;

@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { DEFAULT_HEADER_LOGO_SRC } from "@/lib/cms/defaults/siteSettings";
+import { normalizeImageSrc } from "@/lib/image/normalizeSrc";
 
 type Props = {
   src?: string | null;
@@ -29,19 +29,21 @@ export default function SiteBrandLogo({
   asLink = true,
   linkHref = "/",
 }: Props) {
-  const resolvedSrc = src?.trim() || DEFAULT_HEADER_LOGO_SRC;
+  const resolvedSrc = normalizeImageSrc(src?.trim() || DEFAULT_HEADER_LOGO_SRC);
   const resolvedAlt = alt?.trim() || "Karyan Infratech";
   const variantClass =
     variant === "onDark" ? "brightness-0 invert saturate-0" : "";
 
   const img = (
-    <Image
-      src={"/images/logo.png"}
+    <img
+      src={resolvedSrc}
       alt={resolvedAlt}
       width={width}
       height={height}
+      decoding="async"
+      referrerPolicy="no-referrer"
+      {...(priority ? { fetchPriority: "high" as const } : {})}
       className={`h-auto w-auto max-w-full object-contain object-left ${variantClass} ${className}`.trim()}
-      priority={priority}
     />
   );
 

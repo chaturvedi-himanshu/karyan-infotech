@@ -1,15 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { stripHtml } from "@/lib/html/stripHtml";
+import { normalizeImageSrc } from "@/lib/image/normalizeSrc";
 import type { BlogPostPayload } from "@/lib/cms/types";
 
 import "swiper/css";
 import "swiper/css/navigation";
+
+const FALLBACK_POST_IMAGE = "/images/avenue-iv.jpg";
 
 export default function HomeBlogCarousel({
   posts,
@@ -39,6 +41,7 @@ export default function HomeBlogCarousel({
         navigation={{ prevEl: ".home-blog-prev", nextEl: ".home-blog-next" }}
         spaceBetween={20}
         slidesPerView={1.1}
+        autoHeight
         autoplay={{ delay: 3200, disableOnInteraction: false, pauseOnMouseEnter: true }}
         breakpoints={{
           640: { slidesPerView: 2, spaceBetween: 22 },
@@ -48,21 +51,25 @@ export default function HomeBlogCarousel({
       >
         {posts.map((post) => {
           const plainExcerpt = stripHtml(post.excerpt).trim();
+          const imgSrc = normalizeImageSrc(post.image) || FALLBACK_POST_IMAGE;
           return (
-            <SwiperSlide key={post.slug} className="h-auto">
+            <SwiperSlide key={post.slug} className="!h-auto">
               <Link
                 href={post.href}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] transition hover:border-lux-gold/35 hover:bg-white/[0.1]"
+                className="group flex h-full min-h-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] transition hover:border-lux-gold/35 hover:bg-white/[0.1]"
               >
-                <div className="relative h-56 w-full overflow-hidden">
-                  <Image
-                    src={post.image}
+                <div className="relative isolate h-56 w-full shrink-0 overflow-hidden bg-stone-900/40">
+                  <img
+                    src={imgSrc}
                     alt={post.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    width={800}
+                    height={450}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
                   <span className="absolute left-3 top-3 rounded-full border border-white/30 bg-black/35 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90">
                     {post.category}
                   </span>

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { getSiteSettings } from "@/lib/cms/getters";
+import { normalizeImageSrc } from "@/lib/image/normalizeSrc";
 
 export interface PageHeaderBreadcrumb {
   label: string;
@@ -27,20 +29,26 @@ export default async function PageHeader({
   const settings = await getSiteSettings();
   const defaultHeader = settings.pageHeader;
 
-  const resolvedBg = bgImage?.trim() || defaultHeader.bgImage?.trim() || "";
+  const resolvedBgRaw = bgImage?.trim() || defaultHeader.bgImage?.trim() || "";
+  const resolvedBg = normalizeImageSrc(resolvedBgRaw);
   const resolvedTitle = title?.trim() || defaultHeader.heading.trim() || "Karyan Infratech";
   const resolvedSubheading = (subheading ?? description ?? defaultHeader.subheading)?.trim() || "";
 
   return (
     <header className="relative overflow-hidden border-b border-white/10">
       {resolvedBg ? (
-        <>
-          <div
-            className="absolute inset-0 scale-105 bg-cover bg-center"
-            style={{ backgroundImage: `url(${resolvedBg})` }}
-            aria-hidden
+        <div className="pointer-events-none absolute inset-0 z-0 min-h-[620px] w-full bg-theme-bg" aria-hidden>
+          <Image
+            src={resolvedBg}
+            alt=""
+            fill
+            className="object-cover object-center scale-105"
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+            quality={78}
           />
-        </>
+        </div>
       ) : (
         <>
           <div className="absolute inset-0 bg-theme-bg" aria-hidden />

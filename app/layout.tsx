@@ -28,6 +28,10 @@ export default function RootLayout({
       id="top"
       className={outfit.variable}
     >
+      <head>
+        <link rel="preconnect" href="https://karyaninfratech.co.in" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
+      </head>
       <body
         className={`${outfit.className} min-h-screen flex flex-col bg-theme-bg antialiased`}
       >

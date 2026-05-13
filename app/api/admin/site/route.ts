@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { connectMongo } from "@/lib/mongodb";
 import { SiteSettingsModel } from "@/models/SiteSettings";
@@ -73,6 +73,7 @@ export async function PUT(req: Request) {
     { $set: { key: "default", nav: body.nav, footer: body.footer, projectInterestOptions, themeColors, pageHeader, enquiryFloatPromo } },
     { upsert: true }
   );
+  revalidateTag("site-settings");
   revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }

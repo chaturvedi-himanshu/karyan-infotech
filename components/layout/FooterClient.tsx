@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
@@ -121,16 +122,26 @@ export default function FooterClient({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-theme-bg-soft pt-8 text-xs leading-relaxed text-theme-on-bg-subtle md:flex-row md:items-center md:justify-between">
-          <p>
-            © {year} {footer.legalLine}
+        <div className="mt-14 flex flex-col gap-6 border-t border-theme-bg-soft pt-8 text-base leading-relaxed text-theme-on-bg-subtle lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+          <div className="min-w-0 flex-1 space-y-3">
+            <p>© {year} {footer.legalLine}</p>
             {footer.disclaimerExtra ? (
-              <span className="mt-2 block max-w-xl text-[11px] md:mt-1">{footer.disclaimerExtra}</span>
+              <p className="max-w-3xl">{footer.disclaimerExtra}</p>
             ) : null}
-          </p>
-          <a href="#top" className="shrink-0 text-theme-on-bg transition hover:text-theme-on-bg-muted">
-            Back to top ↑
-          </a>
+          </div>
+          <div className="flex shrink-0 flex-col gap-3 lg:items-end">
+            <span className="text-base font-medium text-theme-on-bg-subtle">
+              Designed and developed by
+            </span>
+            <Image
+              src="/images/sysneticindialogo.png"
+              alt="Sysnetic India — Serves your purpose better"
+              width={220}
+              height={56}
+              className="h-9 w-auto max-w-[min(100%,220px)] object-contain object-left opacity-95 transition-opacity hover:opacity-100 sm:h-10 lg:object-right"
+            />
+          </div>
+          
         </div>
       </div>
     </footer>

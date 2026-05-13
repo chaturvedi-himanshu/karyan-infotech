@@ -10,6 +10,8 @@ interface ProjectCardProps {
   location: string;
   status: string;
   featured?: boolean;
+  /** Hint LCP: first visible row on /projects (2-up grid). */
+  imagePriority?: boolean;
 }
 
 export default function ProjectCard({
@@ -20,6 +22,7 @@ export default function ProjectCard({
   type,
   location,
   status,
+  imagePriority = false,
 }: ProjectCardProps) {
   return (
     <Link
@@ -34,12 +37,11 @@ export default function ProjectCard({
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          priority={imagePriority}
+          {...(imagePriority ? { fetchPriority: "high" as const } : {})}
         />
         <div className="absolute top-3 left-3 flex gap-2">
-          <span
-            className="text-xs font-bold uppercase px-2 py-1 text-white"
-            style={{ background: "#F7B90F" }}
-          >
+          <span className="bg-theme-bg px-2 py-1 text-xs font-bold uppercase text-theme-on-bg">
             {type}
           </span>
         </div>
@@ -52,13 +54,10 @@ export default function ProjectCard({
 
       {/* Content */}
       <div className="p-5">
-        <p className="text-xs mb-1" style={{ color: "#F7B90F" }}>
+        <p className="mb-1 text-xs font-medium text-theme-bg">
           📍 {location}
         </p>
-        <h3
-          className="font-bold text-base mb-2 group-hover:text-[#F7B90F] transition-colors"
-          style={{ color: "#292929" }}
-        >
+        <h3 className="mb-2 text-base font-bold text-[#292929] transition-colors group-hover:text-theme-bg">
           {title}
         </h3>
         <p className="text-sm leading-relaxed line-clamp-3" style={{ color: "#5e646a" }}>
