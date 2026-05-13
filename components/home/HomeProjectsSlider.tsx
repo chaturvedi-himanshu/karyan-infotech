@@ -25,7 +25,7 @@ function PortfolioStackCard({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition duration-500 group-hover:scale-[1.03]"
           priority={imagePriority}
-          {...(imagePriority ? { fetchPriority: "high" as const } : {})}
+          referrerPolicy="no-referrer"
         />
         <div className="absolute left-3 top-3 flex flex-wrap gap-2 sm:left-4 sm:top-4">
           <span className="rounded-full bg-theme-bg/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-theme-on-bg backdrop-blur">

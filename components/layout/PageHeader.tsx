@@ -45,8 +45,7 @@ export default async function PageHeader({
             className="object-cover object-center scale-105"
             sizes="100vw"
             priority
-            fetchPriority="high"
-            quality={78}
+            referrerPolicy="no-referrer"
           />
         </div>
       ) : (

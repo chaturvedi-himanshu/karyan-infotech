@@ -24,6 +24,7 @@ export default function BlogCard({ title, excerpt, date, category, href, image }
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          referrerPolicy="no-referrer"
         />
         <div className="absolute top-3 left-3">
           <span

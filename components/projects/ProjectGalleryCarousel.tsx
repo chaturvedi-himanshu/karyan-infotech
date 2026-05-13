@@ -72,6 +72,7 @@ export default function ProjectGalleryCarousel({
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                referrerPolicy="no-referrer"
               />
               {img.label?.trim() ? (
                 <span className="absolute bottom-3 right-3 rounded-full border border-white/35 bg-black/55 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur">

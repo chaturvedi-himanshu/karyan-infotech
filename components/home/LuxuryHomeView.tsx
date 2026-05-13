@@ -715,6 +715,7 @@ export default function LuxuryHomeView({
                       fill
                       className="object-cover"
                       sizes="(max-width: 1024px) 100vw, 50vw"
+                      referrerPolicy="no-referrer"
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />

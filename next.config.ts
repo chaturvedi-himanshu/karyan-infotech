@@ -17,8 +17,13 @@ const IMAGE_REMOTE_PATTERNS: NonNullable<NonNullable<NextConfig["images"]>["remo
 const nextConfig: NextConfig = {
   transpilePackages: ["jodit-react", "jodit"],
   images: {
-    /** Long TTL for `/_next/image` responses (shared header + CMS images). */
-    minimumCacheTTL: 2_592_000,
+    /**
+     * Bypass the /_next/image optimizer entirely.
+     * Images from Firebase Storage / WP CDN are already optimised at source.
+     * This removes the server-side proxy that was silently failing in production
+     * (server can't always reach the external CDN; local dev can).
+     */
+    unoptimized: true,
     remotePatterns: IMAGE_REMOTE_PATTERNS,
   },
   async headers() {

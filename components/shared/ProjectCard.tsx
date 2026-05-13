@@ -38,7 +38,7 @@ export default function ProjectCard({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           priority={imagePriority}
-          {...(imagePriority ? { fetchPriority: "high" as const } : {})}
+          referrerPolicy="no-referrer"
         />
         <div className="absolute top-3 left-3 flex gap-2">
           <span className="bg-theme-bg px-2 py-1 text-xs font-bold uppercase text-theme-on-bg">

@@ -34,6 +34,7 @@ export default function ProjectFloorPlansLightbox({
               fill
               className="object-cover transition duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 768px) 100vw, 50vw"
+              referrerPolicy="no-referrer"
             />
             {plan.label?.trim() ? (
               <span className="absolute left-3 top-3 z-10 rounded-full border border-white/35 bg-black/55 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur">
