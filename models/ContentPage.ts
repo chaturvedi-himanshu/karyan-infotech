@@ -5,8 +5,8 @@ const ContentPageSchema = new Schema(
     slug: { type: String, required: true, unique: true, index: true },
     title: { type: String, required: true },
     body: { type: String, default: "" },
-    metaTitle: { type: String, required: true },
-    metaDescription: { type: String, required: true },
+    metaTitle: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     seo: { type: Schema.Types.Mixed, required: false },
   },
   { timestamps: true }
