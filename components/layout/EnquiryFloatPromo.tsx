@@ -7,9 +7,6 @@ import { useEffect, useState } from "react";
 import type { SiteEnquiryFloatPromo } from "@/lib/cms/types";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
 
-/** When set to the current image URL, the large promo is hidden and the reopen chip is shown. */
-const STORAGE_MINIMIZED_KEY = "karyan-enquiry-float-minimized";
-
 /** Fixed frame size (px) — portrait strip, matches typical promo creatives */
 const FRAME_W = 160;
 const FRAME_H = 260;
@@ -30,10 +27,14 @@ export default function EnquiryFloatPromo({ promo }: Props) {
 
   useEffect(() => {
     setMounted(true);
-    if (!enabled || typeof window === "undefined") return;
-    const minimized = window.localStorage.getItem(STORAGE_MINIMIZED_KEY) === src;
-    setExpanded(!minimized);
-  }, [enabled, src]);
+  }, []);
+
+  // Re-open the promo whenever the user lands on a new page so it greets them
+  // on every navigation, even if they had minimized it on the previous page.
+  useEffect(() => {
+    setExpanded(true);
+    setHovered(false);
+  }, [pathname]);
 
   if (!mounted || pathname.startsWith("/admin") || !enabled) {
     return null;
@@ -42,20 +43,10 @@ export default function EnquiryFloatPromo({ promo }: Props) {
   function minimize(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    try {
-      window.localStorage.setItem(STORAGE_MINIMIZED_KEY, src);
-    } catch {
-      /* ignore */
-    }
     setExpanded(false);
   }
 
   function expand() {
-    try {
-      window.localStorage.removeItem(STORAGE_MINIMIZED_KEY);
-    } catch {
-      /* ignore */
-    }
     setExpanded(true);
   }
 
