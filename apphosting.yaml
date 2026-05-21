@@ -1,0 +1,97 @@
+# Firebase App Hosting configuration for karyan-next-9999.
+# Docs: https://firebase.google.com/docs/app-hosting/configure
+#
+# Notes:
+# - Plain env vars below are non-sensitive and safe to commit.
+# - Anything secret is referenced via Cloud Secret Manager (`secret:`).
+#   Create those secrets ONCE with:
+#     firebase apphosting:secrets:set MONGODB_URI
+#     firebase apphosting:secrets:set AUTH_SECRET
+#     firebase apphosting:secrets:set SMTP_USER
+#     firebase apphosting:secrets:set SMTP_PASS
+#   (the CLI will prompt for the value and grant the backend access).
+# - NEXT_PUBLIC_* values are inlined at build time, so they must be set with
+#   `availability: [BUILD, RUNTIME]`.
+
+runConfig:
+  # Keep at least one warm instance so MongoDB connections don't re-establish
+  # on every cold start. Bump up if traffic warrants.
+  minInstances: 1
+  maxInstances: 10
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  # ── Server: SMTP transport (non-secret config) ─────────────────────────────
+  - variable: SMTP_ENABLED
+    value: "true"
+  - variable: SMTP_HOST
+    value: "" # TODO: set in Firebase console or here
+  - variable: SMTP_PORT
+    value: "587"
+  - variable: SMTP_SECURE
+    value: "false"
+  - variable: SMTP_FROM
+    value: "" # TODO: set the From address
+  - variable: SMTP_CONNECTION_TIMEOUT_MS
+    value: "10000"
+  - variable: SMTP_GREETING_TIMEOUT_MS
+    value: "10000"
+  - variable: SMTP_SOCKET_TIMEOUT_MS
+    value: "20000"
+
+  # ── Server: outbound lead API ──────────────────────────────────────────────
+  - variable: LEAD_API_ENABLED
+    value: "true"
+  - variable: LEAD_API_URL
+    value: "https://helptrip.me/WebService/Lead.asmx/InsertLead" # TODO: set if lead API is enabled
+
+  # ── Server: secrets (resolved at runtime from Cloud Secret Manager) ────────
+  - variable: MONGODB_URI
+    secret: MONGODB_URI
+  - variable: AUTH_SECRET
+    secret: AUTH_SECRET
+  - variable: SMTP_USER
+    secret: SMTP_USER
+  - variable: SMTP_PASS
+    secret: SMTP_PASS
+
+  # ── Client: Firebase JS SDK (Analytics) ────────────────────────────────────
+  # Public web SDK config — safe to expose (these aren't secrets in Firebase's
+  # security model; abuse is prevented via Firebase Security Rules + App Check).
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyAGA9pxuzJKLpgEYUoijLG9JY529wzZROc"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "globalrealty-1327f.firebaseapp.com"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "globalrealty-1327f"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "globalrealty-1327f.firebasestorage.app"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "696568612998"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:696568612998:web:9e9bcb49e21d1842ec2907"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: "G-7Z2VQ98Z8W"
+    availability:
+      - BUILD
+      - RUNTIME

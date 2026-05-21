@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { getSitePage, getSiteSettings } from "@/lib/cms/getters";
 import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
+import AnalyticsBoot from "@/components/layout/AnalyticsBoot";
 import AosProvider from "@/components/layout/AosProvider";
 import CallNowFab from "@/components/layout/CallNowFab";
 import WhatsAppFab from "@/components/layout/WhatsAppFab";
@@ -74,6 +76,11 @@ export default async function SiteShell({
           {/* <CallNowFab href={settings.nav.topBar.phoneHref} /> */}
           <EnquiryFloatPromo promo={settings.enquiryFloatPromo} />
           <CookieConsentBanner config={settings.cookieConsent} />
+          {/* useSearchParams inside AnalyticsBoot needs a Suspense boundary
+              so the rest of the tree can still prerender. */}
+          <Suspense fallback={null}>
+            <AnalyticsBoot />
+          </Suspense>
         </div>
       </EnquiryProvider>
     </AosProvider>
