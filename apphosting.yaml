@@ -27,13 +27,13 @@ env:
   - variable: SMTP_ENABLED
     value: "true"
   - variable: SMTP_HOST
-    value: "" # TODO: set in Firebase console or here
+    value: "mail.karyaninfratech.co.in" 
   - variable: SMTP_PORT
     value: "587"
   - variable: SMTP_SECURE
     value: "false"
   - variable: SMTP_FROM
-    value: "" # TODO: set the From address
+    value: "no-reply@karyaninfratech.co.in" 
   - variable: SMTP_CONNECTION_TIMEOUT_MS
     value: "10000"
   - variable: SMTP_GREETING_TIMEOUT_MS
@@ -45,7 +45,7 @@ env:
   - variable: LEAD_API_ENABLED
     value: "true"
   - variable: LEAD_API_URL
-    value: "https://helptrip.me/WebService/Lead.asmx/InsertLead" # TODO: set if lead API is enabled
+    value: "https://helptrip.me/WebService/Lead.asmx/InsertLead" 
 
   # ── Server: secrets (resolved at runtime from Cloud Secret Manager) ────────
   - variable: MONGODB_URI
