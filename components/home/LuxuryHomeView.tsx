@@ -87,7 +87,7 @@ export default function LuxuryHomeView({
         brandLogoAlt={brandLogoAlt}
       />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col"> 
         {/* Wave into light band */}
         <div style={{ order: sectionOrder("stats") }}>
         
