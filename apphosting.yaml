@@ -57,6 +57,13 @@ env:
   - variable: SMTP_PASS
     secret: SMTP_PASS
 
+  # ── Client: canonical site origin (used by sitemap.xml, robots.txt, OG tags)
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: "https://karyaninfratech.co.in"
+    availability:
+      - BUILD
+      - RUNTIME
+
   # ── Client: Firebase JS SDK (Analytics) ────────────────────────────────────
   # Public web SDK config — safe to expose (these aren't secrets in Firebase's
   # security model; abuse is prevented via Firebase Security Rules + App Check).

@@ -92,8 +92,8 @@ export default function OurPresenceBlock({ band }: { band: HomePresenceBand }) {
             cities={mapCities}
             dotColor="#d4cfc7"
             markerColor="#b08d57"
-            width={440}
-            height={520}
+            width={340}
+            height={320}
           />
         </div>
       </div>

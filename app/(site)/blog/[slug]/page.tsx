@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
             <div className="bg-lux-ivory p-6 shadow-sm sm:p-10">
               <BlogArticleBody html={mainContent} />
-              <div className="mt-12 text-center">
+              <div className="mt-6 text-center">
                 <Link
                   href="/blog"
                   className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider hover:opacity-80"

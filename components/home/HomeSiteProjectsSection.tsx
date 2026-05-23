@@ -10,7 +10,7 @@ export default function HomeSiteProjectsSection({ payload }: { payload: Projects
   if (!projects?.length) return null;
 
   return (
-    <section className="relative overflow-x-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/70 to-lux-cream py-20 lg:py-28">
+    <section className="section-y relative overflow-x-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/70 to-lux-cream">
       <SectionBgStack
         grain
         bottomGlow

@@ -90,29 +90,10 @@ export default function LuxuryHomeView({
       <div className="flex flex-col">
         {/* Wave into light band */}
         <div style={{ order: sectionOrder("stats") }}>
-          <div className="relative z-20 -mt-14 overflow-hidden bg-lux-ivory md:-mt-20">
-            <SectionBgStack
-              layers={[
-                {
-                  variant: "waveFluid",
-                  wrapClassName: "inset-x-0 -top-[35%] bottom-0 h-[150%]",
-                  opacityClassName: "opacity-[0.32]",
-                },
-                {
-                  variant: "meshPremium",
-                  wrapClassName: "inset-0",
-                  opacityClassName: "opacity-[0.12] text-lux-navy",
-                },
-              ]}
-            />
-            <SectionWave
-              fill="fill-lux-ivory"
-              className="relative z-10 drop-shadow-sm"
-            />
-          </div>
+        
 
           {/* Stats — glass cards, mesh blobs */}
-          <section className="relative z-10 overflow-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/80 to-lux-cream pb-6 pt-2">
+          <section className="section-y relative z-10 overflow-hidden bg-gradient-to-b from-lux-ivory via-lux-cream/80 to-lux-cream">
             <SectionBgStack
               topGlow
               bottomGlow
@@ -168,7 +149,7 @@ export default function LuxuryHomeView({
 
         {/* Philosophy */}
         <section
-          className="relative overflow-hidden bg-gradient-to-br from-lux-cream via-lux-ivory to-lux-cream"
+          className="section-y relative overflow-hidden bg-gradient-to-br from-lux-cream via-lux-ivory to-lux-cream"
           style={{ order: sectionOrder("philosophy") }}
         >
           <SectionBgStack
@@ -189,7 +170,7 @@ export default function LuxuryHomeView({
               },
             ]}
           />
-          <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:flex lg:items-center lg:gap-16 lg:px-8 lg:py-20">
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:flex lg:items-center lg:gap-16 lg:px-8">
             <HomeSectionHeading
               badge={data.philosophy.badge}
               title={data.philosophy.title}
@@ -219,7 +200,7 @@ export default function LuxuryHomeView({
           </div>
 
           {/* Capabilities — ribbon + cards like service tiles */}
-          <section className="relative overflow-hidden bg-lux-ivory pb-14 pt-3">
+          <section className="section-y relative overflow-hidden bg-lux-ivory">
             <SectionBgStack
               topGlow
               grain
@@ -277,7 +258,7 @@ export default function LuxuryHomeView({
 
         {/* Our Presence */}
         <section
-          className="relative overflow-hidden bg-gradient-to-b from-lux-cream to-lux-ivory py-14 lg:py-20"
+          className="section-y relative overflow-hidden bg-gradient-to-b from-lux-cream to-lux-ivory"
           style={{ order: sectionOrder("presence") }}
         >
           <SectionBgStack
@@ -316,7 +297,7 @@ export default function LuxuryHomeView({
 
         {/* Why */}
         <section
-          className="relative overflow-hidden bg-lux-ivory py-14 lg:py-20"
+          className="section-y relative overflow-hidden bg-lux-ivory"
           style={{ order: sectionOrder("why") }}
         >
           <SectionBgStack
@@ -390,7 +371,7 @@ export default function LuxuryHomeView({
           </div>
 
           {/* Process */}
-          <section className="relative overflow-hidden bg-theme-bg pb-24 pt-4 text-stone-200">
+          <section className="section-y relative overflow-hidden bg-theme-bg text-stone-200">
             <SectionBgStack
               edgeFade="dark"
               bottomGlow
@@ -425,7 +406,7 @@ export default function LuxuryHomeView({
                 title={data.processIntro.title}
                 variant="dark"
               />
-              <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {data.process.map((s) => (
                   <div
                     key={s.step}
@@ -588,7 +569,7 @@ export default function LuxuryHomeView({
 
         {/* Location */}
         <section
-          className="relative overflow-hidden bg-gradient-to-br from-lux-ivory via-lux-cream to-lux-cream py-14 lg:py-20"
+          className="section-y relative overflow-hidden bg-gradient-to-br from-lux-ivory via-lux-cream to-lux-cream"
           style={{ order: sectionOrder("location") }}
         >
           <SectionBgStack
@@ -651,7 +632,7 @@ export default function LuxuryHomeView({
 
         {/* About */}
         <section
-          className="relative overflow-hidden bg-lux-ivory py-14 lg:py-20"
+          className="section-y relative overflow-hidden bg-lux-ivory"
           style={{ order: sectionOrder("about") }}
         >
           <SectionBgStack
@@ -688,7 +669,7 @@ export default function LuxuryHomeView({
                 aria-hidden
               />
             </div>
-            <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+            <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
               <div className="flex h-full flex-col rounded-3xl border border-stone-200/90 bg-gradient-to-b from-lux-ivory to-lux-cream/50 p-8 shadow-sm ring-1 ring-lux-gold/10">
                 <p className="text-base leading-relaxed text-stone-600 sm:text-lg">
                   {data.aboutSection.description}
@@ -732,7 +713,7 @@ export default function LuxuryHomeView({
 
         {/* Journal */}
         <section
-          className="relative overflow-hidden bg-theme-bg py-14 text-stone-300 lg:py-20"
+          className="section-y relative overflow-hidden bg-theme-bg text-stone-300"
           style={{ order: sectionOrder("journal") }}
         >
           <SectionBgStack
@@ -775,7 +756,7 @@ export default function LuxuryHomeView({
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="mt-12">
+            <div className="mt-6">
               <HomeBlogCarousel posts={blogPosts} />
             </div>
           </div>
@@ -826,7 +807,7 @@ export default function LuxuryHomeView({
 
         {/* Split contact — gallery/video + contact bar */}
         <section
-          className="relative overflow-hidden bg-lux-ivory py-14 lg:py-20"
+          className="section-y relative overflow-hidden bg-lux-ivory"
           style={{ order: sectionOrder("splitCta") }}
         >
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

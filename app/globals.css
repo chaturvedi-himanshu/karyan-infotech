@@ -29,6 +29,13 @@
   --color-theme-on-bg-subtle: #ffc875;
 }
 
+/* Single source of truth for vertical padding on home page sections.
+   Change these two values to adjust spacing for every section at once. */
+:root {
+  --section-y: 2rem; /* mobile  (≈ py-14) */
+  --section-y-lg: 3rem; /* ≥1024px (≈ py-20) */
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -381,6 +388,19 @@
 
   .text-stone-700 {
     color: var(--color-theme-fg);
+  }
+
+  /* Unified section spacing — used on every home page section.
+     Tweak --section-y / --section-y-lg in :root to update everywhere. */
+  .section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+  }
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-top: var(--section-y-lg);
+      padding-bottom: var(--section-y-lg);
+    }
   }
 }
 
