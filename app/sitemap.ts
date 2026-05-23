@@ -87,56 +87,55 @@ async function buildContentPageEntries(): Promise<SitemapEntry[]> {
   const rows = await safeFetch(() =>
     ContentPageModel.find({}, { slug: 1, updatedAt: 1 }).lean(),
   );
-  return rows
-    .map((row) => {
-      const r = row as { slug?: string; updatedAt?: Date };
-      const slug = r.slug?.trim();
-      if (!slug) return null;
-      return {
-        url: absoluteUrl(`/${slug}`),
-        lastModified: r.updatedAt instanceof Date ? r.updatedAt : new Date(),
-        changeFrequency: "monthly",
-        priority: 0.6,
-      } satisfies SitemapEntry;
-    })
-    .filter((x): x is SitemapEntry => Boolean(x));
+  const entries: SitemapEntry[] = [];
+  for (const row of rows) {
+    const r = row as { slug?: string; updatedAt?: Date };
+    const slug = r.slug?.trim();
+    if (!slug) continue;
+    entries.push({
+      url: absoluteUrl(`/${slug}`),
+      lastModified: r.updatedAt instanceof Date ? r.updatedAt : new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    });
+  }
+  return entries;
 }
 
 async function buildProjectEntries(): Promise<SitemapEntry[]> {
   const rows = await safeFetch(() =>
     ProjectPageModel.find({}, { slug: 1, updatedAt: 1 }).lean(),
   );
-  const fromDb = rows
-    .map((row) => {
-      const r = row as { slug?: string; updatedAt?: Date };
-      const slug = r.slug?.trim();
-      if (!slug) return null;
-      return {
-        url: absoluteUrl(`/${slug}`),
-        lastModified: r.updatedAt instanceof Date ? r.updatedAt : new Date(),
-        changeFrequency: "monthly",
-        priority: 0.85,
-      } satisfies SitemapEntry;
-    })
-    .filter((x): x is SitemapEntry => Boolean(x));
+  const fromDb: SitemapEntry[] = [];
+  for (const row of rows) {
+    const r = row as { slug?: string; updatedAt?: Date };
+    const slug = r.slug?.trim();
+    if (!slug) continue;
+    fromDb.push({
+      url: absoluteUrl(`/${slug}`),
+      lastModified: r.updatedAt instanceof Date ? r.updatedAt : new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    });
+  }
 
   // Also include any project listed only in the listing payload (covers seeded
   // projects that haven't been edited in the admin yet).
   let fromListing: SitemapEntry[] = [];
   try {
     const listing = await getProjectsListPayload();
-    fromListing = listing.projects
-      .map((p) => {
-        const path = p.href?.startsWith("/") ? p.href : `/${p.href ?? ""}`;
-        if (!path || path === "/") return null;
-        return {
+    fromListing = listing.projects.flatMap((p) => {
+      const path = p.href?.startsWith("/") ? p.href : `/${p.href ?? ""}`;
+      if (!path || path === "/") return [];
+      return [
+        {
           url: absoluteUrl(path),
           lastModified: new Date(),
-          changeFrequency: "monthly",
+          changeFrequency: "monthly" as const,
           priority: 0.85,
-        } satisfies SitemapEntry;
-      })
-      .filter((x): x is SitemapEntry => Boolean(x));
+        },
+      ];
+    });
   } catch {
     /* ignore — listing fallback is opportunistic */
   }
