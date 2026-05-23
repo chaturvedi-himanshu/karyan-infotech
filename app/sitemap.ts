@@ -17,17 +17,37 @@ type SitemapEntry = MetadataRoute.Sitemap[number];
 
 /** Static, hand-crafted routes — these always exist on the site. */
 const STATIC_ROUTES: SitemapEntry[] = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" },
-  { path: "/about", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
-  { path: "/projects", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
-].map(({ path, priority, changeFrequency }) => ({
-  url: absoluteUrl(path),
-  lastModified: new Date(),
-  changeFrequency,
-  priority,
-}));
+  {
+    url: absoluteUrl("/"),
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 1.0,
+  },
+  {
+    url: absoluteUrl("/about"),
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  },
+  {
+    url: absoluteUrl("/contact"),
+    lastModified: new Date(),
+    changeFrequency: "yearly",
+    priority: 0.6,
+  },
+  {
+    url: absoluteUrl("/projects"),
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.9,
+  },
+  {
+    url: absoluteUrl("/blog"),
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  },
+];
 
 function normalizeTypeFilter(raw: string): string {
   return raw.trim().toLowerCase();
@@ -137,12 +157,15 @@ async function buildProjectTypeFilterEntries(): Promise<SitemapEntry[]> {
       const t = normalizeTypeFilter(project.type ?? "");
       if (t) types.add(t);
     }
-    return [...types].map((type) => ({
-      url: absoluteUrl(`/projects?type=${encodeURIComponent(type)}`),
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.6,
-    }));
+    return [...types].map(
+      (type) =>
+        ({
+          url: absoluteUrl(`/projects?type=${encodeURIComponent(type)}`),
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.6,
+        }) satisfies SitemapEntry,
+    );
   } catch {
     return [];
   }
