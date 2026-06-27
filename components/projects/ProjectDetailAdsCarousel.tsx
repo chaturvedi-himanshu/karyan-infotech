@@ -16,7 +16,7 @@ export const PROJECT_DETAIL_AD_HEIGHT = 550;
 
 export type ProjectDetailAdSlide = {
   src: string;
-  alt: string;
+  alt: string; 
 };
 
 export default function ProjectDetailAdsCarousel({
