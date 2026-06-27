@@ -8,9 +8,11 @@ import type { ProjectPayload } from "@/lib/cms/types";
 import { getLucideIcon, projectIcon } from "@/lib/cms/icons";
 import ProjectVideoPlayer from "@/components/projects/ProjectVideoPlayer";
 import ProjectGalleryCarousel from "@/components/projects/ProjectGalleryCarousel";
+import ProjectDetailAdsCarousel from "@/components/projects/ProjectDetailAdsCarousel";
 import ProjectFloorPlansLightbox from "@/components/projects/ProjectFloorPlansLightbox";
 import SeoJsonLd from "@/components/seo/SeoJsonLd";
 import { buildSeoMetadata } from "@/lib/seo/metadata";
+import { getSiteSettings } from "@/lib/cms/getters";
 
 export function projectMetadata(data: ProjectPayload): Metadata {
   return buildSeoMetadata({
@@ -20,7 +22,17 @@ export function projectMetadata(data: ProjectPayload): Metadata {
   });
 }
 
-export default function ProjectPageView({ data }: { data: ProjectPayload }) {
+export default async function ProjectPageView({
+  data,
+}: {
+  data: ProjectPayload;
+}) {
+  const site = await getSiteSettings();
+  const adImages =
+    site.projectDetailAds?.images?.filter((img) => img.src?.trim()) ?? [];
+  const bookNowLabel =
+    site.projectDetailAds?.bookNowLabel?.trim() || "Book Now";
+
   const reraNo = data.rera?.trim() ?? "";
   const {
     header,
@@ -55,7 +67,11 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
   return (
     <>
       <SeoJsonLd raw={data.seo?.schemaJsonLd} />
-      <PageHeader title={header.title} breadcrumbs={header.breadcrumbs} bgImage={header.bgImage} />
+      <PageHeader
+        title={header.title}
+        breadcrumbs={header.breadcrumbs}
+        bgImage={header.bgImage}
+      />
 
       {reraNo ? (
         <section
@@ -99,8 +115,12 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                     <p className="mb-1 text-xs font-medium uppercase tracking-wider text-[#7a7a7a]">
                       {item.title}
                     </p>
-                    <p className="text-lg font-bold text-[#1a1a2e]">{item.value}</p>
-                    <p className="mt-1 text-xs text-[#7a7a7a]">{item.description}</p>
+                    <p className="text-lg font-bold text-[#1a1a2e]">
+                      {item.value}
+                    </p>
+                    <p className="mt-1 text-xs text-[#7a7a7a]">
+                      {item.description}
+                    </p>
                   </div>
                 </div>
               );
@@ -109,14 +129,17 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
 
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <h2 className="mb-4 text-3xl font-bold text-[#1a1a2e]">{mainTitle}</h2>
+              <h2 className="mb-4 text-3xl font-bold text-[#1a1a2e]">
+                {mainTitle}
+              </h2>
               <div className="mb-6 h-1 w-14 bg-[#c9a84c]" />
               <div className="space-y-4 leading-relaxed text-[#7a7a7a]">
                 {introParagraphs.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
-               {(downloads?.brochureUrl?.trim() || downloads?.priceListUrl?.trim()) ? (
+              {downloads?.brochureUrl?.trim() ||
+              downloads?.priceListUrl?.trim() ? (
                 <div className="mt-8 flex flex-wrap justify-end gap-3">
                   {downloads?.brochureUrl?.trim() ? (
                     <a
@@ -137,7 +160,8 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                       className="inline-flex items-center gap-2 rounded-sm border border-theme-bg px-5 py-3 text-sm font-semibold text-theme-bg transition hover:bg-theme-bg hover:text-white"
                     >
                       <Download className="h-4 w-4" />
-                      {downloads.priceListLabel?.trim() || "Download Price List"}
+                      {downloads.priceListLabel?.trim() ||
+                        "Download Price List"}
                     </a>
                   ) : null}
                 </div>
@@ -154,8 +178,12 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                         key={unit.size}
                         className="rounded-sm border-t-4 border-[#c9a84c] bg-[#f8f5f0] p-5"
                       >
-                        <h4 className="mb-1 text-sm font-bold text-[#1a1a2e]">{unit.size}</h4>
-                        <p className="mb-2 text-base font-semibold text-[#c9a84c]">{unit.area}</p>
+                        <h4 className="mb-1 text-sm font-bold text-[#1a1a2e]">
+                          {unit.size}
+                        </h4>
+                        <p className="mb-2 text-base font-semibold text-[#c9a84c]">
+                          {unit.area}
+                        </p>
                         <p className="text-xs text-[#7a7a7a]">{unit.ideal}</p>
                       </div>
                     ))}
@@ -193,11 +221,15 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                         <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-sm bg-theme-bg">
                           <Building2 className="h-5 w-5 text-[#c9a84c]" />
                         </div>
-                        <h4 className="mb-1 text-sm font-bold text-[#1a1a2e]">{arch.name}</h4>
+                        <h4 className="mb-1 text-sm font-bold text-[#1a1a2e]">
+                          {arch.name}
+                        </h4>
                         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
                           {arch.role}
                         </p>
-                        <p className="text-xs leading-relaxed text-[#7a7a7a]">{arch.description}</p>
+                        <p className="text-xs leading-relaxed text-[#7a7a7a]">
+                          {arch.description}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -207,7 +239,10 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
               {gallery.length ? (
                 <>
                   <div className="mt-10">
-                    <ProjectGalleryCarousel title="Project Gallery" images={gallery} />
+                    <ProjectGalleryCarousel
+                      title="Project Gallery"
+                      images={gallery}
+                    />
                   </div>
                 </>
               ) : null}
@@ -263,12 +298,19 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
 
               {leasingBox ? (
                 <>
-                  <h3 className="mb-5 mt-10 text-xl font-bold text-[#1a1a2e]">{leasingBox.title}</h3>
+                  <h3 className="mb-5 mt-10 text-xl font-bold text-[#1a1a2e]">
+                    {leasingBox.title}
+                  </h3>
                   <div className="rounded-sm bg-[#f8f5f0] p-6">
-                    <p className="mb-4 text-sm leading-relaxed text-[#7a7a7a]">{leasingBox.intro}</p>
+                    <p className="mb-4 text-sm leading-relaxed text-[#7a7a7a]">
+                      {leasingBox.intro}
+                    </p>
                     <ul className="space-y-3">
                       {leasingBox.bullets.map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-sm">
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-sm"
+                        >
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#c9a84c]" />
                           <span className="text-[#5e646a]">{item}</span>
                         </li>
@@ -310,13 +352,18 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                     })()}
                     {locationSidebar.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-gray-300">{locationSidebar.body}</p>
+                  <p className="text-sm leading-relaxed text-gray-300">
+                    {locationSidebar.body}
+                  </p>
                   {locationSidebar.badges?.length ? (
                     <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-gray-400">
                       {locationSidebar.badges.map((b) => {
                         const Ic = getLucideIcon(b.icon);
                         return (
-                          <span key={b.text} className="flex items-center gap-1">
+                          <span
+                            key={b.text}
+                            className="flex items-center gap-1"
+                          >
                             <Ic className="h-3.5 w-3.5 text-[#c9a84c]" />
                             {b.text}
                           </span>
@@ -327,16 +374,27 @@ export default function ProjectPageView({ data }: { data: ProjectPayload }) {
                 </div>
               ) : null}
 
-              <div className="overflow-hidden rounded-2xl border border-stone-200/90 bg-gradient-to-b from-white to-[#f8f5f0] p-6 lg:sticky lg:top-28">
-                <h3 className="mb-2 text-base font-bold text-[#1a1a2e]">{sidebarFormTitle}</h3>
-                <p className="mb-5 text-xs uppercase tracking-[0.15em] text-stone-500">
-                  We respond within one business day
-                </p>
-                <ContactForm fixedProject={header.title} />
-              </div>
+              {adImages.length > 0 && (
+                <ProjectDetailAdsCarousel
+                  images={adImages}
+                  enquiryProject={cta.enquiryProject}
+                  bookNowLabel={bookNowLabel}
+                />
+              )}
+
+                <div className="space-y-6 lg:sticky lg:top-28">
+                  <div className="overflow-hidden rounded-2xl border border-stone-200/90 bg-gradient-to-b from-white to-[#f8f5f0] p-6">
+                    <h3 className="mb-2 text-base font-bold text-[#1a1a2e]">
+                      {sidebarFormTitle}
+                    </h3>
+                    <p className="mb-5 text-xs uppercase tracking-[0.15em] text-stone-500">
+                      We respond within one business day
+                    </p>
+                    <ContactForm fixedProject={header.title} />
+                  </div>
+                </div>
             </div>
           </div>
-
         </div>
       </section>
 

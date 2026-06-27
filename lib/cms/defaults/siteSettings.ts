@@ -93,6 +93,10 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsBundle = {
     heading: "Karyan Infratech",
     subheading: "Luxury residences and commercial destinations crafted for Delhi NCR.",
   },
+  projectDetailAds: {
+    images: [],
+    bookNowLabel: "Book Now",
+  },
   enquiryFloatPromo: {
     enabled: false,
     imageSrc: "",

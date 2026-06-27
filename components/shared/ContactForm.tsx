@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useEnquiry } from "@/components/enquiry/EnquiryProvider";
 import type { SiteProjectInterestOption } from "@/lib/cms/types";
-import { useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { isCaptchaSubmitError, useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { useMathCaptcha } from "@/hooks/useMathCaptcha";
+import MathCaptchaField from "@/components/shared/MathCaptchaField";
 
 interface ContactFormProps {
   dark?: boolean;
@@ -28,14 +30,25 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
     email: "",
     mobile: "",
     project: normalizedFixedProject,
-    message: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof typeof form, string>>>({});
   const { submitLead, loading } = useLeadSubmission();
+  const {
+    challenge: captchaChallenge,
+    answer: captchaAnswer,
+    setAnswer: setCaptchaAnswer,
+    error: captchaError,
+    loading: captchaLoading,
+    validate: validateCaptcha,
+    reset: resetCaptcha,
+    getPayload: getCaptchaPayload,
+    reportError: reportCaptchaError,
+  } = useMathCaptcha();
 
   useEffect(() => {
     if (!submitted) return;
+    void resetCaptcha();
     const timer = window.setTimeout(() => {
       setSubmitted(false);
       setForm({
@@ -43,14 +56,13 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
         email: "",
         mobile: "",
         project: normalizedFixedProject,
-        message: "",
       });
     }, 5000);
     return () => window.clearTimeout(timer);
-  }, [submitted, normalizedFixedProject]);
+  }, [submitted, normalizedFixedProject, resetCaptcha]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     const nextValue =
@@ -80,24 +92,36 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    const fieldsOk = validate();
+    const captchaOk = validateCaptcha();
+    if (!fieldsOk || !captchaOk) return;
+    const captchaPayload = getCaptchaPayload();
+    if (!captchaPayload) return;
     try {
       const pagePath = typeof window !== "undefined" ? window.location.pathname : "/contact";
       const source = normalizedFixedProject ? "property_details" : "contact_page";
-      const ok = await submitLead({
+      const result = await submitLead({
         source,
         name: form.name.trim(),
         email: form.email.trim(),
         mobile: form.mobile.trim(),
         project: normalizedFixedProject || form.project,
-        message: form.message.trim(),
         pagePath,
+        ...captchaPayload,
       });
-      if (!ok) throw new Error("Request failed");
+      if (!result.ok) {
+        if (isCaptchaSubmitError(result.error)) {
+          reportCaptchaError(result.error);
+        } else {
+          alert(result.error);
+        }
+        return;
+      }
       setSubmitted(true);
       setErrors({});
+      void resetCaptcha();
     } catch {
-      alert("We could not send your message. Please try again or use the phone number above.");
+      alert("We could not send your enquiry. Please try again or use the phone number above.");
     }
   };
 
@@ -193,21 +217,19 @@ export default function ContactForm({ dark = false, fixedProject }: ContactFormP
           </select>
         </div>
       ) : null}
-      <div>
-        <label className={labelClass}>Message</label>
-        <textarea
-          name="message"
-          rows={3}
-          placeholder="Your message..."
-          value={form.message}
-          onChange={handleChange}
-          className={`${inputClass} resize-none`}
-        />
-        {errors.message ? <p className={errorClass}>{errors.message}</p> : null}
-      </div>
+      <MathCaptchaField
+        prompt={captchaChallenge?.prompt ?? null}
+        value={captchaAnswer}
+        onChange={setCaptchaAnswer}
+        error={captchaError}
+        loading={captchaLoading}
+        labelClassName={labelClass}
+        inputClassName={inputClass}
+        errorClassName={errorClass}
+      />
       <button
         type="submit"
-        disabled={loading}
+        disabled={loading || captchaLoading || !captchaChallenge}
         className="w-full rounded-xl bg-[linear-gradient(135deg,#a07c3a,#c6a96a)] py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_14px_26px_-14px_rgba(160,124,58,0.8)] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {loading ? "Sending..." : "Submit Enquiry"}

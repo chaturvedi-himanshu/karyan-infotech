@@ -8,7 +8,6 @@ export type LeadSubmissionRow = {
   email: string;
   mobile: string;
   project: string;
-  message: string;
   preferredDate: string;
   pagePath: string;
   createdAt: string;
@@ -27,7 +26,6 @@ export async function listLeadSubmissions(limit = 300): Promise<LeadSubmissionRo
     email: r.email,
     mobile: r.mobile,
     project: r.project ?? "",
-    message: r.message ?? "",
     preferredDate: r.preferredDate ?? "",
     pagePath: r.pagePath ?? "",
     createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : "",

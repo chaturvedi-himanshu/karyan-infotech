@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import Link from "next/link";
 import { X, Send, CheckCircle2 } from "lucide-react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
 import type { SiteProjectInterestOption } from "@/lib/cms/types";
-import { useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { isCaptchaSubmitError, useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { useMathCaptcha } from "@/hooks/useMathCaptcha";
+import MathCaptchaField from "@/components/shared/MathCaptchaField";
 
 const PROJECT_OPTIONS_FALLBACK: SiteProjectInterestOption[] = [
   { value: "", label: "Select a project" },
@@ -24,7 +25,6 @@ type FormState = {
   mobile: string;
   project: string;
   preferredDate: string;
-  message: string;
 };
 
 const initialForm: FormState = {
@@ -33,7 +33,6 @@ const initialForm: FormState = {
   mobile: "",
   project: "",
   preferredDate: "",
-  message: "",
 };
 
 function todayIsoDate(): string {
@@ -42,19 +41,17 @@ function todayIsoDate(): string {
 
 const TAB_CONFIG: Record<
   EnquiryTab,
-  { label: string; heading: string; subtitle: string; messagePlaceholder: string }
+  { label: string; heading: string; subtitle: string }
 > = {
   agent: {
     label: "Connect with an agent",
     heading: "Connect with an agent",
     subtitle: "Share your details — our team responds within one business day.",
-    messagePlaceholder: "How can we help you?",
   },
   site_visit: {
     label: "Book a site visit",
     heading: "Book a site visit",
     subtitle: "Pick a project and tell us when you would like to visit.",
-    messagePlaceholder: "Preferred date, time, or any notes…",
   },
 };
 
@@ -87,6 +84,17 @@ export default function EnquiryModal({
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const { submitLead, loading } = useLeadSubmission();
+  const {
+    challenge: captchaChallenge,
+    answer: captchaAnswer,
+    setAnswer: setCaptchaAnswer,
+    error: captchaError,
+    loading: captchaLoading,
+    validate: validateCaptcha,
+    reset: resetCaptcha,
+    getPayload: getCaptchaPayload,
+    reportError: reportCaptchaError,
+  } = useMathCaptcha(isOpen);
 
   const tabMeta = TAB_CONFIG[activeTab];
 
@@ -114,7 +122,7 @@ export default function EnquiryModal({
   }, [isOpen, onClose]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     const nextValue =
@@ -147,31 +155,33 @@ export default function EnquiryModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    const fieldsOk = validate();
+    const captchaOk = validateCaptcha();
+    if (!fieldsOk || !captchaOk) return;
 
-    const enquiryLabel = TAB_CONFIG[activeTab].label;
-    const userMessage = form.message.trim();
-    const message = userMessage
-      ? `[${enquiryLabel}] ${userMessage}`
-      : `[${enquiryLabel}]`;
+    const captchaPayload = getCaptchaPayload();
+    if (!captchaPayload) return;
 
-    try {
-      const ok = await submitLead({
-        source: "enquiry_modal",
-        name: form.name.trim(),
-        email: form.email.trim(),
-        mobile: form.mobile.trim(),
-        project: form.project,
-        preferredDate: activeTab === "site_visit" ? form.preferredDate : "",
-        message,
-        pagePath: typeof window !== "undefined" ? window.location.pathname : "",
-      });
-      if (!ok) throw new Error("Request failed");
-      setSubmitted(true);
-      setErrors({});
-    } catch {
-      alert("We could not send your enquiry. Please try again or call the desk.");
+    const result = await submitLead({
+      source: "enquiry_modal",
+      name: form.name.trim(),
+      email: form.email.trim(),
+      mobile: form.mobile.trim(),
+      project: form.project,
+      preferredDate: activeTab === "site_visit" ? form.preferredDate : "",
+      pagePath: typeof window !== "undefined" ? window.location.pathname : "",
+      ...captchaPayload,
+    });
+    if (!result.ok) {
+      if (isCaptchaSubmitError(result.error)) {
+        reportCaptchaError(result.error);
+      } else {
+        alert(result.error);
+      }
+      return;
     }
+    setSubmitted(true);
+    setErrors({});
   };
 
   const handleClose = () => {
@@ -387,27 +397,20 @@ export default function EnquiryModal({
                 </div>
               ) : null}
 
-              <div>
-                <label htmlFor="enquiry-message" className={labelClass}>
-                  Message
-                </label>
-                <input
-                  id="enquiry-message"
-                  name="message"
-                  type="text"
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder={tabMeta.messagePlaceholder}
-                  className={fieldClass}
-                />
-                {errors.message ? (
-                  <p className="mt-1 text-xs text-red-500">{errors.message}</p>
-                ) : null}
-              </div>
+              <MathCaptchaField
+                id="enquiry-math-captcha"
+                prompt={captchaChallenge?.prompt ?? null}
+                value={captchaAnswer}
+                onChange={setCaptchaAnswer}
+                error={captchaError}
+                loading={captchaLoading}
+                labelClassName={labelClass}
+                inputClassName={fieldClass}
+              />
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || captchaLoading || !captchaChallenge}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-theme-bg py-3.5 text-sm font-semibold uppercase tracking-widest text-theme-on-bg transition hover:bg-theme-bg-muted disabled:opacity-70"
               >
                 <Send className="h-4 w-4" />

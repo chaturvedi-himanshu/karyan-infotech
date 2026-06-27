@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import type { MathCaptchaPayload } from "@/hooks/useMathCaptcha";
 
 type LeadSource =
   | "enquiry_modal"
@@ -8,22 +9,25 @@ type LeadSource =
   | "about_page"
   | "property_details";
 
-type LeadPayload = {
+type LeadPayload = MathCaptchaPayload & {
   source: LeadSource;
   name: string;
   email: string;
   mobile: string;
   project?: string;
-  message?: string;
   preferredDate?: string;
   pagePath?: string;
 };
+
+export type LeadSubmitResult =
+  | { ok: true }
+  | { ok: false; error: string };
 
 export function useLeadSubmission() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const submitLead = useCallback(async (payload: LeadPayload) => {
+  const submitLead = useCallback(async (payload: LeadPayload): Promise<LeadSubmitResult> => {
     setLoading(true);
     setError(null);
     try {
@@ -34,18 +38,23 @@ export function useLeadSubmission() {
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(
-          typeof j.error === "string" ? j.error : "We could not process your request right now."
-        );
+        const message =
+          typeof j.error === "string" ? j.error : "We could not process your request right now.";
+        throw new Error(message);
       }
-      return true;
+      return { ok: true };
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
-      return false;
+      const message = err instanceof Error ? err.message : "Request failed";
+      setError(message);
+      return { ok: false, error: message };
     } finally {
       setLoading(false);
     }
   }, []);
 
   return { submitLead, loading, error };
+}
+
+export function isCaptchaSubmitError(message: string): boolean {
+  return message.toLowerCase().includes("security check");
 }

@@ -25,6 +25,8 @@ import type { ProjectsListPayload } from "@/components/site/ProjectsPageContent"
 import {
   applyProjectListingFields,
   buildDefaultProjectPayload,
+  filterPublishableProjectCards,
+  normalizeProjectListingCards,
   slugFromProjectHref,
   sortProjectsByOrder,
   type ProjectListingFieldsBySlug,
@@ -50,7 +52,9 @@ async function loadSiteSettingsFromDb(): Promise<SiteSettingsBundle> {
       const defInterest = DEFAULT_SITE_SETTINGS.projectInterestOptions;
       const defHeader = DEFAULT_SITE_SETTINGS.pageHeader;
       const defTheme = DEFAULT_SITE_SETTINGS.themeColors;
+      const defAds = DEFAULT_SITE_SETTINGS.projectDetailAds;
       const cc = raw.cookieConsent;
+      const pda = raw.projectDetailAds;
       const enquiryFloatPromo: SiteSettingsBundle["enquiryFloatPromo"] =
         pr && typeof pr === "object" && !Array.isArray(pr)
           ? { ...defPromo, ...(pr as Partial<typeof defPromo>) }
@@ -78,6 +82,16 @@ async function loadSiteSettingsFromDb(): Promise<SiteSettingsBundle> {
         tr && typeof tr === "object" && !Array.isArray(tr)
           ? { ...defTheme, ...(tr as Partial<typeof defTheme>) }
           : defTheme;
+      const projectDetailAds: SiteSettingsBundle["projectDetailAds"] =
+        pda && typeof pda === "object" && !Array.isArray(pda)
+          ? {
+              ...defAds,
+              ...(pda as Partial<typeof defAds>),
+              images: Array.isArray((pda as SiteSettingsBundle["projectDetailAds"]).images)
+                ? (pda as SiteSettingsBundle["projectDetailAds"]).images
+                : defAds.images,
+            }
+          : defAds;
       return {
         nav: {
           ...DEFAULT_SITE_SETTINGS.nav,
@@ -94,6 +108,7 @@ async function loadSiteSettingsFromDb(): Promise<SiteSettingsBundle> {
         projectInterestOptions,
         themeColors,
         pageHeader,
+        projectDetailAds,
         enquiryFloatPromo,
         cookieConsent,
       };
@@ -235,10 +250,9 @@ function mergeProjectsListFromSitePage(
     eyebrow: typeof raw.eyebrow === "string" ? raw.eyebrow : fb.eyebrow,
     title: typeof raw.title === "string" ? raw.title : fb.title,
     subtitle: typeof raw.subtitle === "string" ? raw.subtitle : fb.subtitle,
-    projects:
-      Array.isArray(projects) && projects.length
-        ? (projects as ProjectsListPayload["projects"])
-        : fb.projects,
+    projects: Array.isArray(projects)
+      ? normalizeProjectListingCards(projects as unknown[])
+      : fb.projects,
   };
 }
 
@@ -265,9 +279,17 @@ export async function getProjectsListPayload(): Promise<ProjectsListPayload> {
         fieldsBySlug.set(row.slug, entry);
       }
     }
-    return { ...payload, projects: applyProjectListingFields(payload.projects, fieldsBySlug) };
+    return {
+      ...payload,
+      projects: filterPublishableProjectCards(
+        applyProjectListingFields(payload.projects, fieldsBySlug),
+      ),
+    };
   } catch {
-    return { ...payload, projects: sortProjectsByOrder(payload.projects) };
+    return {
+      ...payload,
+      projects: filterPublishableProjectCards(sortProjectsByOrder(payload.projects)),
+    };
   }
 }
 

@@ -9,6 +9,7 @@ const SiteSettingsSchema = new Schema(
     themeColors: { type: Schema.Types.Mixed, required: false },
     pageHeader: { type: Schema.Types.Mixed, required: false },
     enquiryFloatPromo: { type: Schema.Types.Mixed, required: false },
+    projectDetailAds: { type: Schema.Types.Mixed, required: false },
     cookieConsent: { type: Schema.Types.Mixed, required: false },
   },
   { timestamps: true }

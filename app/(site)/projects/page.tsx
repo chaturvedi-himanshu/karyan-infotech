@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+/** Always read fresh projects listing from Mongo (not a stale cached snapshot). */
+export const dynamic = "force-dynamic";
 import PageHeader from "@/components/layout/PageHeader";
 import { getProjectsListPayload, getSitePage } from "@/lib/cms/getters";
 import { sortProjectsByOrder } from "@/lib/cms/projects";

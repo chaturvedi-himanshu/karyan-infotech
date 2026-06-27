@@ -14,7 +14,6 @@ export type LeadInput = {
   email: string;
   mobile: string;
   project?: string;
-  message?: string;
   preferredDate?: string;
   pagePath?: string;
 };
@@ -24,7 +23,6 @@ const MAX_LEN = {
   email: 320,
   mobile: 80,
   project: 120,
-  message: 8000,
   preferredDate: 32,
   pagePath: 500,
 };
@@ -106,7 +104,6 @@ async function sendToLeadApi(lead: {
   formType: string;
   project?: string;
   preferredDate?: string;
-  message?: string;
 }) {
   const apiUrl = getLeadApiUrl();
   if (!isLeadApiEnabled()) {
@@ -116,7 +113,6 @@ async function sendToLeadApi(lead: {
 
   const remarkParts = [`Lead from ${lead.formType} Form - karyan website`];
   if (lead.preferredDate) remarkParts.push(`Preferred visit date: ${lead.preferredDate}`);
-  if (lead.message) remarkParts.push(lead.message);
 
   const body = new URLSearchParams({
     Name: lead.name,
@@ -145,7 +141,6 @@ async function sendEmails(lead: {
   email: string;
   mobile: string;
   project: string;
-  message: string;
   preferredDate: string;
   formType: string;
 }) {
@@ -158,7 +153,6 @@ async function sendEmails(lead: {
   const email = escapeHtml(lead.email);
   const mobile = escapeHtml(lead.mobile);
   const project = escapeHtml(lead.project || "General");
-  const message = escapeHtml(lead.message || "N/A");
   const preferredDate = escapeHtml(lead.preferredDate || "N/A");
   const formType = escapeHtml(lead.formType);
 
@@ -195,7 +189,6 @@ async function sendEmails(lead: {
                         <p style="margin:0 0 8px 0;font-size:14px;"><strong>Email:</strong> ${email}</p>
                         <p style="margin:0 0 8px 0;font-size:14px;"><strong>Project:</strong> ${project}</p>
                         <p style="margin:0 0 8px 0;font-size:14px;"><strong>Preferred visit date:</strong> ${preferredDate}</p>
-                        <p style="margin:0 0 8px 0;font-size:14px;"><strong>Message:</strong> ${message}</p>
                         <p style="margin:0;font-size:13px;color:#6b7280;"><strong>Date:</strong> ${new Date().toLocaleString()}</p>
                       </td>
                     </tr>
@@ -283,7 +276,6 @@ export function sanitizeLeadInput(body: Record<string, unknown>): LeadInput {
     email: trim(body.email, MAX_LEN.email),
     mobile: trim(body.mobile, MAX_LEN.mobile),
     project: trim(body.project, MAX_LEN.project),
-    message: trim(body.message, MAX_LEN.message),
     preferredDate: trim(body.preferredDate, MAX_LEN.preferredDate),
     pagePath: trim(body.pagePath, MAX_LEN.pagePath),
   };
@@ -301,7 +293,6 @@ export async function submitLead(rawLead: LeadInput) {
     email: rawLead.email,
     mobile: rawLead.mobile,
     project: rawLead.project ?? "",
-    message: rawLead.message ?? "",
     preferredDate: rawLead.preferredDate ?? "",
     pagePath: rawLead.pagePath ?? "",
   });
@@ -315,14 +306,12 @@ export async function submitLead(rawLead: LeadInput) {
       formType,
       project: rawLead.project,
       preferredDate: rawLead.preferredDate,
-      message: rawLead.message,
     }),
     sendEmails({
       name: rawLead.name,
       email: rawLead.email,
       mobile: rawLead.mobile,
       project: rawLead.project ?? "",
-      message: rawLead.message ?? "",
       preferredDate: rawLead.preferredDate ?? "",
       formType,
     }),

@@ -239,7 +239,7 @@ export default function ProjectPortalForm({ slug }: { slug: string }) {
               }
             />
           </CmsField>
-          <CmsField label="Background image" hint="Hero banner behind the project title.">
+          <CmsField label="Background image" hint="Hero banner behind the project title at the top of the page.">
             <CmsImageUpload
               value={data.header.bgImage}
               onChange={(url) =>

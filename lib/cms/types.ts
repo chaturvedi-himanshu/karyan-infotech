@@ -115,12 +115,19 @@ export type SitePageHeaderDefaults = {
   subheading: string;
 };
 
+/** Image carousel in the right column on every project detail page (above the enquiry form). */
+export type SiteProjectDetailAds = {
+  images: { src: string; alt: string }[];
+  bookNowLabel?: string;
+};
+
 export type SiteSettingsBundle = {
   nav: SiteNavPayload;
   footer: SiteFooterPayload;
   projectInterestOptions: SiteProjectInterestOption[];
   themeColors: SiteThemeColors;
   pageHeader: SitePageHeaderDefaults;
+  projectDetailAds: SiteProjectDetailAds;
   enquiryFloatPromo: SiteEnquiryFloatPromo;
   cookieConsent: SiteCookieConsent;
 };

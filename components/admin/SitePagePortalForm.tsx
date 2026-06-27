@@ -864,10 +864,10 @@ export default function SitePagePortalForm({ slug }: { slug: string }) {
                     projects: [
                       ...((p.projects as ProjectCard[]) ?? []),
                       {
-                        title: "New project",
+                        title: "",
                         description: "",
-                        image: "/images/trevana-main.webp",
-                        href: "/",
+                        image: "",
+                        href: "",
                         type: "",
                         location: "",
                         status: "",

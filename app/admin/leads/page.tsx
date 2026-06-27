@@ -71,7 +71,6 @@ export default async function AdminLeadsPage() {
                 <th className="whitespace-nowrap px-4 py-3">Mobile</th>
                 <th className="whitespace-nowrap px-4 py-3">Project</th>
                 <th className="whitespace-nowrap px-4 py-3">Visit date</th>
-                <th className="min-w-[220px] px-4 py-3">Message</th>
                 <th className="whitespace-nowrap px-4 py-3">Page</th>
               </tr>
             </thead>
@@ -107,11 +106,6 @@ export default async function AdminLeadsPage() {
                   <td className="px-4 py-3 text-stone-600">{row.project || "—"}</td>
                   <td className="whitespace-nowrap px-4 py-3 text-stone-600">
                     {row.preferredDate || "—"}
-                  </td>
-                  <td className="max-w-[260px] px-4 py-3 text-stone-600">
-                    <span className="line-clamp-4 whitespace-pre-wrap" title={row.message}>
-                      {row.message || "—"}
-                    </span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs text-stone-500">{row.pagePath || "—"}</td>
                 </tr>

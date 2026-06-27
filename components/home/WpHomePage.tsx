@@ -541,26 +541,11 @@ export default function WpHomePage() {
                                       </span>
                                     </p>
                                   </div>
-                                  <div className="form-control-wrap">
-                                    <p>
-                                      <span className="wpcf7-form-control-wrap">
-                                        <textarea
-                                          cols={40}
-                                          rows={10}
-                                          maxLength={2000}
-                                          className="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required"
-                                          aria-required="true"
-                                          placeholder="Your Message"
-                                          name="your-message"
-                                        />
-                                      </span>
-                                    </p>
-                                  </div>
                                   <p>
                                     <input
                                       className="wpcf7-form-control wpcf7-submit has-spinner tbtn hvcolor"
                                       type="submit"
-                                      value="Send Message"
+                                      value="Submit Enquiry"
                                     />
                                   </p>
                                 </div>

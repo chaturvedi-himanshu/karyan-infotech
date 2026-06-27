@@ -39,6 +39,7 @@ export default function SiteSettingsPortalForm() {
         const pageHeader = j.pageHeader ?? {};
         const enquiryFloatPromo = j.enquiryFloatPromo ?? {};
         const cookieConsent = j.cookieConsent ?? {};
+        const projectDetailAds = j.projectDetailAds ?? {};
         const merged = deepMerge(
           DEFAULT_SITE_SETTINGS as unknown as Record<string, unknown>,
           {
@@ -47,6 +48,7 @@ export default function SiteSettingsPortalForm() {
             projectInterestOptions,
             themeColors,
             pageHeader,
+            projectDetailAds,
             enquiryFloatPromo,
             cookieConsent,
           } as Record<string, unknown>
@@ -408,6 +410,99 @@ export default function SiteSettingsPortalForm() {
                 }
               />
             </CmsField>
+          </div>
+        </CmsSection>
+      </CmsGroup>
+
+      <CmsGroup
+        icon={<LayoutGrid className="h-4 w-4" />}
+        title="Project detail ads"
+        description="Shared image carousel on every project page — right column, above the enquiry form"
+      >
+        <CmsSection
+          title="Sidebar ads carousel"
+          description="Same carousel on all project detail pages. Upload images at 386 × 550 px. Book Now opens the enquiry popup for that project."
+          where="Right column on /karyan-trevana, /karyan-citywalk, and every other project page — directly above the contact form"
+          defaultOpen
+        >
+          <CmsField label="Book now button label">
+            <CmsInput
+              value={data.projectDetailAds.bookNowLabel ?? "Book Now"}
+              onChange={(e) =>
+                patch((d) => ({
+                  ...d,
+                  projectDetailAds: {
+                    ...d.projectDetailAds,
+                    bookNowLabel: e.target.value,
+                  },
+                }))
+              }
+            />
+          </CmsField>
+          <div className="space-y-4">
+            {(data.projectDetailAds.images ?? []).map((slide, i) => (
+              <CmsItemCard
+                key={i}
+                title={`Slide ${i + 1}`}
+                onRemove={() =>
+                  patch((d) => ({
+                    ...d,
+                    projectDetailAds: {
+                      ...d.projectDetailAds,
+                      images: d.projectDetailAds.images.filter((_, j) => j !== i),
+                    },
+                  }))
+                }
+              >
+                <CmsField
+                  label="Image"
+                  hint="Recommended size: 386 × 550 px (portrait)."
+                >
+                  <CmsImageUpload
+                    value={slide.src}
+                    onChange={(url) =>
+                      patch((d) => {
+                        const images = [...d.projectDetailAds.images];
+                        images[i] = { ...images[i], src: url };
+                        return {
+                          ...d,
+                          projectDetailAds: { ...d.projectDetailAds, images },
+                        };
+                      })
+                    }
+                    folder="site/project-detail-ads"
+                  />
+                </CmsField>
+                <CmsField label="Alt text">
+                  <CmsInput
+                    value={slide.alt}
+                    onChange={(e) =>
+                      patch((d) => {
+                        const images = [...d.projectDetailAds.images];
+                        images[i] = { ...images[i], alt: e.target.value };
+                        return {
+                          ...d,
+                          projectDetailAds: { ...d.projectDetailAds, images },
+                        };
+                      })
+                    }
+                  />
+                </CmsField>
+              </CmsItemCard>
+            ))}
+            <CmsGhostButton
+              onClick={() =>
+                patch((d) => ({
+                  ...d,
+                  projectDetailAds: {
+                    ...d.projectDetailAds,
+                    images: [...d.projectDetailAds.images, { src: "", alt: "" }],
+                  },
+                }))
+              }
+            >
+              + Add ad image
+            </CmsGhostButton>
           </div>
         </CmsSection>
       </CmsGroup>

@@ -19,6 +19,7 @@ export async function GET() {
       pageHeader: null,
       enquiryFloatPromo: null,
       cookieConsent: null,
+      projectDetailAds: null,
     });
   const promo =
     doc.enquiryFloatPromo && typeof doc.enquiryFloatPromo === "object"
@@ -47,12 +48,25 @@ export async function GET() {
     doc.themeColors && typeof doc.themeColors === "object"
       ? { ...DEFAULT_SITE_SETTINGS.themeColors, ...(doc.themeColors as object) }
       : DEFAULT_SITE_SETTINGS.themeColors;
+  const projectDetailAds =
+    doc.projectDetailAds && typeof doc.projectDetailAds === "object"
+      ? {
+          ...DEFAULT_SITE_SETTINGS.projectDetailAds,
+          ...(doc.projectDetailAds as object),
+          images: Array.isArray(
+            (doc.projectDetailAds as { images?: unknown }).images,
+          )
+            ? (doc.projectDetailAds as { images: { src: string; alt: string }[] }).images
+            : DEFAULT_SITE_SETTINGS.projectDetailAds.images,
+        }
+      : DEFAULT_SITE_SETTINGS.projectDetailAds;
   return NextResponse.json({
     nav: doc.nav,
     footer: doc.footer,
     projectInterestOptions,
     themeColors,
     pageHeader,
+    projectDetailAds,
     enquiryFloatPromo: promo,
     cookieConsent,
   });
@@ -92,6 +106,16 @@ export async function PUT(req: Request) {
     body.themeColors && typeof body.themeColors === "object"
       ? { ...DEFAULT_SITE_SETTINGS.themeColors, ...body.themeColors }
       : DEFAULT_SITE_SETTINGS.themeColors;
+  const projectDetailAds =
+    body.projectDetailAds && typeof body.projectDetailAds === "object"
+      ? {
+          ...DEFAULT_SITE_SETTINGS.projectDetailAds,
+          ...body.projectDetailAds,
+          images: Array.isArray(body.projectDetailAds.images)
+            ? body.projectDetailAds.images
+            : DEFAULT_SITE_SETTINGS.projectDetailAds.images,
+        }
+      : DEFAULT_SITE_SETTINGS.projectDetailAds;
   await connectMongo();
   await SiteSettingsModel.findOneAndUpdate(
     { key: "default" },
@@ -103,6 +127,7 @@ export async function PUT(req: Request) {
         projectInterestOptions,
         themeColors,
         pageHeader,
+        projectDetailAds,
         enquiryFloatPromo,
         cookieConsent,
       },
@@ -111,5 +136,6 @@ export async function PUT(req: Request) {
   );
   revalidateTag("site-settings", "max");
   revalidatePath("/", "layout");
+  revalidatePath("/projects");
   return NextResponse.json({ ok: true });
 }

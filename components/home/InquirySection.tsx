@@ -2,22 +2,36 @@
 
 import { useEffect, useState } from "react";
 import SiteBrandLogo from "@/components/layout/SiteBrandLogo";
-import { useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { isCaptchaSubmitError, useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { useMathCaptcha } from "@/hooks/useMathCaptcha";
+import MathCaptchaField from "@/components/shared/MathCaptchaField";
 
 export default function InquirySection() {
   const [form, setForm] = useState({ name: "", email: "", mobile: "" });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof typeof form, string>>>({});
   const { submitLead, loading } = useLeadSubmission();
+  const {
+    challenge: captchaChallenge,
+    answer: captchaAnswer,
+    setAnswer: setCaptchaAnswer,
+    error: captchaError,
+    loading: captchaLoading,
+    validate: validateCaptcha,
+    reset: resetCaptcha,
+    getPayload: getCaptchaPayload,
+    reportError: reportCaptchaError,
+  } = useMathCaptcha();
 
   useEffect(() => {
     if (!submitted) return;
     const timer = window.setTimeout(() => {
       setSubmitted(false);
       setForm({ name: "", email: "", mobile: "" });
+      void resetCaptcha();
     }, 5000);
     return () => window.clearTimeout(timer);
-  }, [submitted]);
+  }, [submitted, resetCaptcha]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,23 +62,30 @@ export default function InquirySection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    try {
-      const ok = await submitLead({
-        source: "about_page",
-        name: form.name.trim(),
-        email: form.email.trim(),
-        mobile: form.mobile.trim(),
-        project: "",
-        message: "",
-        pagePath: typeof window !== "undefined" ? window.location.pathname : "/about",
-      });
-      if (!ok) throw new Error("Request failed");
-      setSubmitted(true);
-      setErrors({});
-    } catch {
-      alert("We could not send your enquiry. Please try again.");
+    const fieldsOk = validate();
+    const captchaOk = validateCaptcha();
+    if (!fieldsOk || !captchaOk) return;
+    const captchaPayload = getCaptchaPayload();
+    if (!captchaPayload) return;
+    const result = await submitLead({
+      source: "about_page",
+      name: form.name.trim(),
+      email: form.email.trim(),
+      mobile: form.mobile.trim(),
+      project: "",
+      pagePath: typeof window !== "undefined" ? window.location.pathname : "/about",
+      ...captchaPayload,
+    });
+    if (!result.ok) {
+      if (isCaptchaSubmitError(result.error)) {
+        reportCaptchaError(result.error);
+      } else {
+        alert(result.error);
+      }
+      return;
     }
+    setSubmitted(true);
+    setErrors({});
   };
 
   return (
@@ -163,9 +184,18 @@ export default function InquirySection() {
                     <p className="mt-1 text-xs text-red-500">{errors.mobile}</p>
                   ) : null}
                 </div>
+                <MathCaptchaField
+                  prompt={captchaChallenge?.prompt ?? null}
+                  value={captchaAnswer}
+                  onChange={setCaptchaAnswer}
+                  error={captchaError}
+                  loading={captchaLoading}
+                  labelClassName="mb-1 block text-xs font-semibold uppercase tracking-wide text-theme-fg-muted"
+                  inputClassName="w-full border border-stone-300 bg-white px-[14px] py-[10px] text-sm text-theme-fg outline-none transition focus:border-lux-gold/60 focus:ring-2 focus:ring-lux-gold/25"
+                />
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || captchaLoading || !captchaChallenge}
                   className="w-full bg-lux-gold py-3 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-lux-gold-dim disabled:cursor-wait disabled:opacity-80"
                 >
                   {loading ? "Sending..." : "Submit"}

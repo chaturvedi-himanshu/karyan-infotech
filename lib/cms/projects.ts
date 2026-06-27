@@ -97,6 +97,50 @@ export function migrateProjectPayloadSlug(
   return next;
 }
 
+/** Normalize listing cards — only fills href from title when needed; no placeholder defaults. */
+export function normalizeProjectListingCards(
+  projects: unknown[] | undefined
+): ProjectListCard[] {
+  if (!Array.isArray(projects)) return [];
+  return projects.map((raw) => {
+    const row = (raw && typeof raw === "object" ? raw : {}) as Partial<ProjectListCard>;
+    const title = String(row.title ?? "").trim();
+    const hrefRaw = String(row.href ?? "").trim();
+    const slugFromHref = slugFromProjectHref(hrefRaw);
+    const href =
+      slugFromHref
+        ? hrefRaw.startsWith("/")
+          ? hrefRaw
+          : `/${hrefRaw}`
+        : title
+          ? `/${normalizeProjectSlug(title)}`
+          : "";
+    return {
+      title,
+      description: String(row.description ?? "").trim(),
+      image: String(row.image ?? "").trim(),
+      href,
+      type: String(row.type ?? "").trim(),
+      location: String(row.location ?? "").trim(),
+      status: String(row.status ?? "").trim(),
+      featured: Boolean(row.featured),
+      ...(typeof row.order === "number" && Number.isFinite(row.order)
+        ? { order: row.order }
+        : {}),
+      ...(typeof row.rera === "string" && row.rera.trim() ? { rera: row.rera.trim() } : {}),
+    };
+  });
+}
+
+/** Cards shown on /projects — must have a title and valid project link. */
+export function filterPublishableProjectCards<T extends ProjectListCard>(
+  projects: T[]
+): T[] {
+  return projects.filter(
+    (project) => project.title?.trim() && slugFromProjectHref(project.href ?? ""),
+  );
+}
+
 export function slugFromProjectHref(href: string): string | null {
   const value = href.trim();
   if (!value) return null;

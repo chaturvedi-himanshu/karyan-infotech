@@ -89,6 +89,26 @@
   transform: scale(1.28);
 }
 
+/* Project hero carousel pagination */
+.project-hero-bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.project-hero-bullet-active {
+  background: linear-gradient(135deg, #e8891d, #ffb347);
+  box-shadow: 0 0 0 1px rgba(255, 240, 220, 0.5);
+  transform: scale(1.2);
+}
+
 /* Floating “Call now” FAB (see CallNowFab) */
 @keyframes lux-call-fab-float {
   0%,

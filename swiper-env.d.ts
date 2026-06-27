@@ -1,3 +1,7 @@
+declare module "swiper/css";
+declare module "swiper/css/navigation";
+declare module "swiper/css/pagination";
+
 declare module "swiper/bundle" {
   // Swiper 8 bundle default export (types not exposed via package.json exports)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,4 +15,6 @@ declare module "swiper" {
   export const Autoplay: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const Navigation: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export const Pagination: any;
 }

@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import {
   migrateProjectPayloadSlug,
+  normalizeProjectListingCards,
   normalizeProjectSlug,
   slugFromProjectHref,
 } from "@/lib/cms/projects";
@@ -125,6 +126,45 @@ async function syncListingHref(oldSlug: string, newSlug: string): Promise<void> 
   }
 }
 
+/** Add a project to the public listing when its detail page is saved but no card exists yet. */
+async function ensureProjectInListing(slug: string, payload: ProjectPayload): Promise<void> {
+  const listingDoc = await SitePageModel.findOne({ slug: "projects" }).lean();
+  const rawPayload = listingDoc?.payload;
+  if (!rawPayload || typeof rawPayload !== "object" || Array.isArray(rawPayload)) return;
+  const pl = rawPayload as { projects?: unknown[] };
+  const rows = normalizeProjectListingCards(pl.projects);
+  if (rows.some((row) => slugFromProjectHref(row.href) === slug)) return;
+
+  const title = payload.header?.title?.trim() || slug;
+  const locationHighlight = payload.investmentHighlights?.find((h) =>
+    h.title?.toLowerCase().includes("location"),
+  );
+  const typeHighlight = payload.investmentHighlights?.find((h) =>
+    h.title?.toLowerCase().includes("type"),
+  );
+  const statusHighlight = payload.investmentHighlights?.find((h) =>
+    h.title?.toLowerCase().includes("status"),
+  );
+
+  rows.push({
+    title,
+    description: payload.introParagraphs?.[0]?.trim() ?? "",
+    image: payload.header?.bgImage?.trim() || "/images/trevana-main.webp",
+    href: `/${slug}`,
+    type: typeHighlight?.value?.trim() || "Residential",
+    location: locationHighlight?.value?.trim() || "",
+    status: statusHighlight?.value?.trim() || "UPCOMING",
+    featured: false,
+    order: typeof payload.order === "number" ? payload.order : rows.length + 1,
+    ...(payload.rera?.trim() ? { rera: payload.rera.trim() } : {}),
+  });
+
+  await SitePageModel.findOneAndUpdate(
+    { slug: "projects" },
+    { $set: { payload: { ...pl, projects: rows } } },
+  );
+}
+
 export async function GET(
   _req: Request,
   ctx: { params: Promise<{ slug: string }> }
@@ -189,6 +229,7 @@ export async function PUT(
     if (projectTitle) await syncListingTitle(renameTo, projectTitle);
     if (projectOrder !== undefined) await syncListingOrder(renameTo, projectOrder);
     await syncListingRera(renameTo, projectRera);
+    await ensureProjectInListing(renameTo, migrated);
 
     revalidatePath(`/${normalizedCurrent}`);
     revalidatePath(`/${renameTo}`);
@@ -207,6 +248,7 @@ export async function PUT(
   if (projectTitle) await syncListingTitle(normalizedCurrent, projectTitle);
   if (projectOrder !== undefined) await syncListingOrder(normalizedCurrent, projectOrder);
   await syncListingRera(normalizedCurrent, projectRera);
+  await ensureProjectInListing(normalizedCurrent, payload);
 
   revalidatePath(`/${normalizedCurrent}`);
   revalidatePath("/projects");
